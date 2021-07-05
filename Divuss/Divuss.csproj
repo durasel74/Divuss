@@ -16,4 +16,14 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Styles\" />
+    <Folder Include="Resources\Icons\" />
+    <Folder Include="Resources\Templates\" />
+    <Folder Include="Resources\Controls\" />
+    <Folder Include="Service\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="Model\" />
+  </ItemGroup>
+
 </Project>

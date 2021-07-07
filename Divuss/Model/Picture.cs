@@ -1,39 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Divuss.Model
 {
-	public class Picture : MediaElement
+	public class Picture
 	{
 		private string imagePath;
 
-
 		public Picture(string imagePath)
 		{
-			ImageExists(imagePath);
 			ImagePath = imagePath;
 		}
-
 
 		public string ImagePath
 		{
 			get
 			{
-				ImageExists(imagePath);
+				if (!PathExists(imagePath))
+					throw new MediaElementNotFoundException(imagePath);
 				return imagePath;
 			}
 			private set
 			{
 				var newPath = value;
-				ImageExists(newPath);
+				if (!PathExists(imagePath))
+					throw new MediaElementNotFoundException(imagePath);
 				imagePath = newPath;
 			}
 		}
 
-		private void ImageExists(string path)
+		public bool PathExists(string path)
 		{
-			if (!File.Exists(path))
-				throw new Exception();
+			if (File.Exists(path)) return true;
+			else return false;
 		}
 	}
 }

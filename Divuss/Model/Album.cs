@@ -5,7 +5,7 @@ namespace Divuss.Model
 {
 	public class Album
 	{
-		private List<Picture> pictures = new List<Picture>();
+		private List<Picture> elements = new List<Picture>();
 
 
 		public Album(string albumName)
@@ -19,20 +19,28 @@ namespace Divuss.Model
 
 
 
-		public void Add(Picture picture)
+		public void AddPictures(Picture[] pictures)
 		{
-			pictures.Add(picture);
+			elements.AddRange(pictures);
 		}
 
-		public void MoveFile()
+		public void MovePictures(Picture[] pictures, Album album)
 		{
-
+			album.AddPictures(pictures);
+			DeletePicture(pictures);
 		}
 
-		public void DeleteFile()
+		public void CopyPicture(Picture[] pictures, Album album)
 		{
-			
+			album.AddPictures(pictures);
 		}
 
+		public void DeletePicture(Picture[] pictures)
+		{
+			foreach (Picture picture in pictures)
+			{
+				elements.Remove(picture);
+			}
+		}
 	}
 }

@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <ListBox Background="#555" DataContext="{Binding photos}"
+                 ItemsSource="{Binding LastPictures}" 
+                 VirtualizingPanel.ScrollUnit="Pixel"
+                 HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel Margin="3" Orientation="Horizontal">
+                        <Image Source="{Binding Path=ImagePath}" Width="300"/>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

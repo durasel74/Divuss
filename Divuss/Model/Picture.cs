@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Divuss.Model
@@ -24,8 +23,8 @@ namespace Divuss.Model
 			private set
 			{
 				var newPath = value;
-				if (!PathExists(imagePath))
-					throw new MediaElementNotFoundException(imagePath);
+				if (!PathExists(newPath))
+					throw new MediaElementNotFoundException(newPath);
 				imagePath = newPath;
 			}
 		}

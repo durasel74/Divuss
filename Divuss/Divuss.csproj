@@ -22,7 +22,6 @@
     <Folder Include="Resources\Templates\" />
     <Folder Include="Resources\Controls\" />
     <Folder Include="Service\" />
-    <Folder Include="ViewModel\" />
   </ItemGroup>
 
 </Project>

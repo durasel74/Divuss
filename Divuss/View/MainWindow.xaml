@@ -6,18 +6,29 @@
         xmlns:local="clr-namespace:Divuss.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <ListBox Background="#555" DataContext="{Binding photos}"
-                 ItemsSource="{Binding LastPictures}" 
-                 VirtualizingPanel.ScrollUnit="Pixel"
-                 HorizontalContentAlignment="Stretch">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <WrapPanel Margin="3" Orientation="Horizontal">
-                        <Image Source="{Binding Path=ImagePath}" Width="300"/>
-                    </WrapPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+
+    <Grid Background="#555">
+        <TabControl Background="Transparent">
+            <TabItem Header="{Binding PhotosTab.SectionName}">
+                <ListBox Grid.Row="1" Background="Transparent"
+                         DataContext="{Binding PhotosTab}"
+                         ItemsSource="{Binding LastPictures}"
+                         VirtualizingPanel.ScrollUnit="Pixel"
+                         HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel Margin="3" Orientation="Horizontal">
+                                <Image Source="{Binding Path=ImagePath}" Width="300"/>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+            <TabItem Header="{Binding AlbumsTab.SectionName}">
+                <TextBlock Text="Нет альбомов" FontSize="50"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

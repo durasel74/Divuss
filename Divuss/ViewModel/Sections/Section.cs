@@ -1,20 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Collections.ObjectModel;
 
 namespace Divuss.ViewModel
 {
-	internal class ViewModel : INotifyPropertyChanged
+	internal abstract class Section
 	{
-        public ViewModel()
-        {
-            PhotosTab = Photos.GetInstance();
-            AlbumsTab = Albums.GetInstance();
-		}
-
-        public Photos PhotosTab { get; }
-        public Albums AlbumsTab { get; }
+		public abstract string SectionName { get; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName] string prop = "")

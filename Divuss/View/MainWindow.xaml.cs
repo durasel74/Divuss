@@ -22,5 +22,15 @@ namespace Divuss.View
 			InitializeComponent();
 			DataContext = new ViewModel.ViewModel();
 		}
+
+		private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			PicturePanel.Visibility = Visibility.Visible;
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			PicturePanel.Visibility = Visibility.Collapsed;
+		}
 	}
 }

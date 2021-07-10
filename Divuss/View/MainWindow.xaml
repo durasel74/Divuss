@@ -4,31 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Divuss.View"
+        xmlns:Controls="clr-namespace:Divuss.Resources.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
     <Grid Background="#555">
         <TabControl Background="Transparent">
             <TabItem Header="{Binding PhotosTab.SectionName}">
-                <ListBox Grid.Row="1" Background="Transparent"
+                <ListBox x:Name="ListBoxPics" Grid.Row="1" 
+                         Background="Transparent"
                          DataContext="{Binding PhotosTab}"
                          ItemsSource="{Binding LastPictures}"
                          VirtualizingPanel.ScrollUnit="Pixel"
-                         HorizontalContentAlignment="Stretch">
+                         HorizontalContentAlignment="Stretch"
+                         SelectedItem="{Binding CurrentPicture}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <WrapPanel Margin="3" Orientation="Horizontal">
-                                <Image Source="{Binding Path=ImagePath}" Width="300"/>
-                            </WrapPanel>
+                            <Button Background="Transparent" 
+                                    PreviewMouseLeftButtonUp="Button_MouseLeftButtonUp">
+                                <Image Source="{Binding Path=ImagePath}"
+                                       Width="300"/>
+                            </Button>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </TabItem>
+            
             <TabItem Header="{Binding AlbumsTab.SectionName}">
                 <TextBlock Text="Нет альбомов" FontSize="50"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
             </TabItem>
         </TabControl>
+
+        <Grid x:Name="PicturePanel" Visibility="Collapsed">
+            <Controls:PictureView DataContext="{Binding PhotosTab}"/>
+
+            <Button HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Width="100" Height="50" Content="Назад"
+                    Click="Button_Click"/>
+        </Grid>
     </Grid>
 </Window>

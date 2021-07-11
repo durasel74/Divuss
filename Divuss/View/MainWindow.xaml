@@ -11,38 +11,25 @@
     <Grid Background="#555">
         <TabControl Background="Transparent">
             <TabItem Header="{Binding PhotosTab.SectionName}">
-                <ListBox x:Name="ListBoxPics" Grid.Row="1" 
-                         Background="Transparent"
-                         DataContext="{Binding PhotosTab}"
-                         ItemsSource="{Binding LastPictures}"
-                         VirtualizingPanel.ScrollUnit="Pixel"
-                         HorizontalContentAlignment="Stretch"
-                         SelectedItem="{Binding CurrentPicture}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Button Background="Transparent" 
-                                    PreviewMouseLeftButtonUp="Button_MouseLeftButtonUp">
-                                <Image Source="{Binding Path=ImagePath}"
-                                       Width="300"/>
-                            </Button>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <Controls:Photos DataContext="{Binding PhotosTab}"/>
             </TabItem>
-            
+
             <TabItem Header="{Binding AlbumsTab.SectionName}">
-                <TextBlock Text="Нет альбомов" FontSize="50"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
+                <Controls:Albums/>
+            </TabItem>
+
+            
+            
+            <TabItem Header="Test">
+                <Controls:Photos DataContext="{Binding PhotosTab}"/>
             </TabItem>
         </TabControl>
 
-        <Grid x:Name="PicturePanel" Visibility="Collapsed">
+        <Grid Visibility="Collapsed">
             <Controls:PictureView DataContext="{Binding PhotosTab}"/>
 
             <Button HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Width="100" Height="50" Content="Назад"
-                    Click="Button_Click"/>
+                    Width="100" Height="50" Content="Назад"/>
         </Grid>
     </Grid>
 </Window>

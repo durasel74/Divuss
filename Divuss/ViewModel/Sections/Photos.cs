@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using Divuss.Model;
 
+using System.IO;
+
 namespace Divuss.ViewModel
 {
 	internal class Photos : Section
@@ -17,12 +19,20 @@ namespace Divuss.ViewModel
 			SectionName = "Фотографии";
 			PictureViewIsVisibility = false;
 
+			LastPictures = new ObservableCollection<Picture>();
+
+			//string[] AllFiles = Directory.GetFiles(@"D:\закачки\картинки\New Wave", "*.*", SearchOption.AllDirectories);
+			//foreach (string filename in AllFiles)
+			//{
+			//	LastPictures.Add(new Picture(filename));
+			//}
+
 			LastPictures = new ObservableCollection<Picture>()
 			{
-				new Picture(@"D:\закачки\новые\Gradietns\Gradient_Biruz.jpg"),
-				new Picture(@"D:\закачки\новые\Gradietns\Gradient_Blue.jpg"),
-				new Picture(@"D:\закачки\новые\Gradietns\Gradient_Lighting.jpg"),
-				new Picture(@"D:\закачки\новые\Gradietns\Gradient_Violet.jpg")
+				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Biruz.jpg"),
+				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Blue.jpg"),
+				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Lighting.jpg"),
+				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Violet.jpg")
 			};
 		}
 		public static Photos GetInstance()

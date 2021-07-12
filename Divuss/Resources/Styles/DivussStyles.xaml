@@ -4,6 +4,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="PictureListStyle.xaml"/>
         <ResourceDictionary Source="PictureListItemStyle.xaml"/>
+        <ResourceDictionary Source="PictureViewPanelStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
     

@@ -6,32 +6,17 @@
              xmlns:local="clr-namespace:Divuss.Resources.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Grid Style="{StaticResource PictureViewPanel}">
+        <Image Source="{Binding CurrentPicture.ImagePath}" Margin="10"/>
 
-    <UserControl.Resources>
-        <Style x:Key="PictureView" TargetType="{x:Type Grid}">
-            <Setter Property="Visibility" Value="Collapsed"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding PictureViewIsVisibility}"
-                             Value="False">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding PictureViewIsVisibility}"
-                             Value="True">
-                    <Setter Property="Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
-
-    <Grid Style="{StaticResource PictureView}">
-        <Grid Background="#000">
-            <Image Source="{Binding CurrentPicture.ImagePath}"/>
+        <Grid>
+            <Button HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Margin="3" Width="25" Height="25" Content="&lt;"
+                    FontSize="16"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                            AncestorType={x:Type Window}}, 
+                            Path=DataContext.PictureSwitchCommand}"/>
         </Grid>
-
-        <Button HorizontalAlignment="Left" VerticalAlignment="Top"
-                Width="100" Height="50" 
-                Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-                        AncestorType={x:Type Window}}, 
-                        Path=DataContext.PictureSwitchCommand}"/>
     </Grid>
 </UserControl>

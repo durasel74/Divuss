@@ -17,19 +17,6 @@
             <TabItem Header="{Binding AlbumsTab.SectionName}">
                 <Controls:Albums/>
             </TabItem>
-
-            
-            
-            <TabItem Header="Test">
-                <Controls:Photos DataContext="{Binding PhotosTab}"/>
-            </TabItem>
         </TabControl>
-
-        <Grid Visibility="Collapsed">
-            <Controls:PictureView DataContext="{Binding PhotosTab}"/>
-
-            <Button HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Width="100" Height="50" Content="Назад"/>
-        </Grid>
     </Grid>
 </Window>

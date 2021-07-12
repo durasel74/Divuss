@@ -16,23 +16,20 @@ namespace Divuss.Model
 		{
 			get
 			{
-				if (!PathExists(imagePath))
+				if (!PathExists())
 					throw new MediaElementNotFoundException(imagePath);
 				return imagePath;
 			}
 			private set
 			{
 				var newPath = value;
-				if (!PathExists(newPath))
+				if (!PathExists(value))
 					throw new MediaElementNotFoundException(newPath);
 				imagePath = newPath;
 			}
 		}
 
-		public bool PathExists(string path)
-		{
-			if (File.Exists(path)) return true;
-			else return false;
-		}
+		public static bool PathExists(string path) => File.Exists(path);
+		public bool PathExists() => File.Exists(imagePath);
 	}
 }

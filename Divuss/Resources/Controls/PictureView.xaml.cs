@@ -13,9 +13,6 @@ using System.Windows.Shapes;
 
 namespace Divuss.Resources.Controls
 {
-	/// <summary>
-	/// Логика взаимодействия для PictureView.xaml
-	/// </summary>
 	public partial class PictureView : UserControl
 	{
 		public PictureView()

@@ -16,6 +16,19 @@ namespace Divuss.ViewModel
         public Photos PhotosTab { get; }
         public Albums AlbumsTab { get; }
 
+		private ButtonCommand pictureSwitchCommand;
+		public ButtonCommand PictureSwitchCommand
+		{
+			get
+			{
+				return pictureSwitchCommand ??
+				  (pictureSwitchCommand = new ButtonCommand(obj =>
+				  {
+					  PhotosTab.PictureSwitch(obj);
+				  }));
+			}
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName] string prop = "")
 		{

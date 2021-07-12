@@ -1,15 +1,32 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <ControlTemplate x:Key="PictureListItemTemplate" TargetType="ListBoxItem">
-        <Border x:Name="Border" SnapsToDevicePixels="true"
+    <!--#region Helper template -->
+    <ControlTemplate x:Key="PictureListItemBorder" TargetType="Button">
+        <Border SnapsToDevicePixels="true"
                 HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                 VerticalAlignment="{TemplateBinding VerticalAlignment}"
                 Margin="{TemplateBinding Margin}"
                 BorderThickness="{TemplateBinding BorderThickness}"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}">
+            <ContentPresenter/>
+        </Border>
+    </ControlTemplate>
+    <!--#endregion-->
 
+    <ControlTemplate x:Key="PictureListItemTemplate" TargetType="ListBoxItem">
+        <Button x:Name="Border" Template="{StaticResource PictureListItemBorder}" 
+                SnapsToDevicePixels="true" Margin="{TemplateBinding Margin}"
+                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                CommandParameter="{TemplateBinding Content}"
+                Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                        AncestorType={x:Type Window}}, 
+                        Path=DataContext.PictureSwitchCommand}">
+            
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="SelectionStates">
                     <VisualState x:Name="Unselected"/>
@@ -19,7 +36,7 @@
             </VisualStateManager.VisualStateGroups>
             
             <ContentPresenter/>
-        </Border>
+        </Button>
     </ControlTemplate>
 
     <DataTemplate x:Key="PictureListItemContentTemplate">

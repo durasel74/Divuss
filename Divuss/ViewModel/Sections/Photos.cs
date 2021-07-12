@@ -6,14 +6,17 @@ namespace Divuss.ViewModel
 {
 	internal class Photos : Section
 	{
-		private static Photos instance;
 		//private int maxElementCount = 1000;
-
+		private bool pictureViewIsVisibility;
 		private Picture currentPicture;
 
+		#region Singleton constructor
+		private static Photos instance;
 		private Photos()
 		{
 			SectionName = "Фотографии";
+			PictureViewIsVisibility = false;
+
 			LastPictures = new ObservableCollection<Picture>()
 			{
 				new Picture(@"D:\закачки\новые\Gradietns\Gradient_Biruz.jpg"),
@@ -21,13 +24,34 @@ namespace Divuss.ViewModel
 				new Picture(@"D:\закачки\новые\Gradietns\Gradient_Lighting.jpg"),
 				new Picture(@"D:\закачки\новые\Gradietns\Gradient_Violet.jpg")
 			};
-			CurrentPicture = LastPictures[1];
 		}
-
-		public override string SectionName { get; }
+		public static Photos GetInstance()
+		{
+			if (instance == null)
+				instance = new Photos();
+			return instance;
+		} 
+		#endregion
 
 		public ObservableCollection<Picture> LastPictures { get; }
+		public override string SectionName { get; }
 
+		/// <summary>
+		/// Determines if the image is currently open in view mode.
+		/// </summary>
+		public bool PictureViewIsVisibility
+		{
+			get { return pictureViewIsVisibility; }
+			set
+			{
+				pictureViewIsVisibility = value;
+				OnPropertyChanged("PictureViewIsVisibility");
+			}
+		}
+
+		/// <summary>
+		/// The current image is open in view mode.
+		/// </summary>
 		public Picture CurrentPicture
 		{
 			get { return currentPicture; }
@@ -38,12 +62,22 @@ namespace Divuss.ViewModel
 			}
 		}
 
-
-		public static Photos GetInstance()
+		/// <summary>
+		/// Continuation of the command to switch the picture view mode.
+		/// </summary>
+		/// <param name="obj">Command parameter.</param>
+		public void PictureSwitch(object obj)
 		{
-			if (instance == null)
-				instance = new Photos();
-			return instance;
+			if (obj is Picture)
+			{
+				PictureViewIsVisibility = true;
+				CurrentPicture = (Picture)obj;
+			}
+			else
+			{
+				PictureViewIsVisibility = false;
+				CurrentPicture = null;
+			}
 		}
 	}
 }

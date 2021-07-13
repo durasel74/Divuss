@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using System.Windows;
+using Microsoft.Win32;
 
 namespace Divuss.ViewModel
 {
@@ -25,6 +27,26 @@ namespace Divuss.ViewModel
 				  (pictureSwitchCommand = new ButtonCommand(obj =>
 				  {
 					  PhotosTab.PictureSwitch(obj);
+				  }));
+			}
+		}
+
+		private ButtonCommand pictureOpenCommand;
+		public ButtonCommand PictureOpenCommand
+		{
+			get
+			{
+				return pictureOpenCommand ??
+				  (pictureOpenCommand = new ButtonCommand(obj =>
+				  {
+					  OpenFileDialog openFileDialog = new OpenFileDialog();
+					  openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
+					  if (openFileDialog.ShowDialog() == true)
+					  {
+						  var imagePath = openFileDialog.FileName;
+						  PhotosTab.AddImageToLast(imagePath);
+						  PhotosTab.OpenPictureView();
+					  }
 				  }));
 			}
 		}

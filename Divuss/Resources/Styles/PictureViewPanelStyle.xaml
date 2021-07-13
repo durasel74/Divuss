@@ -3,7 +3,7 @@
 
     <Style x:Key="PictureViewPanel" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="#111"/>
-        <Setter Property="Visibility" Value="Visible"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding PictureViewIsVisibility}"
                              Value="False">

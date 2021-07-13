@@ -13,6 +13,12 @@
                  ItemsSource="{Binding LastPictures}">
         </ListBox>
 
+        <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Width="50" Height="50" Content="Open" 
+                Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                        AncestorType={x:Type Window}}, 
+                        Path=DataContext.PictureOpenCommand}"/>
+
         <local:PictureView x:Name="PictureView"/>
     </Grid>
 </UserControl>

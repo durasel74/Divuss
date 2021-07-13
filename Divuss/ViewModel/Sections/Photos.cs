@@ -67,6 +67,8 @@ namespace Divuss.ViewModel
 			get { return currentPicture; }
 			set
 			{
+				var newLastPicture = value;
+
 				currentPicture = value;
 				OnPropertyChanged("CurrentPicture");
 			}
@@ -88,6 +90,44 @@ namespace Divuss.ViewModel
 				PictureViewIsVisibility = false;
 				CurrentPicture = null;
 			}
+		}
+
+		public void OpenPictureView()
+		{
+			CurrentPicture = LastPictures[0];
+			PictureViewIsVisibility = true;
+		}
+
+		public void AddImageToLast(string path)
+		{
+			int indexInLastPictures = FindImageWithPath(path);
+			if (indexInLastPictures >= 0)
+			{
+				LastPictures.RemoveAt(indexInLastPictures);
+			}
+			LastPictures.Insert(0, new Picture(path));
+		}
+
+		public void RemoveImageFromLast(int index)
+		{
+			LastPictures.RemoveAt(index);
+		}
+
+		/// <summary>
+		/// Finds an element with similar image paths.
+		/// </summary>
+		/// <param name="path">Path to image.</param>
+		/// <returns>Element index.</returns>
+		public int FindImageWithPath(string path)
+		{
+			string currentPath = "";
+			for (int i = 0; i < LastPictures.Count; i++)
+			{
+				currentPath = LastPictures[i].ImagePath;
+				if (currentPath == path)
+					return i;
+			}
+			return -1;
 		}
 	}
 }

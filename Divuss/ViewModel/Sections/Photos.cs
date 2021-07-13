@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using Divuss.Model;
 
-using System.IO;
+//using System.IO;
 
 namespace Divuss.ViewModel
 {
@@ -12,11 +12,11 @@ namespace Divuss.ViewModel
 		private bool pictureViewIsVisibility;
 		private Picture currentPicture;
 
-		#region Singleton constructor
+		#region Singleton конструктор
 		private static Photos instance;
 		private Photos()
 		{
-			SectionName = "Фотографии";
+			SectionName = "Photos";
 			PictureViewIsVisibility = false;
 
 			LastPictures = new ObservableCollection<Picture>();
@@ -47,7 +47,7 @@ namespace Divuss.ViewModel
 		public override string SectionName { get; }
 
 		/// <summary>
-		/// Determines if the image is currently open in view mode.
+		/// Определяет, открыто ли в данный момент изображение в режиме просмотра.
 		/// </summary>
 		public bool PictureViewIsVisibility
 		{
@@ -68,59 +68,54 @@ namespace Divuss.ViewModel
 			set
 			{
 				var newLastPicture = value;
-
-				currentPicture = value;
+				currentPicture = newLastPicture;
 				OnPropertyChanged("CurrentPicture");
+				UpdatePictureInLast(newLastPicture);
 			}
 		}
 
-		/// <summary>
-		/// Continuation of the command to switch the picture view mode.
-		/// </summary>
-		/// <param name="obj">Command parameter.</param>
-		public void PictureSwitch(object obj)
+		public void OpenPicture(Picture picture)
 		{
-			if (obj is Picture)
-			{
-				PictureViewIsVisibility = true;
-				CurrentPicture = (Picture)obj;
-			}
-			else
-			{
-				PictureViewIsVisibility = false;
-				CurrentPicture = null;
-			}
-		}
-
-		public void OpenPictureView()
-		{
-			CurrentPicture = LastPictures[0];
+			CurrentPicture = picture;
 			PictureViewIsVisibility = true;
 		}
 
-		public void AddImageToLast(string path)
+		public void ClosePicture()
 		{
-			int indexInLastPictures = FindImageWithPath(path);
+			PictureViewIsVisibility = false;
+			CurrentPicture = null;
+		}
+
+		public void AddPictureToLast(string path)
+		{
+			int indexInLastPictures = FindPictureWithPath(path);
 			if (indexInLastPictures >= 0)
-			{
 				LastPictures.RemoveAt(indexInLastPictures);
-			}
 			LastPictures.Insert(0, new Picture(path));
 		}
 
-		public void RemoveImageFromLast(int index)
+		public void UpdatePictureInLast(Picture picture)
 		{
-			LastPictures.RemoveAt(index);
+			if (LastPictures.Contains(picture))
+			{
+				LastPictures.Remove(picture);
+				LastPictures.Insert(0, picture);
+			}
+		}
+
+		public void RemovePictureFromLast(Picture picture)
+		{
+			LastPictures.Remove(picture);
 		}
 
 		/// <summary>
-		/// Finds an element with similar image paths.
+		/// Находит элемент с одинаковым путем к изображению.
 		/// </summary>
-		/// <param name="path">Path to image.</param>
-		/// <returns>Element index.</returns>
-		public int FindImageWithPath(string path)
+		/// <param name="path">Путь к изображению.</param>
+		/// <returns>Индекс элемента.</returns>
+		public int FindPictureWithPath(string path)
 		{
-			string currentPath = "";
+			string currentPath;
 			for (int i = 0; i < LastPictures.Count; i++)
 			{
 				currentPath = LastPictures[i].ImagePath;

@@ -9,14 +9,10 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid Background="#555">
-        <TabControl Background="Transparent">
-            <TabItem Header="{Binding PhotosTab.SectionName}">
-                <Controls:Photos DataContext="{Binding PhotosTab}"/>
-            </TabItem>
-
-            <TabItem Header="{Binding AlbumsTab.SectionName}">
-                <Controls:Albums/>
-            </TabItem>
-        </TabControl>
+        <TabControl Style="{StaticResource SectionsList}" 
+                    ItemContainerStyle="{StaticResource SectionsListItem}"
+                    ItemsSource="{Binding Sections}"
+                    SelectedItem="{Binding CurrentSection}"
+                    Background="Transparent"/>
     </Grid>
 </Window>

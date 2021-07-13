@@ -2,8 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="PictureListStyle.xaml"/>
-        <ResourceDictionary Source="PictureListItemStyle.xaml"/>
+        <ResourceDictionary Source="PictureListStyles\PictureListStyle.xaml"/>
+        <ResourceDictionary Source="PictureListStyles\PictureListItemStyle.xaml"/>
+        <ResourceDictionary Source="SectionsListStyles\SectionsListStyle.xaml"/>
+        <ResourceDictionary Source="SectionsListStyles\SectionsListItemStyle.xaml"/>
         <ResourceDictionary Source="PictureViewPanelStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

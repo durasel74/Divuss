@@ -10,7 +10,7 @@ namespace Divuss.ViewModel
 
 		private Albums()
 		{
-			SectionName = "Альбомы";
+			SectionName = "Albums";
 			AlbumsList = new ObservableCollection<Album>();
 		}
 

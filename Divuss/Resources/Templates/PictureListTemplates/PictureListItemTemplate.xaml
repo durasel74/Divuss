@@ -26,7 +26,7 @@
                 Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                         AncestorType={x:Type Window}}, 
                         Path=DataContext.PictureSwitchCommand}">
-            
+
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="SelectionStates">
                     <VisualState x:Name="Unselected"/>
@@ -34,13 +34,9 @@
                     <VisualState x:Name="SelectedUnfocused"/>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            
+
             <ContentPresenter/>
         </Button>
     </ControlTemplate>
-
-    <DataTemplate x:Key="PictureListItemContentTemplate">
-        <Image Source="{Binding Path=ImagePath}"/>
-    </DataTemplate>
 </ResourceDictionary>
     

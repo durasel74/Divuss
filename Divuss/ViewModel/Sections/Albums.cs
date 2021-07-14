@@ -4,7 +4,7 @@ using Divuss.Model;
 
 namespace Divuss.ViewModel
 {
-	internal class Albums : Section
+	public class Albums : Section
 	{
 		private static Albums instance;
 

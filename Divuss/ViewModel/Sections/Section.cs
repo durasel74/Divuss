@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Divuss.ViewModel
 {
-	internal abstract class Section : INotifyPropertyChanged
+	public abstract class Section : INotifyPropertyChanged
 	{
 		public abstract string SectionName { get; }
 

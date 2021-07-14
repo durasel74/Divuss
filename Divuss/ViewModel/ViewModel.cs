@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using Divuss.Model;
+using Divuss.Service;
 
 namespace Divuss.ViewModel
 {
@@ -28,16 +29,17 @@ namespace Divuss.ViewModel
 			{
 				currentSection = value;
 				OnPropertyChanged("CurrentSection");
+				Logger.LogTrace($"Выбран раздел: {currentSection.SectionName}");
 			}
 		}
 
-		private ButtonCommand pictureSwitchCommand;
-		public ButtonCommand PictureSwitchCommand
+		private PictureCommand pictureSwitchCommand;
+		public PictureCommand PictureSwitchCommand
 		{
 			get
 			{
 				return pictureSwitchCommand ??
-				  (pictureSwitchCommand = new ButtonCommand(obj =>
+				  (pictureSwitchCommand = new PictureCommand(obj =>
 				  {
 					  if (CurrentSection is Photos)
 						  PhotosPictureSwitch(obj);
@@ -53,14 +55,18 @@ namespace Divuss.ViewModel
 				return pictureOpenCommand ??
 				  (pictureOpenCommand = new ButtonCommand(obj =>
 				  {
+					  Logger.LogTrace("Нажата кнопка открытия изображения");
 					  OpenFileDialog openFileDialog = new OpenFileDialog();
 					  openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
+					  Logger.LogTrace("Открыто окно выбора файла...");
 					  if (openFileDialog.ShowDialog() == true)
 					  {
 						  var imagePath = openFileDialog.FileName;
+						  Logger.LogTrace($"Файл выбран: {imagePath}");
 						  if (CurrentSection is Photos)
 							  PhotosPictureOpen(imagePath);
 					  }
+					  else Logger.LogTrace("Файл не был выбран");
 				  }));
 			}
 		}

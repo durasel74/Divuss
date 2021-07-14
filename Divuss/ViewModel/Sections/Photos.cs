@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Divuss.Model;
+using Divuss.Service;
 
 //using System.IO;
 
 namespace Divuss.ViewModel
 {
-	internal class Photos : Section
+	public class Photos : Section
 	{
 		//private int maxElementCount = 1000;
 		private bool pictureViewIsVisibility;
@@ -78,12 +79,14 @@ namespace Divuss.ViewModel
 		{
 			CurrentPicture = picture;
 			PictureViewIsVisibility = true;
+			Logger.LogTrace($"({SectionName}) Открыт просмотр картинки: {picture.ImagePath}");
 		}
 
 		public void ClosePicture()
 		{
 			PictureViewIsVisibility = false;
 			CurrentPicture = null;
+			Logger.LogTrace($"({SectionName}) Просмотр картинки закрыт");
 		}
 
 		public void AddPictureToLast(string path)
@@ -92,6 +95,7 @@ namespace Divuss.ViewModel
 			if (indexInLastPictures >= 0)
 				LastPictures.RemoveAt(indexInLastPictures);
 			LastPictures.Insert(0, new Picture(path));
+			Logger.LogTrace($"({SectionName}) Добавлена картинка: {path}");
 		}
 
 		public void UpdatePictureInLast(Picture picture)
@@ -100,12 +104,16 @@ namespace Divuss.ViewModel
 			{
 				LastPictures.Remove(picture);
 				LastPictures.Insert(0, picture);
+				Logger.LogTrace($"({SectionName}) Обновлена картинка: " +
+					$"{picture.ImagePath}");
 			}
 		}
 
 		public void RemovePictureFromLast(Picture picture)
 		{
 			LastPictures.Remove(picture);
+			Logger.LogTrace($"({SectionName}) Удалена картинка: " +
+					$"{picture.ImagePath}");
 		}
 
 		/// <summary>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Divuss.Service;
 
 namespace Divuss.View
 {
@@ -19,8 +20,23 @@ namespace Divuss.View
 	{
 		public MainWindow()
 		{
-			InitializeComponent();
-			DataContext = new ViewModel.ViewModel();
+			try
+			{
+				Logger.Initialize();
+				InitializeComponent();
+				DataContext = new ViewModel.ViewModel();
+			}
+			catch (Exception e)
+			{
+				Logger.LogError(e.Message);
+				Logger.ForcedClose();
+				Application.Current.Shutdown();
+			}
+		}
+
+		private void Window_Closed(object sender, EventArgs e)
+		{
+			Logger.Close();
 		}
 	}
 }

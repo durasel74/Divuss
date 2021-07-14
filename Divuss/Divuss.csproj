@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Resources\Icons\" />
-    <Folder Include="Service\" />
   </ItemGroup>
 
 </Project>

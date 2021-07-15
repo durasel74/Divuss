@@ -3,7 +3,7 @@
                     xmlns:Controls="clr-namespace:Divuss.Resources.Controls">
 
     <DataTemplate x:Key="SectionsListContentTemplate">
-        <ContentControl x:Name="Content"/>
+        <ContentControl x:Name="Content" Focusable="False"/>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding SectionName}" Value="Photos">
                 <Setter TargetName="Content" Property="Content">

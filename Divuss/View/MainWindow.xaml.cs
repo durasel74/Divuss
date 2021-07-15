@@ -13,11 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Divuss.Service;
+using Divuss.ViewModel;
 
 namespace Divuss.View
 {
 	public partial class MainWindow : Window
 	{
+		private ViewModel.ViewModel dataContext;
+
 		public MainWindow()
 		{
 			try
@@ -32,11 +35,35 @@ namespace Divuss.View
 				Logger.ForcedClose();
 				Application.Current.Shutdown();
 			}
+			dataContext = (ViewModel.ViewModel)this.DataContext;
 		}
 
 		private void Window_Closed(object sender, EventArgs e)
 		{
 			Logger.Close();
+		}
+
+		private void Photos_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (IsPressedControl(e.Key))
+				dataContext.SelectionModeCommand.Execute(true);
+			else if (IsPressedShift(e.Key))
+				dataContext.SelectionModeCommand.Execute(true);
+		}
+		private void Photos_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (IsPressedControl(e.Key))
+				dataContext.SelectionModeCommand.Execute(false);
+			else if (IsPressedShift(e.Key))
+				dataContext.SelectionModeCommand.Execute(false);
+		}
+		private bool IsPressedControl(Key key)
+		{
+			return key == Key.LeftCtrl || key == Key.RightCtrl;
+		}
+		private bool IsPressedShift(Key key)
+		{
+			return key == Key.LeftShift || key == Key.RightShift;
 		}
 	}
 }

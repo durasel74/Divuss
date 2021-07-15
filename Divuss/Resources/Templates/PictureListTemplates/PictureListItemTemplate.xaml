@@ -15,10 +15,11 @@
     <!--#endregion-->
 
     <ControlTemplate x:Key="PictureListItemTemplate" TargetType="ListBoxItem">
-        <Button x:Name="Border" Template="{StaticResource PictureListItemBorder}" 
-                SnapsToDevicePixels="true" Margin="{TemplateBinding Margin}"
+        <Border SnapsToDevicePixels="True" Margin="{TemplateBinding Margin}"
                 HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                 VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                BorderThickness="0" Background="Transparent">
+            <Button x:Name="Border" Template="{StaticResource PictureListItemBorder}" 
                 BorderThickness="{TemplateBinding BorderThickness}"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -26,17 +27,39 @@
                 Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                         AncestorType={x:Type Window}}, 
                         Path=DataContext.PictureSwitchCommand}">
+                <ContentPresenter Margin="{TemplateBinding Padding}"/>
+            </Button>
 
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="SelectionStates">
                     <VisualState x:Name="Unselected"/>
-                    <VisualState x:Name="Selected"/>
-                    <VisualState x:Name="SelectedUnfocused"/>
+                    <VisualState x:Name="Selected">
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="Border" 
+                                            Storyboard.TargetProperty="
+                                                (Border.BorderBrush).(SolidColorBrush.Color)" 
+                                            To="Red" Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="SelectedUnfocused">
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="Border" 
+                                            Storyboard.TargetProperty="
+                                                (Border.BorderBrush).(SolidColorBrush.Color)" 
+                                            To="Red" Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
+        </Border>
 
-            <ContentPresenter/>
-        </Button>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, 
+                        AncestorType={x:Type Window}}, 
+                        Path=DataContext.SelectionMode}" Value="True">
+                <Setter TargetName="Border" Property="IsHitTestVisible" Value="False"/>
+            </DataTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 </ResourceDictionary>
     

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Divuss.View"
+        xmlns:Controls="clr-namespace:Divuss.Resources.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         KeyDown="Photos_KeyDown" KeyUp="Photos_KeyUp"
@@ -15,5 +16,7 @@
                     ItemsSource="{Binding Sections}"
                     SelectedItem="{Binding CurrentSection}"
                     Background="Transparent"/>
+
+        <Controls:PictureView DataContext="{Binding PictureView}"/>
     </Grid>
 </Window>

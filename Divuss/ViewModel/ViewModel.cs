@@ -19,10 +19,12 @@ namespace Divuss.ViewModel
 			Sections = new ObservableCollection<Section>();
 			Sections.Add(Photos.GetInstance());
 			Sections.Add(Albums.GetInstance());
+			PictureView = PictureView.GetInstance();
 			CurrentSection = Sections[0];
 		}
 
 		public ObservableCollection<Section> Sections { get; }
+		public PictureView PictureView { get; }
 
 		public Section CurrentSection
 		{
@@ -54,20 +56,22 @@ namespace Divuss.ViewModel
 
 		private void PhotosPictureSwitch(object obj)
 		{
-			Photos photos = (Photos)CurrentSection;
-
+			var photos = (Photos)CurrentSection;
 			var picture = obj as Picture;
 			if (picture != null)
-				photos.OpenPicture(picture);
-			else
-				photos.ClosePicture();
+			{
+				PictureView.OpenPicture(picture);
+				photos.UpdatePictureInLast(picture);
+			}
+			else PictureView.ClosePicture();
 		}
 
 		private void PhotosPictureOpen(string path)
 		{
-			Photos photos = (Photos)CurrentSection;
+			var photos = (Photos)CurrentSection;
 			photos.AddPictureToLast(path);
-			photos.OpenPicture(photos.LastPictures[0]);
+			PictureView.OpenPicture(photos.LastPicture);
+			photos.UpdatePictureInLast(photos.LastPicture);
 		}
 
 		private PictureCommand pictureSwitchCommand;
@@ -95,6 +99,7 @@ namespace Divuss.ViewModel
 					  Logger.LogTrace("Нажата кнопка открытия изображения");
 					  OpenFileDialog openFileDialog = new OpenFileDialog();
 					  openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
+
 					  Logger.LogTrace("Открыто окно выбора файла...");
 					  if (openFileDialog.ShowDialog() == true)
 					  {

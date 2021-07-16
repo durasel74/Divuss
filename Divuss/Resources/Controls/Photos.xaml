@@ -18,7 +18,5 @@
                 Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                         AncestorType={x:Type Window}}, 
                         Path=DataContext.PictureOpenCommand}"/>
-
-        <local:PictureView x:Name="PictureView"/>
     </Grid>
 </UserControl>

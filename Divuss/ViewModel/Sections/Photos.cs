@@ -10,16 +10,12 @@ namespace Divuss.ViewModel
 	public class Photos : Section
 	{
 		//private int maxElementCount = 1000;
-		private bool pictureViewIsVisibility;
-		private Picture currentPicture;
 
 		#region Singleton конструктор
 		private static Photos instance;
 		private Photos()
 		{
 			SectionName = "Photos";
-			PictureViewIsVisibility = false;
-
 			LastPictures = new ObservableCollection<Picture>();
 
 			//string[] AllFiles = Directory.GetFiles(@"D:\закачки\картинки\New Wave", "*.*", SearchOption.AllDirectories);
@@ -44,50 +40,9 @@ namespace Divuss.ViewModel
 		} 
 		#endregion
 
-		public ObservableCollection<Picture> LastPictures { get; }
 		public override string SectionName { get; }
-
-		/// <summary>
-		/// Определяет, открыто ли в данный момент изображение в режиме просмотра.
-		/// </summary>
-		public bool PictureViewIsVisibility
-		{
-			get { return pictureViewIsVisibility; }
-			set
-			{
-				pictureViewIsVisibility = value;
-				OnPropertyChanged("PictureViewIsVisibility");
-			}
-		}
-
-		/// <summary>
-		/// The current image is open in view mode.
-		/// </summary>
-		public Picture CurrentPicture
-		{
-			get { return currentPicture; }
-			set
-			{
-				var newLastPicture = value;
-				currentPicture = newLastPicture;
-				OnPropertyChanged("CurrentPicture");
-				UpdatePictureInLast(newLastPicture);
-			}
-		}
-
-		public void OpenPicture(Picture picture)
-		{
-			CurrentPicture = picture;
-			PictureViewIsVisibility = true;
-			Logger.LogTrace($"({SectionName}) Открыт просмотр картинки: {picture.ImagePath}");
-		}
-
-		public void ClosePicture()
-		{
-			PictureViewIsVisibility = false;
-			CurrentPicture = null;
-			Logger.LogTrace($"({SectionName}) Просмотр картинки закрыт");
-		}
+		public ObservableCollection<Picture> LastPictures { get; }
+		public Picture LastPicture => LastPictures != null ? LastPictures[0] : null;
 
 		public void AddPictureToLast(string path)
 		{

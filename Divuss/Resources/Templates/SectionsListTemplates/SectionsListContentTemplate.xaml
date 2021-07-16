@@ -16,7 +16,7 @@
             <DataTrigger Binding="{Binding SectionName}" Value="Albums">
                 <Setter TargetName="Content" Property="Content">
                     <Setter.Value>
-                        <Controls:Albums/>
+                        <Controls:Albums DataContext="{Binding}"/>
                     </Setter.Value>
                 </Setter>
             </DataTrigger>

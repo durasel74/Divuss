@@ -10,8 +10,7 @@
     <Grid>
         <ListBox Style="{DynamicResource PictureList}"
                  ItemContainerStyle="{DynamicResource PictureListItem}"
-                 ItemsSource="{Binding LastPictures}">
-        </ListBox>
+                 ItemsSource="{Binding LastPictures}"/>
 
         <Button HorizontalAlignment="Right" VerticalAlignment="Bottom"
                 Width="50" Height="50" Content="Open" 

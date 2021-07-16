@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
-    <Grid Style="{StaticResource PictureViewPanel}">
+    <Grid Style="{DynamicResource PictureViewPanel}">
         <Image Source="{Binding CurrentPicture.ImagePath}" Margin="10"
                RenderOptions.BitmapScalingMode="HighQuality"/>
 

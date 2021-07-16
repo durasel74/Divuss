@@ -1,29 +1,28 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Divuss.Model
 {
-	public class Album : INotifyPropertyChanged
+	public class Album : NotifyPropertyChanged
 	{
-		private int maxAlbumNameLength = 50;
+		private const int MAX_ALBUM_NAME_LENGTH = 50;
 
 		private string albumName;
-		private List<Picture> elements = new List<Picture>();
+		private ObservableCollection<Picture> elements;
 
 		public Album(string albumName)
 		{
 			AlbumName = albumName;
+			elements = new ObservableCollection<Picture>();
 		}
 
-		public string AlbumName 
-		{ 
+		public string AlbumName
+		{
 			get { return albumName; }
 			set
 			{
 				string newName = value;
-				if (newName.Length <= maxAlbumNameLength)
+				if (newName.Length <= MAX_ALBUM_NAME_LENGTH)
 				{
 					albumName = newName;
 					OnPropertyChanged("AlbumName");
@@ -33,7 +32,10 @@ namespace Divuss.Model
 
 		public void AddPictures(Picture[] pictures)
 		{
-			elements.AddRange(pictures);
+			foreach (Picture picture in pictures)
+			{
+				elements.Add(picture);
+			}
 		}
 
 		public void MovePictures(Picture[] pictures, Album album)
@@ -53,13 +55,6 @@ namespace Divuss.Model
 			{
 				elements.Remove(picture);
 			}
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-		public void OnPropertyChanged([CallerMemberName] string prop = "")
-		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
 		}
 	}
 }

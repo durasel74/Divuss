@@ -8,6 +8,9 @@
         <ResourceDictionary Source="SectionsListTemplates\SectionsListItemTemplate.xaml"/>
         <ResourceDictionary Source="SectionsListTemplates\SectionsListContentTemplate.xaml"/>
         <ResourceDictionary Source="SectionsListTemplates\SectionsListItemHeaderTemplate.xaml"/>
+        <ResourceDictionary Source="AlbumListTemplates\AlbumListTemplate.xaml"/>
+        <ResourceDictionary Source="AlbumListTemplates\AlbumListItemTemplate.xaml"/>
+        <ResourceDictionary Source="AlbumListTemplates\AlbumListItemContentTemplate.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
     

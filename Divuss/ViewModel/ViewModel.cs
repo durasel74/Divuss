@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using Divuss.Model;
@@ -8,13 +6,13 @@ using Divuss.Service;
 
 namespace Divuss.ViewModel
 {
-	internal class ViewModel : INotifyPropertyChanged
+	internal class ViewModel : NotifyPropertyChanged
 	{
 		private Section currentSection;
 		private bool selectionMode;
 
 		public ViewModel()
-        {
+		{
 			SelectionMode = false;
 			Sections = new ObservableCollection<Section>();
 			Sections.Add(Photos.GetInstance());
@@ -123,15 +121,10 @@ namespace Divuss.ViewModel
 					  {
 						  if (CurrentSection is Photos)
 							  SelectionMode = (bool)obj;
+						  else if (CurrentSection is Albums)
+							  SelectionMode = (bool)obj;
 					  }));
 			}
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-		public void OnPropertyChanged([CallerMemberName] string prop = "")
-		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
 		}
 	}
 }

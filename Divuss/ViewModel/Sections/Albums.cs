@@ -6,23 +6,25 @@ namespace Divuss.ViewModel
 {
 	public class Albums : Section
 	{
-		private static Albums instance;
 
+		#region Singleton конструктор
+		private static Albums instance;
 		private Albums()
 		{
 			SectionName = "Albums";
 			AlbumsList = new ObservableCollection<Album>();
 		}
-
-		public override string SectionName { get; }
-
-		public ObservableCollection<Album> AlbumsList { get; }
-
 		public static Albums GetInstance()
 		{
 			if (instance == null)
 				instance = new Albums();
 			return instance;
-		}
+		} 
+		#endregion
+
+		public override string SectionName { get; }
+		public ObservableCollection<Album> AlbumsList { get; }
+
+
 	}
 }

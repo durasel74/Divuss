@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 
 using Divuss.Model;
@@ -8,7 +6,7 @@ using Divuss.Service;
 
 namespace Divuss.ViewModel
 {
-	public class PictureView : INotifyPropertyChanged
+	public class PictureView : NotifyPropertyChanged
 	{
 		private bool pictureViewIsVisibility;
 		private Picture currentPicture;
@@ -69,13 +67,6 @@ namespace Divuss.ViewModel
 			PictureViewIsVisibility = false;
 			CurrentPicture = null;
 			Logger.LogTrace($"({SectionName}) Просмотр картинки закрыт");
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-		public void OnPropertyChanged([CallerMemberName] string prop = "")
-		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(prop));
 		}
 	}
 }

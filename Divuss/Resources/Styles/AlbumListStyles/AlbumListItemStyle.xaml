@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="AlbumListItem" TargetType="ListBoxItem">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+        <Setter Property="Background" Value="#444"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+
+        <Setter Property="Template" Value="{StaticResource AlbumListItemTemplate}"/>
+        <!--<Setter Property="ContentTemplate" Value="{StaticResource PictureListItemContentTemplate}"/>-->
+    </Style>
+</ResourceDictionary>
+    

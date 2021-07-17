@@ -11,10 +11,10 @@
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     CommandParameter="{TemplateBinding Content}"
-                    ><!--Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
-                            Path=DataContext.PictureSwitchCommand}"-->
-                
+                            Path=DataContext.AlbumSwitchCommand}">
+
                 <ContentPresenter Margin="{TemplateBinding Padding}" 
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>

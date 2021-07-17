@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-
 namespace Divuss.Model
 {
 	public class Album : NotifyPropertyChanged
@@ -9,13 +8,15 @@ namespace Divuss.Model
 		private const int MAX_ALBUM_NAME_LENGTH = 50;
 
 		private string albumName;
-		private ObservableCollection<Picture> elements;
+		private Picture currentElement;
 
 		public Album(string albumName)
 		{
 			AlbumName = albumName;
-			elements = new ObservableCollection<Picture>();
+			Elements = new ObservableCollection<Picture>();
 		}
+
+		public ObservableCollection<Picture> Elements { get; }
 
 		public string AlbumName
 		{
@@ -31,11 +32,24 @@ namespace Divuss.Model
 			}
 		}
 
+		public Picture CurrentElement
+		{
+			get { return currentElement; }
+			set
+			{
+				currentElement = value;
+				OnPropertyChanged("CurrentElement");
+			}
+		}
+
+
+
+
 		public void AddPictures(Picture[] pictures)
 		{
 			foreach (Picture picture in pictures)
 			{
-				elements.Add(picture);
+				Elements.Add(picture);
 			}
 		}
 
@@ -54,7 +68,7 @@ namespace Divuss.Model
 		{
 			foreach (Picture picture in pictures)
 			{
-				elements.Remove(picture);
+				Elements.Remove(picture);
 			}
 		}
 	}

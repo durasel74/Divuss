@@ -11,7 +11,7 @@
         Closed="Window_Closed">
 
     <Grid Background="#555">
-        <TabControl Style="{StaticResource SectionsList}" 
+        <TabControl x:Name="Sections" Style="{StaticResource SectionsList}" 
                     ItemContainerStyle="{StaticResource SectionsListItem}"
                     SelectionChanged="SectionsList_SelectionChanged"
                     Background="Transparent">

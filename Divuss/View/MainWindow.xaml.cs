@@ -48,7 +48,8 @@ namespace Divuss.View
 			var tabItem = (sender as TabControl)?.SelectedItem as TabItem;
 			var userControl = tabItem?.Content as UserControl;
 			ViewModel.Section section = userControl?.DataContext as ViewModel.Section;
-			if (section != null) dataContext.CurrentSection = section;
+			if (section != null && e.OriginalSource is TabControl)
+				dataContext.CurrentSection = section;
 		}
 
 		private void Photos_KeyDown(object sender, KeyEventArgs e)

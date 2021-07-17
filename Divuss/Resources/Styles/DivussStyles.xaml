@@ -8,6 +8,7 @@
         <ResourceDictionary Source="PictureViewStyles\PictureViewPanelStyle.xaml"/>
         <ResourceDictionary Source="AlbumListStyles\AlbumListStyle.xaml"/>
         <ResourceDictionary Source="AlbumListStyles\AlbumListItemStyle.xaml"/>
+        <ResourceDictionary Source="AlbumListStyles\AlbumPicturesPanelStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
     

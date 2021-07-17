@@ -65,6 +65,28 @@ namespace Divuss.ViewModel
 			else PictureView.ClosePicture();
 		}
 
+		private void AlbumsPictureSwitch(object obj)
+		{
+			var albums = (Albums)CurrentSection;
+			var picture = obj as Picture;
+			if (picture != null)
+			{
+				PictureView.OpenPicture(picture);
+			}
+			else PictureView.ClosePicture();
+		}
+
+		private void AlbumsAlbumSwitch(object obj)
+		{
+			var albums = (Albums)CurrentSection;
+			var album = obj as Album;
+			if (album != null)
+			{
+				albums.OpenAlbum(album);
+			}
+			else albums.CloseAlbum();
+		}
+
 		private void PhotosPictureOpen(string path)
 		{
 			var photos = (Photos)CurrentSection;
@@ -83,6 +105,22 @@ namespace Divuss.ViewModel
 				  {
 					  if (CurrentSection is Photos)
 						  PhotosPictureSwitch(obj);
+					  else if (CurrentSection is Albums)
+						  AlbumsPictureSwitch(obj);
+				  }));
+			}
+		}
+
+		private PictureCommand albumSwitchCommand;
+		public PictureCommand AlbumSwitchCommand
+		{
+			get
+			{
+				return albumSwitchCommand ??
+				  (albumSwitchCommand = new PictureCommand(obj =>
+				  {
+					if (CurrentSection is Albums)
+					  AlbumsAlbumSwitch(obj);
 				  }));
 			}
 		}

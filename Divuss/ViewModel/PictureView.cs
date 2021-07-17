@@ -49,8 +49,7 @@ namespace Divuss.ViewModel
 			get { return currentPicture; }
 			private set
 			{
-				var newCurrentPicture = value;
-				currentPicture = newCurrentPicture;
+				currentPicture = value;
 				OnPropertyChanged("CurrentPicture");
 			}
 		}

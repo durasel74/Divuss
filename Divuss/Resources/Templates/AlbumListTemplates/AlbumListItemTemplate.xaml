@@ -2,19 +2,36 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="AlbumListItemTemplate" TargetType="ListBoxItem">
-        <Border x:Name="Border" SnapsToDevicePixels="True" Margin="{TemplateBinding Margin}"
+        <Border SnapsToDevicePixels="True" Margin="{TemplateBinding Margin}"
                 HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                BorderThickness="0" Background="Transparent">
+            <Button x:Name="Border" Template="{DynamicResource ItemBorder}" 
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    CommandParameter="{TemplateBinding Content}"
+                    ><!--Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                            AncestorType={x:Type Window}}, 
+                            Path=DataContext.PictureSwitchCommand}"-->
+                
+                <ContentPresenter Margin="{TemplateBinding Padding}" 
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Button>
 
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="SelectionStates">
                     <VisualState x:Name="Unselected"/>
-                    <VisualState x:Name="Selected"/>
+                    <VisualState x:Name="Selected">
+                        <Storyboard Storyboard.TargetName="Border"
+                                    Storyboard.TargetProperty="Background.Color">
+                            <ColorAnimation To="#999" Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </VisualState>
                     <VisualState x:Name="SelectedUnfocused"/>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-
-            <ContentPresenter />
         </Border>
     </ControlTemplate>
 </ResourceDictionary>

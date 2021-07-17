@@ -6,7 +6,6 @@
         <Setter Property="BorderThickness" Value="0"/>
 
         <Setter Property="Template" Value="{StaticResource SectionsListTemplate}"/>
-        <Setter Property="ContentTemplate" Value="{DynamicResource SectionsListContentTemplate}"/>
     </Style>
 </ResourceDictionary>
     

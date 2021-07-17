@@ -4,7 +4,6 @@
     <Style x:Key="SectionsListItem" TargetType="{x:Type TabItem}">
 
         <Setter Property="Template" Value="{StaticResource SectionsListItemTemplate}"/>
-        <Setter Property="HeaderTemplate" Value="{DynamicResource SectionsListItemHeaderTemplate}"/>
     </Style>
 </ResourceDictionary>
     

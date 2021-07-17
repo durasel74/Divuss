@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
+
 namespace Divuss.Model
 {
 	public class Album : NotifyPropertyChanged

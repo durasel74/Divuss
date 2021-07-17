@@ -43,6 +43,14 @@ namespace Divuss.View
 			Logger.Close();
 		}
 
+		private void SectionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var tabItem = (sender as TabControl)?.SelectedItem as TabItem;
+			var userControl = tabItem?.Content as UserControl;
+			ViewModel.Section section = userControl?.DataContext as ViewModel.Section;
+			if (section != null) dataContext.CurrentSection = section;
+		}
+
 		private void Photos_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (IsPressedControl(e.Key))

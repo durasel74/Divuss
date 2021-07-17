@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Divuss.View"
-        xmlns:Controls="clr-namespace:Divuss.Resources.Controls"
+        xmlns:Controls="clr-namespace:Divuss.Resources.Controls" 
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         KeyDown="Photos_KeyDown" KeyUp="Photos_KeyUp"
@@ -13,9 +13,15 @@
     <Grid Background="#555">
         <TabControl Style="{StaticResource SectionsList}" 
                     ItemContainerStyle="{StaticResource SectionsListItem}"
-                    ItemsSource="{Binding Sections}"
-                    SelectedItem="{Binding CurrentSection}"
-                    Background="Transparent"/>
+                    SelectionChanged="SectionsList_SelectionChanged"
+                    Background="Transparent">
+            <TabItem Header="Фотографии">
+                <Controls:Photos DataContext="{Binding PhotosTab}"/>
+            </TabItem>
+            <TabItem Header="Альбомы">
+                <Controls:Albums DataContext="{Binding AlbumsTab}"/>
+            </TabItem>
+        </TabControl>
 
         <Controls:PictureView DataContext="{Binding PictureView}"/>
     </Grid>

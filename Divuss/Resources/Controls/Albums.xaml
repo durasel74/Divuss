@@ -9,7 +9,10 @@
     
     <Grid>
         <ListBox Style="{DynamicResource AlbumList}"
-                 ItemContainerStyle="{DynamicResource AlbumListItem}"/>
+                 ItemContainerStyle="{DynamicResource AlbumListItem}"
+                 ItemsSource="{Binding AlbumsList}"
+                 SelectedItem="{Binding CurrentAlbum}">
+        </ListBox>
         
     </Grid>
 </UserControl>

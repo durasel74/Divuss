@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using Divuss.Model;
 using Divuss.Service;
+
+using System.Windows;
 
 namespace Divuss.ViewModel
 {
@@ -14,14 +15,14 @@ namespace Divuss.ViewModel
 		public ViewModel()
 		{
 			SelectionMode = false;
-			Sections = new ObservableCollection<Section>();
-			Sections.Add(Photos.GetInstance());
-			Sections.Add(Albums.GetInstance());
+			PhotosTab = Photos.GetInstance();
+			AlbumsTab = Albums.GetInstance();
 			PictureView = PictureView.GetInstance();
-			CurrentSection = Sections[0];
+			CurrentSection = PhotosTab;
 		}
 
-		public ObservableCollection<Section> Sections { get; }
+		public Section PhotosTab { get; }
+		public Section AlbumsTab { get; }
 		public PictureView PictureView { get; }
 
 		public Section CurrentSection

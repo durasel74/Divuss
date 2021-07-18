@@ -24,7 +24,7 @@
 
                 <Button Width="50" Height="50" Content="Delete" Margin="4"
                         CommandParameter="{Binding ElementName=AlbumList,
-                    Path=SelectedItems}"
+                                        Path=SelectedItems}"
                         Command="{Binding RelativeSource={RelativeSource 
                                 FindAncestor, AncestorType={x:Type Window}}, 
                                 Path=DataContext.AlbumDeleteCommand}"/>

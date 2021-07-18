@@ -122,6 +122,19 @@ namespace Divuss.ViewModel
 			albums.DeleteAlbums(selectedAlbums);
 		}
 
+		private void PhotosDeletePictures(object obj)
+		{
+			var photos = (Photos)CurrentSection;
+			var selectedList = (ObservableCollection<object>)obj;
+			Picture[] selectedPictures = new Picture[selectedList.Count];
+
+			if (selectedList.Count == 0) return;
+			for (int i = 0; i < selectedPictures.Length; i++)
+				selectedPictures[i] = (Picture)selectedList[i];
+
+			photos.RemovePicturesFromLast(selectedPictures);
+		}
+
 		private PictureCommand pictureSwitchCommand;
 		public PictureCommand PictureSwitchCommand
 		{
@@ -134,20 +147,6 @@ namespace Divuss.ViewModel
 						  PhotosPictureSwitch(obj);
 					  else if (CurrentSection is Albums)
 						  AlbumsPictureSwitch(obj);
-				  }));
-			}
-		}
-
-		private PictureCommand albumSwitchCommand;
-		public PictureCommand AlbumSwitchCommand
-		{
-			get
-			{
-				return albumSwitchCommand ??
-				  (albumSwitchCommand = new PictureCommand(obj =>
-				  {
-					  if (CurrentSection is Albums)
-						  AlbumsAlbumSwitch(obj);
 				  }));
 			}
 		}
@@ -175,6 +174,34 @@ namespace Divuss.ViewModel
 							  AlbumsPictureOpen(imagePath);
 					  }
 					  else Logger.LogTrace("Файл не был выбран");
+				  }));
+			}
+		}
+
+		private PictureCommand pictureDeleteCommand;
+		public PictureCommand PictureDeleteCommand
+		{
+			get
+			{
+				return pictureDeleteCommand ??
+				  (pictureDeleteCommand = new PictureCommand(obj =>
+				  {
+					  if (CurrentSection is Photos)
+						  PhotosDeletePictures(obj);
+				  }));
+			}
+		}
+
+		private PictureCommand albumSwitchCommand;
+		public PictureCommand AlbumSwitchCommand
+		{
+			get
+			{
+				return albumSwitchCommand ??
+				  (albumSwitchCommand = new PictureCommand(obj =>
+				  {
+					  if (CurrentSection is Albums)
+						  AlbumsAlbumSwitch(obj);
 				  }));
 			}
 		}

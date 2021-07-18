@@ -8,30 +8,36 @@
              d:DesignHeight="450" d:DesignWidth="800">
  
     <Grid Style="{DynamicResource AlbumPicturePanel}">
-        <ListBox x:Name="AlbumPhotosList" Margin="0,10,0,0"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Style="{DynamicResource SectionPanel}">
+            <Button HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Margin="3" Width="25" Height="25" Content="&lt;"
+                    FontSize="16"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                            AncestorType={x:Type Window}}, 
+                            Path=DataContext.AlbumSwitchCommand}"/>
+        </Border>
+
+        <ListBox x:Name="AlbumPhotosList" Grid.Row="1"
                  Style="{DynamicResource PictureList}" 
                  ItemContainerStyle="{DynamicResource PictureListItem}"
                  MouseLeftButtonDown="AlbumPhotosList_MouseLeftButtonDown"
                  ItemsSource="{Binding CurrentAlbum.Elements}"
                  SelectedItem="{Binding CurrentAlbum.CurrentElement}"/>
 
-        <Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="4"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            
             <Button HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Margin="3" Width="25" Height="25" Content="&lt;"
-                    FontSize="16"
-                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-                            AncestorType={x:Type Window}}, 
-                            Path=DataContext.AlbumSwitchCommand}"/>
-
-            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                        Orientation="Horizontal">
-                <Button HorizontalAlignment="Left" VerticalAlignment="Top"
                     Margin="3" Width="50" Height="50" Content="Open"
                     FontSize="16"
                     Command="{Binding RelativeSource={RelativeSource 
                             FindAncestor, AncestorType={x:Type Window}}, 
                             Path=DataContext.PictureOpenCommand}"/>
-            </StackPanel>
-        </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>

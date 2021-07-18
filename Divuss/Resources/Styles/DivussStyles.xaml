@@ -5,6 +5,7 @@
         <ResourceDictionary Source="PictureListStyles\PictureListItemStyle.xaml"/>
         <ResourceDictionary Source="SectionsListStyles\SectionsListStyle.xaml"/>
         <ResourceDictionary Source="SectionsListStyles\SectionsListItemStyle.xaml"/>
+        <ResourceDictionary Source="SectionsListStyles\SectionPanelStyle.xaml"/>
         <ResourceDictionary Source="PictureViewStyles\PictureViewPanelStyle.xaml"/>
         <ResourceDictionary Source="AlbumListStyles\AlbumListStyle.xaml"/>
         <ResourceDictionary Source="AlbumListStyles\AlbumListItemStyle.xaml"/>

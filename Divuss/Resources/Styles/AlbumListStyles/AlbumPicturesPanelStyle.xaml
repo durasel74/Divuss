@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="AlbumPicturePanel" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="#333"/>
+        <Setter Property="Background" Value="#555"/>
         <Setter Property="Visibility" Value="Collapsed"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding PictureListIsVisibility}"

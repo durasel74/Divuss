@@ -19,5 +19,22 @@ namespace Divuss.Resources.Controls
 		{
 			InitializeComponent();
 		}
+
+		private void AlbumList_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			if (!IsKeyModifiersDown())
+				((ListBox)sender).SelectedItems.Clear();
+		}
+
+		private bool IsKeyModifiersDown()
+		{
+			if (Keyboard.IsKeyDown(Key.LeftCtrl) ||
+					Keyboard.IsKeyDown(Key.RightCtrl))
+				return true;
+			else if (Keyboard.IsKeyDown(Key.LeftShift) ||
+					Keyboard.IsKeyDown(Key.RightShift))
+				return true;
+			return false;
+		}
 	}
 }

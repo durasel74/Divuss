@@ -11,6 +11,7 @@
     <Grid>
         <ListBox x:Name="AlbumList" Style="{DynamicResource AlbumList}"
                  ItemContainerStyle="{DynamicResource AlbumListItem}"
+                 MouseLeftButtonDown="AlbumList_MouseLeftButtonDown"
                  ItemsSource="{Binding AlbumsList}"
                  SelectedItem="{Binding CurrentAlbum}"/>
 

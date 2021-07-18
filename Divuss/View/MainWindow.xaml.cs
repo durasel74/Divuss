@@ -43,7 +43,8 @@ namespace Divuss.View
 			Logger.Close();
 		}
 
-		private void SectionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void SectionsList_SelectionChanged(object sender, 
+			SelectionChangedEventArgs e)
 		{
 			var tabItem = (sender as TabControl)?.SelectedItem as TabItem;
 			var userControl = tabItem?.Content as UserControl;
@@ -52,14 +53,14 @@ namespace Divuss.View
 				dataContext.CurrentSection = section;
 		}
 
-		private void Photos_KeyDown(object sender, KeyEventArgs e)
+		private void IsKeyDown(object sender, KeyEventArgs e)
 		{
 			if (IsPressedControl(e.Key))
 				dataContext.SelectionModeCommand.Execute(true);
 			else if (IsPressedShift(e.Key))
 				dataContext.SelectionModeCommand.Execute(true);
 		}
-		private void Photos_KeyUp(object sender, KeyEventArgs e)
+		private void IsKeyUp(object sender, KeyEventArgs e)
 		{
 			if (IsPressedControl(e.Key))
 				dataContext.SelectionModeCommand.Execute(false);

@@ -7,8 +7,7 @@
         xmlns:Controls="clr-namespace:Divuss.Resources.Controls" 
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        KeyDown="Photos_KeyDown" KeyUp="Photos_KeyUp"
-        Closed="Window_Closed">
+        KeyDown="IsKeyDown" KeyUp="IsKeyUp" Closed="Window_Closed">
 
     <Grid Background="#555">
         <TabControl x:Name="Sections" Style="{StaticResource SectionsList}" 

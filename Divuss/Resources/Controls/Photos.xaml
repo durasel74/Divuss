@@ -10,6 +10,7 @@
     <Grid>
         <ListBox x:Name="PictureList" Style="{DynamicResource PictureList}"
                  ItemContainerStyle="{DynamicResource PictureListItem}"
+                 MouseLeftButtonDown="PictureList_MouseLeftButtonDown"
                  ItemsSource="{Binding LastPictures}"/>
 
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom"

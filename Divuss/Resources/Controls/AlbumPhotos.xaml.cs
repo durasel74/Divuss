@@ -13,14 +13,29 @@ using System.Windows.Shapes;
 
 namespace Divuss.Resources.Controls
 {
-	/// <summary>
-	/// Логика взаимодействия для AlbumPictures.xaml
-	/// </summary>
 	public partial class AlbumPhotos : UserControl
 	{
 		public AlbumPhotos()
 		{
 			InitializeComponent();
+		}
+
+		private void AlbumPhotosList_MouseLeftButtonDown(object sender, 
+			MouseButtonEventArgs e)
+		{
+			if (!IsKeyModifiersDown())
+				((ListBox)sender).SelectedItems.Clear();
+		}
+
+		private bool IsKeyModifiersDown()
+		{
+			if (Keyboard.IsKeyDown(Key.LeftCtrl) || 
+					Keyboard.IsKeyDown(Key.RightCtrl))
+				return true;
+			else if (Keyboard.IsKeyDown(Key.LeftShift) || 
+					Keyboard.IsKeyDown(Key.RightShift))
+				return true;
+			return false;
 		}
 	}
 }

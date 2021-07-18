@@ -4,6 +4,8 @@ using Divuss.Model;
 using Divuss.Service;
 
 using System.Windows;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Divuss.ViewModel
 {
@@ -95,6 +97,25 @@ namespace Divuss.ViewModel
 			photos.UpdatePictureInLast(photos.LastPicture);
 		}
 
+		private void AlbumsCreateAlbum()
+		{
+			var albums = (Albums)CurrentSection;
+			albums.CreateAlbum();
+		}
+
+		private void AlbumsDeleteAlbums(object obj)
+		{
+			var albums = (Albums)CurrentSection;
+			var selectedList = (ObservableCollection<object>)obj;
+			Album[] selectedAlbums = new Album[selectedList.Count];
+
+			if (selectedList.Count == 0) return;
+			for (int i = 0; i < selectedAlbums.Length; i++)
+				selectedAlbums[i] = (Album)selectedList[i];
+
+			albums.DeleteAlbums(selectedAlbums);
+		}
+
 		private PictureCommand pictureSwitchCommand;
 		public PictureCommand PictureSwitchCommand
 		{
@@ -147,6 +168,34 @@ namespace Divuss.ViewModel
 					  }
 					  else Logger.LogTrace("Файл не был выбран");
 				  }));
+			}
+		}
+
+		private ButtonCommand albumCreateCommand;
+		public ButtonCommand AlbumCreateCommand
+		{
+			get
+			{
+				return albumCreateCommand ??
+					  (albumCreateCommand = new ButtonCommand(obj =>
+					  {
+						  if (CurrentSection is Albums)
+							  AlbumsCreateAlbum();
+					  }));
+			}
+		}
+
+		private ButtonCommand albumDeleteCommand;
+		public ButtonCommand AlbumDeleteCommand
+		{
+			get
+			{
+				return albumDeleteCommand ??
+					  (albumDeleteCommand = new ButtonCommand(obj =>
+					  {
+						  if (CurrentSection is Albums)
+							  AlbumsDeleteAlbums(obj);
+					  }));
 			}
 		}
 

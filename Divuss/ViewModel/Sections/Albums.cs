@@ -9,12 +9,14 @@ namespace Divuss.ViewModel
 	{
 		private Album currentAlbum;
 		private bool pictureListIsVisibility;
+		private int nameNoveltyCounter;
 
 		#region Singleton конструктор
 		private static Albums instance;
 		private Albums()
 		{
 			SectionName = "Albums";
+			nameNoveltyCounter = 1;
 			AlbumsList = new ObservableCollection<Album>();
 			PictureListIsVisibility = false;
 
@@ -46,6 +48,7 @@ namespace Divuss.ViewModel
 
 		public override string SectionName { get; }
 		public ObservableCollection<Album> AlbumsList { get; }
+		public int NameNoveltyCounter { get => nameNoveltyCounter++;  }
 
 		public Album CurrentAlbum
 		{
@@ -79,6 +82,27 @@ namespace Divuss.ViewModel
 			PictureListIsVisibility = false;
 			CurrentAlbum = null;
 			Logger.LogTrace($"({SectionName}) Просмотр альбома закрыт");
+		}
+
+		public void CreateAlbum()
+		{
+			string newAlbumName = $"New Album {NameNoveltyCounter}";
+			var newAlbum = new Album(newAlbumName);
+			AlbumsList.Add(newAlbum);
+			Logger.LogTrace($"({SectionName}) Создан альбом: {newAlbumName}");
+		}
+
+		public void DeleteAlbums(Album[] albums)
+		{
+			Logger.LogTrace($"({SectionName}) Удаление альбомов...");
+			int albumsCount = albums.Length;
+
+			foreach (var album in albums)
+			{
+				AlbumsList.Remove(album);
+				Logger.LogTrace($"({SectionName}) Удален альбом: {album.AlbumName}");
+			}
+			Logger.LogTrace($"({SectionName}) Удаление альбомов завершено...");
 		}
 	}
 }

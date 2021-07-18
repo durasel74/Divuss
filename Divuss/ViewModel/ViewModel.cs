@@ -67,6 +67,14 @@ namespace Divuss.ViewModel
 			else PictureView.ClosePicture();
 		}
 
+		private void PhotosPictureOpen(string path)
+		{
+			var photos = (Photos)CurrentSection;
+			photos.AddPictureToLast(path);
+			PictureView.OpenPicture(photos.LastPicture);
+			photos.UpdatePictureInLast(photos.LastPicture);
+		}
+
 		private void AlbumsPictureSwitch(object obj)
 		{
 			var albums = (Albums)CurrentSection;
@@ -89,12 +97,10 @@ namespace Divuss.ViewModel
 			else albums.CloseAlbum();
 		}
 
-		private void PhotosPictureOpen(string path)
+		private void AlbumsPictureOpen(string path)
 		{
-			var photos = (Photos)CurrentSection;
-			photos.AddPictureToLast(path);
-			PictureView.OpenPicture(photos.LastPicture);
-			photos.UpdatePictureInLast(photos.LastPicture);
+			var albums = (Albums)CurrentSection;
+			albums.CurrentAlbum.AddPictureFromFile(path);
 		}
 
 		private void AlbumsCreateAlbum()
@@ -140,8 +146,8 @@ namespace Divuss.ViewModel
 				return albumSwitchCommand ??
 				  (albumSwitchCommand = new PictureCommand(obj =>
 				  {
-					if (CurrentSection is Albums)
-					  AlbumsAlbumSwitch(obj);
+					  if (CurrentSection is Albums)
+						  AlbumsAlbumSwitch(obj);
 				  }));
 			}
 		}
@@ -165,6 +171,8 @@ namespace Divuss.ViewModel
 						  Logger.LogTrace($"Файл выбран: {imagePath}");
 						  if (CurrentSection is Photos)
 							  PhotosPictureOpen(imagePath);
+						  else if (CurrentSection is Albums)
+							  AlbumsPictureOpen(imagePath);
 					  }
 					  else Logger.LogTrace("Файл не был выбран");
 				  }));

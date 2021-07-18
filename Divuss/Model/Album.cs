@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Divuss.Service;
 
 namespace Divuss.Model
 {
@@ -42,6 +43,15 @@ namespace Divuss.Model
 			}
 		}
 
+		public void AddPictureFromFile(string path)
+		{
+			int indexInLastPictures = FindPictureWithPath(path);
+			if (indexInLastPictures >= 0)
+				Elements.RemoveAt(indexInLastPictures);
+			Elements.Insert(0, new Picture(path));
+			Logger.LogTrace($"(Альбом {albumName}) Импортирована картинка: {path}");
+		}
+
 
 
 
@@ -49,27 +59,47 @@ namespace Divuss.Model
 		{
 			foreach (Picture picture in pictures)
 			{
-				Elements.Add(picture);
+				Elements.Insert(0, picture);
 			}
 		}
 
-		public void MovePictures(Picture[] pictures, Album album)
-		{
-			album.AddPictures(pictures);
-			DeletePicture(pictures);
-		}
+		//public void MovePictures(Picture[] pictures, Album album)
+		//{
+		//	album.AddPictures(pictures);
+		//	DeletePicture(pictures);
+		//}
 
-		public void CopyPicture(Picture[] pictures, Album album)
-		{
-			album.AddPictures(pictures);
-		}
+		//public void CopyPicture(Picture[] pictures, Album album)
+		//{
+		//	album.AddPictures(pictures);
+		//}
 
-		public void DeletePicture(Picture[] pictures)
+		//public void DeletePicture(Picture[] pictures)
+		//{
+		//	foreach (Picture picture in pictures)
+		//	{
+		//		Elements.Remove(picture);
+		//	}
+		//}
+
+
+
+
+		/// <summary>
+		/// Находит элемент с одинаковым путем к изображению.
+		/// </summary>
+		/// <param name="path">Путь к изображению.</param>
+		/// <returns>Индекс элемента.</returns>
+		public int FindPictureWithPath(string path)
 		{
-			foreach (Picture picture in pictures)
+			string currentPath;
+			for (int i = 0; i < Elements.Count; i++)
 			{
-				Elements.Remove(picture);
+				currentPath = Elements[i].ImagePath;
+				if (currentPath == path)
+					return i;
 			}
+			return -1;
 		}
 	}
 }

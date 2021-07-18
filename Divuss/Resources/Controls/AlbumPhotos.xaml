@@ -20,6 +20,16 @@
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
                             Path=DataContext.AlbumSwitchCommand}"/>
+
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Orientation="Horizontal">
+                <Button HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Margin="3" Width="50" Height="50" Content="Open"
+                    FontSize="16"
+                    Command="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}}, 
+                            Path=DataContext.PictureOpenCommand}"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

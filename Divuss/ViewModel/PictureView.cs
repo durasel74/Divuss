@@ -56,6 +56,9 @@ namespace Divuss.ViewModel
 
 		public void OpenPicture(Picture picture)
 		{
+			if (picture == null)
+				return;
+
 			CurrentPicture = picture;
 			PictureViewIsVisibility = true;
 			Logger.LogTrace($"({SectionName}) Открыт просмотр картинки: {picture.ImagePath}");

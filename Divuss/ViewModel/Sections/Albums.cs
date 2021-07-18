@@ -102,7 +102,7 @@ namespace Divuss.ViewModel
 				AlbumsList.Remove(album);
 				Logger.LogTrace($"({SectionName}) Удален альбом: {album.AlbumName}");
 			}
-			Logger.LogTrace($"({SectionName}) Удаление альбомов завершено...");
+			Logger.LogTrace($"({SectionName}) Удалено альбомов: {albumsCount}");
 		}
 	}
 }

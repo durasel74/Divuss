@@ -27,6 +27,20 @@ namespace Divuss.Resources.Controls
 				((ListBox)sender).SelectedItems.Clear();
 		}
 
+		private void AlbumPhotosList_SelectionChanged(object sender,
+			SelectionChangedEventArgs e)
+		{
+			ListBox listBox;
+			int selectedItemsCount;
+			if (e.OriginalSource is ListBox)
+			{
+				listBox = (ListBox)e.OriginalSource;
+				selectedItemsCount = listBox.SelectedItems.Count;
+				ViewModel.ViewModel.DataContext.SelectionCountCommand.
+					Execute(selectedItemsCount);
+			}
+		}
+
 		private bool IsKeyModifiersDown()
 		{
 			if (Keyboard.IsKeyDown(Key.LeftCtrl) || 

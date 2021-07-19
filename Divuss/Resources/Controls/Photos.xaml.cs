@@ -18,12 +18,29 @@ namespace Divuss.Resources.Controls
 		public Photos()
 		{
 			InitializeComponent();
+			ViewModel.ViewModel.SelectionClearEventHandler += 
+				PictureList_SelectionClear;
 		}
 
-		private void PictureList_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		private void PictureList_MouseLeftButtonDown(object sender, 
+			MouseButtonEventArgs e)
 		{
 			if (!IsKeyModifiersDown())
 				((ListBox)sender).SelectedItems.Clear();
+		}
+
+		private void PictureList_SelectionChanged(object sender, 
+			SelectionChangedEventArgs e)
+		{
+			ListBox listBox;
+			int selectedItemsCount;
+			if (e.OriginalSource is ListBox)
+			{
+				listBox = (ListBox)e.OriginalSource;
+				selectedItemsCount = listBox.SelectedItems.Count;
+				ViewModel.ViewModel.DataContext.SelectionCountCommand.
+					Execute(selectedItemsCount);
+			}
 		}
 
 		private bool IsKeyModifiersDown()
@@ -35,6 +52,11 @@ namespace Divuss.Resources.Controls
 					Keyboard.IsKeyDown(Key.RightShift))
 				return true;
 			return false;
+		}
+
+		private void PictureList_SelectionClear()
+		{
+			PictureList.SelectedItems.Clear();
 		}
 	}
 }

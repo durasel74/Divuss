@@ -6,7 +6,21 @@
              xmlns:local="clr-namespace:Divuss.Resources.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
- 
+
+    <UserControl.Resources>
+        <Style x:Key="ImportButton" TargetType="Button">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandMode}"
+                             Value="None">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
     <Grid Style="{DynamicResource AlbumPicturePanel}">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -26,14 +40,15 @@
                  Style="{DynamicResource PictureList}" 
                  ItemContainerStyle="{DynamicResource PictureListItem}"
                  MouseLeftButtonDown="AlbumPhotosList_MouseLeftButtonDown"
-                 ItemsSource="{Binding CurrentAlbum.Elements}"
-                 SelectedItem="{Binding CurrentAlbum.CurrentElement}"/>
+                 SelectionChanged="AlbumPhotosList_SelectionChanged"
+                 ItemsSource="{Binding CurrentAlbum.Elements}"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="4"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom">
             
             <Button HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Margin="3" Width="50" Height="50" Content="Open"
+                    Style="{StaticResource ImportButton}"
+                    Margin="3" Width="50" Height="50" Content="Import"
                     FontSize="16"
                     Command="{Binding RelativeSource={RelativeSource 
                             FindAncestor, AncestorType={x:Type Window}}, 

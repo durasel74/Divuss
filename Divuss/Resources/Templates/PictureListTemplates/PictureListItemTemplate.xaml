@@ -26,16 +26,14 @@
                     <VisualState x:Name="Selected">
                         <Storyboard>
                             <ColorAnimation Storyboard.TargetName="Border" 
-                                            Storyboard.TargetProperty="
-                                                (Border.BorderBrush).(SolidColorBrush.Color)" 
+                                            Storyboard.TargetProperty="BorderBrush.Color" 
                                             To="Red" Duration="0:0:0.1"/>
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="SelectedUnfocused">
                         <Storyboard>
                             <ColorAnimation Storyboard.TargetName="Border" 
-                                            Storyboard.TargetProperty="
-                                                (Border.BorderBrush).(SolidColorBrush.Color)" 
+                                            Storyboard.TargetProperty="BorderBrush.Color"
                                             To="Red" Duration="0:0:0.1"/>
                         </Storyboard>
                     </VisualState>

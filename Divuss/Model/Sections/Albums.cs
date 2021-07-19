@@ -73,6 +73,7 @@ namespace Divuss.Model
 		{
 			CurrentAlbum = album;
 			PictureListIsVisibility = true;
+			ViewModel.ViewModel.ClearAllSelection();
 			Logger.LogTrace($"({SectionName}) Открыт просмотр альбома: {album.AlbumName}");
 		}
 
@@ -80,6 +81,7 @@ namespace Divuss.Model
 		{
 			PictureListIsVisibility = false;
 			CurrentAlbum = null;
+			ViewModel.ViewModel.ClearAllSelection();
 			Logger.LogTrace($"({SectionName}) Просмотр альбома закрыт");
 		}
 

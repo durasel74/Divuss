@@ -7,6 +7,32 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <Style x:Key="OpenButton" TargetType="Button">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandMode}"
+                             Value="None">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DeleteButton" TargetType="Button">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandMode}"
+                             Value="None">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -19,17 +45,20 @@
                  Style="{DynamicResource PictureList}"
                  ItemContainerStyle="{DynamicResource PictureListItem}"
                  MouseLeftButtonDown="PictureList_MouseLeftButtonDown"
+                 SelectionChanged="PictureList_SelectionChanged"
                  ItemsSource="{Binding LastPictures}"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="4"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom">
 
             <Button Width="50" Height="50" Content="Open" 
+                    Style="{StaticResource OpenButton}"
                     Command="{Binding RelativeSource={RelativeSource
                             FindAncestor, AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.PictureOpenCommand}"/>
 
             <Button Width="50" Height="50" Content="Delete"
+                    Style="{StaticResource DeleteButton}"
                     CommandParameter="{Binding ElementName=PictureList,
                                     Path=SelectedItems}"
                     Command="{Binding RelativeSource={RelativeSource 

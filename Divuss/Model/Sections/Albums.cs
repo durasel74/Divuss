@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Divuss.Model;
 using Divuss.Service;
 
-namespace Divuss.ViewModel
+namespace Divuss.Model
 {
 	public class Albums : Section
 	{

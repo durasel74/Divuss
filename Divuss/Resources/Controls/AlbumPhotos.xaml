@@ -19,7 +19,7 @@
                     FontSize="16"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
-                            Path=DataContext.AlbumSwitchCommand}"/>
+                            Path=DataContext.CommandModel.AlbumSwitchCommand}"/>
         </Border>
 
         <ListBox x:Name="AlbumPhotosList" Grid.Row="1"
@@ -37,7 +37,7 @@
                     FontSize="16"
                     Command="{Binding RelativeSource={RelativeSource 
                             FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.PictureOpenCommand}"/>
+                            Path=DataContext.CommandModel.PictureOpenCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

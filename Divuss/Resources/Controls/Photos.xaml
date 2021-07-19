@@ -27,14 +27,14 @@
             <Button Width="50" Height="50" Content="Open" 
                     Command="{Binding RelativeSource={RelativeSource
                             FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.PictureOpenCommand}"/>
+                            Path=DataContext.CommandModel.PictureOpenCommand}"/>
 
             <Button Width="50" Height="50" Content="Delete"
                     CommandParameter="{Binding ElementName=PictureList,
                                     Path=SelectedItems}"
                     Command="{Binding RelativeSource={RelativeSource 
                             FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.PictureDeleteCommand}"/>
+                            Path=DataContext.CommandModel.PictureDeleteCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

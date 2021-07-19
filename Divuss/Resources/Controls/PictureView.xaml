@@ -17,7 +17,7 @@
                     FontSize="16"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
-                            Path=DataContext.PictureSwitchCommand}"/>
+                            Path=DataContext.CommandModel.PictureSwitchCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

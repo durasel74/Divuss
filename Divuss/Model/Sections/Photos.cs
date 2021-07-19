@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Divuss.Model;
 using Divuss.Service;
 
-//using System.IO;
-
-namespace Divuss.ViewModel
+namespace Divuss.Model
 {
 	public class Photos : Section
 	{

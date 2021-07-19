@@ -29,14 +29,14 @@
             <Button Width="50" Height="50" Content="Create" 
                     Command="{Binding RelativeSource={RelativeSource 
                             FindAncestor, AncestorType={x:Type Window}},
-                            Path=DataContext.AlbumCreateCommand}"/>
+                            Path=DataContext.CommandModel.AlbumCreateCommand}"/>
 
             <Button Width="50" Height="50" Content="Delete"
                         CommandParameter="{Binding ElementName=AlbumList,
                                         Path=SelectedItems}"
                         Command="{Binding RelativeSource={RelativeSource 
                                 FindAncestor, AncestorType={x:Type Window}}, 
-                                Path=DataContext.AlbumDeleteCommand}"/>
+                                Path=DataContext.CommandModel.AlbumDeleteCommand}"/>
         </StackPanel>
 
         <Controls:AlbumPhotos Grid.RowSpan="2"/>

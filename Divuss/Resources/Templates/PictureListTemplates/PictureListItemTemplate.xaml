@@ -13,7 +13,7 @@
                     CommandParameter="{TemplateBinding Content}"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
-                            Path=DataContext.PictureSwitchCommand}">
+                            Path=DataContext.CommandModel.PictureSwitchCommand}">
 
                 <ContentPresenter Margin="{TemplateBinding Padding}" 
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

@@ -1,4 +1,4 @@
-﻿namespace Divuss.ViewModel
+﻿namespace Divuss.Model
 {
 	public abstract class Section : NotifyPropertyChanged
 	{

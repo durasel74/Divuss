@@ -48,7 +48,7 @@ namespace Divuss.View
 		{
 			var tabItem = (sender as TabControl)?.SelectedItem as TabItem;
 			var userControl = tabItem?.Content as UserControl;
-			ViewModel.Section section = userControl?.DataContext as ViewModel.Section;
+			Model.Section section = userControl?.DataContext as Model.Section;
 			if (section != null && e.OriginalSource is TabControl)
 				dataContext.CurrentSection = section;
 		}

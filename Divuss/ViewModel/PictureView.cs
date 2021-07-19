@@ -6,7 +6,7 @@ using Divuss.Service;
 
 namespace Divuss.ViewModel
 {
-	public class PictureView : NotifyPropertyChanged
+	internal class PictureView : NotifyPropertyChanged
 	{
 		private bool pictureViewIsVisibility;
 		private Picture currentPicture;

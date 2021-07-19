@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using Divuss.Model;
 using Divuss.Service;
 
 using System.Windows;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Divuss.ViewModel
 {

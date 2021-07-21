@@ -18,6 +18,20 @@
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.PictureSwitchCommand}"/>
+            
+            <Button HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Background="DarkRed"
+                    Width="10" Height="50" Content="&lt;" FontSize="16"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                            AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandModel.PictureViewPreviousMoveCommand}"/>
+
+            <Button HorizontalAlignment="Right" VerticalAlignment="Center"
+                    Width="10" Height="50" Content=">" FontSize="16"
+                    Background="DarkRed"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                            AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandModel.PictureViewNextMoveCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -28,10 +28,17 @@ namespace Divuss.ViewModel
 				return pictureSwitchCommand ??
 				  (pictureSwitchCommand = new PictureCommand(obj =>
 				  {
-					  if (CurrentSection is Photos)
-						  PhotosPictureSwitch(obj);
-					  else if (CurrentSection is Albums)
-						  AlbumsPictureSwitch(obj);
+					  var picture = obj as Picture;
+					  var pictures = ObjectToObservablePicturesList(obj);
+
+					  if (pictures == null && picture != null)
+					  {
+						  if (CurrentSection is Photos)
+							  pictures = Photos.LastPictures;
+						  else if (CurrentSection is Albums)
+							  pictures = Albums.CurrentAlbum.Elements;
+					  }
+					  PictureSwitch(picture, pictures);
 				  }));
 			}
 		}
@@ -119,23 +126,59 @@ namespace Divuss.ViewModel
 			}
 		}
 
-		private void PhotosPictureSwitch(object obj)
+		private ButtonCommand pictureViewPreviousMoveCommand;
+		public ButtonCommand PictureViewPreviousMoveCommand
 		{
-			var picture = obj as Picture;
-			if (picture != null)
+			get
 			{
-				PictureView.OpenPicture(picture);
-				Photos.UpdatePictureInLast(picture);
+				return pictureViewPreviousMoveCommand ??
+					  (pictureViewPreviousMoveCommand = new ButtonCommand(obj =>
+					  { PictureView.MoveBuffer(BufferMove.Previous); },
+					  (obj) =>
+					  {
+						  var buffer = PictureView.PicturesBuffer;
+						  if (buffer.Count == 0)
+							  return false;
+						  else if (buffer.IndexOf(PictureView.CurrentPicture)
+							== 0)
+							  return false;
+						  return true;
+					  }));
 			}
-			else PictureView.ClosePicture();
 		}
 
-		private void AlbumsPictureSwitch(object obj)
+		private ButtonCommand pictureViewNextMoveCommand;
+		public ButtonCommand PictureViewNextMoveCommand
 		{
-			var picture = obj as Picture;
-			if (picture != null)
+			get
 			{
+				return pictureViewNextMoveCommand ??
+					  (pictureViewNextMoveCommand = new ButtonCommand(obj =>
+					  { PictureView.MoveBuffer(BufferMove.Next); },
+					  (obj) =>
+					  {
+						  var buffer = PictureView.PicturesBuffer;
+						  if (buffer.Count == 0)
+							  return false;
+						  else if (buffer.IndexOf(PictureView.CurrentPicture)
+							== buffer.Count - 1)
+							  return false;
+						  return true;
+					  }));
+			}
+		}
+
+		private void PictureSwitch(Picture picture, ObservableCollection<Picture> pictures)
+		{
+			if (picture != null && pictures != null)
+			{
+				PictureView.AddPicturesToBuffer(pictures);
 				PictureView.OpenPicture(picture);
+			}
+			else if (pictures != null)
+			{
+				PictureView.AddPicturesToBuffer(pictures);
+				PictureView.OpenPicture(PictureView.PicturesBuffer[0]);
 			}
 			else PictureView.ClosePicture();
 		}
@@ -164,33 +207,66 @@ namespace Divuss.ViewModel
 
 		private void PhotosDeletePictures(object obj)
 		{
-			var selectedList = (ObservableCollection<object>)obj;
-			Picture[] selectedPictures = new Picture[selectedList.Count];
-
-			if (selectedList.Count == 0) return;
-			for (int i = 0; i < selectedPictures.Length; i++)
-				selectedPictures[i] = (Picture)selectedList[i];
-
+			Picture[] selectedPictures = ObservalbeObjectToPicturesArray(obj);
+			if (selectedPictures == null) return;
 			Photos.RemovePicturesFromLast(selectedPictures);
 		}
 
 		private void AlbumsCreateAlbum()
 		{
-			var albums = (Albums)CurrentSection;
-			albums.CreateAlbum();
+			Albums.CreateAlbum();
 		}
 
 		private void AlbumsDeleteAlbums(object obj)
 		{
-			var albums = (Albums)CurrentSection;
 			var selectedList = (ObservableCollection<object>)obj;
-			Album[] selectedAlbums = new Album[selectedList.Count];
+			Album[] selectedAlbums = ObservableObjectToAlbumsArray(obj);
+			if (selectedList == null) return;
+			Albums.DeleteAlbums(selectedAlbums);
+		}
 
-			if (selectedList.Count == 0) return;
-			for (int i = 0; i < selectedAlbums.Length; i++)
-				selectedAlbums[i] = (Album)selectedList[i];
 
-			albums.DeleteAlbums(selectedAlbums);
+
+
+
+
+		private Picture[] ObservalbeObjectToPicturesArray(object obj)
+		{
+			var objectPictures = obj as ObservableCollection<object>;
+			if (objectPictures != null && objectPictures.Count != 0)
+			{
+				Picture[] pictures = new Picture[objectPictures.Count];
+				for (int i = 0; i < objectPictures.Count; i++)
+					pictures[i] = (Picture)objectPictures[i];
+				return pictures;
+			}
+			return null;
+		}
+
+		private Album[] ObservableObjectToAlbumsArray(object obj)
+		{
+			var objectAlbums = obj as ObservableCollection<object>;
+			if (objectAlbums != null && objectAlbums.Count != 0)
+			{
+				Album[] albums = new Album[objectAlbums.Count];
+				for (int i = 0; i < objectAlbums.Count; i++)
+					albums[i] = (Album)objectAlbums[i];
+				return albums;
+			}
+			return null;
+		}
+
+		private ObservableCollection<Picture> ObjectToObservablePicturesList(object obj)
+		{
+			var objectPictures = obj as ObservableCollection<object>;
+			if (objectPictures != null && objectPictures.Count != 0)
+			{
+				ObservableCollection<Picture> pictures = new ObservableCollection<Picture>();
+				foreach (var picture in objectPictures)
+					pictures.Add((Picture)picture);
+				return pictures;
+			}
+			return null;
 		}
 	}
 }

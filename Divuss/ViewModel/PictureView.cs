@@ -6,6 +6,12 @@ using Divuss.Service;
 
 namespace Divuss.ViewModel
 {
+	internal enum BufferMove
+	{ 
+		Previous,
+		Next
+	}
+
 	internal class PictureView : NotifyPropertyChanged
 	{
 		private bool pictureViewIsVisibility;
@@ -16,6 +22,7 @@ namespace Divuss.ViewModel
 		private PictureView()
 		{
 			SectionName = "PictureView";
+			PicturesBuffer = new ObservableCollection<Picture>();
 			PictureViewIsVisibility = false;
 		}
 		public static PictureView GetInstance()
@@ -27,6 +34,7 @@ namespace Divuss.ViewModel
 		#endregion
 
 		public string SectionName { get; }
+		public ObservableCollection<Picture> PicturesBuffer { get; set; }
 
 		/// <summary>
 		/// Определяет, открыто ли в данный момент изображение в режиме просмотра.
@@ -40,10 +48,7 @@ namespace Divuss.ViewModel
 				OnPropertyChanged("PictureViewIsVisibility");
 			}
 		}
-
-		/// <summary>
-		/// The current image is open in view mode.
-		/// </summary>
+		
 		public Picture CurrentPicture
 		{
 			get { return currentPicture; }
@@ -54,9 +59,14 @@ namespace Divuss.ViewModel
 			}
 		}
 
+		public void AddPicturesToBuffer(ObservableCollection<Picture> pictures)
+		{
+			PicturesBuffer = pictures;
+		}
+
 		public void OpenPicture(Picture picture)
 		{
-			if (picture == null)
+			if (picture == null || !PicturesBuffer.Contains(picture))
 				return;
 
 			CurrentPicture = picture;
@@ -69,6 +79,33 @@ namespace Divuss.ViewModel
 			PictureViewIsVisibility = false;
 			CurrentPicture = null;
 			Logger.LogTrace($"({SectionName}) Просмотр картинки закрыт");
+		}
+
+		public void MoveBuffer(BufferMove move)
+		{
+			switch (move)
+			{
+				case BufferMove.Previous:
+					MovePrevious();
+					break;
+				case BufferMove.Next:
+					MoveNext();
+					break;
+			}
+		}
+
+		private void MovePrevious()
+		{
+			var currentPictureIndex = PicturesBuffer.IndexOf(CurrentPicture);
+			if (currentPictureIndex == 0) return;
+			OpenPicture(PicturesBuffer[currentPictureIndex - 1]);
+		}
+
+		private void MoveNext()
+		{
+			var currentPictureIndex = PicturesBuffer.IndexOf(CurrentPicture);
+			if (currentPictureIndex == PicturesBuffer.Count - 1) return;
+			OpenPicture(PicturesBuffer[currentPictureIndex + 1]);
 		}
 	}
 }

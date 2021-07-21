@@ -15,7 +15,7 @@ namespace Divuss.ViewModel
 			this.viewModel = viewModel;
 		}
 
-		private Section CurrentSection =>  viewModel.CurrentSection;
+		private Section CurrentSection => viewModel.CurrentSection;
 		private PictureView PictureView => viewModel.PictureView;
 		public Photos Photos => (Photos)viewModel.PhotosTab;
 		private Albums Albums => (Albums)viewModel.AlbumsTab;
@@ -224,11 +224,6 @@ namespace Divuss.ViewModel
 			if (selectedList == null) return;
 			Albums.DeleteAlbums(selectedAlbums);
 		}
-
-
-
-
-
 
 		private Picture[] ObservalbeObjectToPicturesArray(object obj)
 		{

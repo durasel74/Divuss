@@ -19,6 +19,18 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="SelectOpenButton" TargetType="Button">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandMode}"
+                             Value="None">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <Grid Style="{DynamicResource AlbumPicturePanel}">
@@ -53,6 +65,14 @@
                     Command="{Binding RelativeSource={RelativeSource 
                             FindAncestor, AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.PictureOpenCommand}"/>
+
+            <Button Width="50" Height="50" Content="Open"
+                    Style="{StaticResource SelectOpenButton}"
+                    CommandParameter="{Binding ElementName=AlbumPhotosList,
+                                    Path=SelectedItems}"
+                    Command="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandModel.PictureSwitchCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -19,5 +19,10 @@ namespace Divuss.Resources.Controls
 		{
 			InitializeComponent();
 		}
+
+		private void FullscreenButton_Click(object sender, RoutedEventArgs e)
+		{
+			
+		}
 	}
 }

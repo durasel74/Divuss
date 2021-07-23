@@ -12,13 +12,21 @@
                RenderOptions.BitmapScalingMode="HighQuality"/>
 
         <Grid>
-            <Button HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Margin="3" Width="25" Height="25" Content="&lt;"
-                    FontSize="16"
+            <Button Style="{DynamicResource ActionButton}"
+                    HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Margin="3" Content="&lt;"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.PictureSwitchCommand}"/>
-            
+
+            <Button Style="{DynamicResource ActionButton}"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Margin="3" Content="Full"
+                    Click="FullscreenButton_Click"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                            AncestorType={x:Type Window}}, 
+                            Path=DataContext.FullscreenModeCommand}"/>
+
             <Button HorizontalAlignment="Left" VerticalAlignment="Center"
                     Background="DarkRed"
                     Width="10" Height="50" Content="&lt;" FontSize="16"

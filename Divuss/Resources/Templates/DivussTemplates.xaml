@@ -10,6 +10,7 @@
         <ResourceDictionary Source="AlbumListTemplates\AlbumListTemplate.xaml"/>
         <ResourceDictionary Source="AlbumListTemplates\AlbumListItemTemplate.xaml"/>
         <ResourceDictionary Source="AlbumListTemplates\AlbumListItemContentTemplate.xaml"/>
+        <ResourceDictionary Source="ButtonsTemplates\ActionButtonTemplate.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
     

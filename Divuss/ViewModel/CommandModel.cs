@@ -180,7 +180,11 @@ namespace Divuss.ViewModel
 				PictureView.AddPicturesToBuffer(pictures);
 				PictureView.OpenPicture(PictureView.PicturesBuffer[0]);
 			}
-			else PictureView.ClosePicture();
+			else 
+			{
+				viewModel.FullscreenMode = false;
+				PictureView.ClosePicture();
+			}
 		}
 
 		private void AlbumsAlbumSwitch(object obj)
@@ -196,6 +200,8 @@ namespace Divuss.ViewModel
 		private void PhotosPictureOpen(string path)
 		{
 			Photos.AddPictureToLast(path);
+			PictureView.AddPicturesToBuffer(new ObservableCollection<Picture>() 
+				{ Photos.LastPicture } );
 			PictureView.OpenPicture(Photos.LastPicture);
 			Photos.UpdatePictureInLast(Photos.LastPicture);
 		}

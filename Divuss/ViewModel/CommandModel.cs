@@ -4,6 +4,8 @@ using Microsoft.Win32;
 using Divuss.Model;
 using Divuss.Service;
 
+using System.Windows;
+
 namespace Divuss.ViewModel
 {
 	internal class CommandModel
@@ -164,6 +166,19 @@ namespace Divuss.ViewModel
 							== buffer.Count - 1)
 							  return false;
 						  return true;
+					  }));
+			}
+		}
+
+		private ButtonCommand pictureGetInfoCommand;
+		public ButtonCommand PictureGetInfoCommand
+		{
+			get
+			{
+				return pictureGetInfoCommand ??
+					  (pictureGetInfoCommand = new ButtonCommand(obj =>
+					  {
+						  MessageBox.Show(PictureView.CurrentPicture.GetPictureInfo());
 					  }));
 			}
 		}

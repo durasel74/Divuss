@@ -1,15 +1,19 @@
 ﻿using System;
 using System.IO;
+using System.Drawing;
 
 namespace Divuss.Model
 {
 	public class Picture
 	{
 		private string imagePath;
+		private Size imageSize;
 
 		public Picture(string imagePath)
 		{
 			ImagePath = imagePath;
+			Image image = Image.FromFile(imagePath);
+			imageSize = image.Size;
 		}
 
 		public string ImagePath
@@ -29,7 +33,41 @@ namespace Divuss.Model
 			}
 		}
 
+		public string GetPictureInfo()
+		{
+			FileInfo fileInfo = new FileInfo(imagePath);
+			var fullName = fileInfo.FullName;
+			var length = ConvertBytesToSuitableString(fileInfo.Length);
+			var creationTime = fileInfo.CreationTime;
+			var lastAccessTime = fileInfo.LastAccessTime;
+			string size = $"{imageSize.Width}x{imageSize.Height}";
+
+			string output =
+			$"Название файла: {fullName}\n" +
+			$"Размер файла: {length}\n" +
+			$"Дата создания: {creationTime}\n" +
+			$"Дата открытия: {lastAccessTime}\n" +
+			$"Размер изображения: {size}";
+			return output;
+		}
+
 		public static bool PathExists(string path) => File.Exists(path);
 		public bool PathExists() => File.Exists(imagePath);
+
+		private string ConvertBytesToSuitableString(long bytes)
+		{
+			double preResult = bytes;
+			long unitMultipler = 1024;
+			string[] units = { "Б", "КБ", "МБ", "ГБ", "ТБ"};
+
+			for (int i = 0; i < units.Length; i++)
+			{
+				if (preResult < unitMultipler) 
+					return $"{Math.Round(preResult, 2)} {units[i]}";
+				else 
+					preResult /= unitMultipler;
+			}
+			return $"{preResult}";
+		}
 	}
 }

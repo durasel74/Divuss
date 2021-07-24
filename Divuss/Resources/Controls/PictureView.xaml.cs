@@ -42,6 +42,9 @@ namespace Divuss.Resources.Controls
 
 		public static void FullscreenOpen()
 		{
+			if (fullscreenMode == true)
+				return;
+
 			var window = View.MainWindow.GetWindow();
 			fullscreenMode = true;
 			parametersSave = new FullscreenParametersSave(window);
@@ -60,6 +63,9 @@ namespace Divuss.Resources.Controls
 
 		public static void FullscreenClose()
 		{
+			if (fullscreenMode == false)
+				return;
+
 			var window = View.MainWindow.GetWindow();
 			fullscreenMode = false;
 			window.WindowStyle = parametersSave.WindowStyle;

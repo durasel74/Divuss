@@ -3,6 +3,7 @@
 
     <ControlTemplate x:Key="ActionButtonTemplate" TargetType="{x:Type Button}">
         <Border x:Name="Border" Margin="{TemplateBinding Margin}"
+                Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
                 VerticalAlignment="{TemplateBinding VerticalAlignment}"
                 HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                 BorderThickness="{TemplateBinding BorderThickness}"

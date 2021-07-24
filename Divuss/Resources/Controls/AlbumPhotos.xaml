@@ -31,6 +31,18 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="DeleteButton" TargetType="Button">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandMode}"
+                             Value="None">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <Grid Style="{DynamicResource AlbumPicturePanel}">
@@ -73,6 +85,14 @@
                     Command="{Binding RelativeSource={RelativeSource 
                             FindAncestor, AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.PictureSwitchCommand}"/>
+
+            <Button Width="50" Height="50" Content="Delete"
+                    Style="{StaticResource DeleteButton}"
+                    CommandParameter="{Binding ElementName=AlbumPhotosList,
+                                    Path=SelectedItems}"
+                    Command="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandModel.PictureDeleteCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

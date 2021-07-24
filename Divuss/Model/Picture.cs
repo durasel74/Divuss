@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using Divuss.Service;
 
 namespace Divuss.Model
 {
@@ -36,18 +37,19 @@ namespace Divuss.Model
 		public string GetPictureInfo()
 		{
 			FileInfo fileInfo = new FileInfo(imagePath);
-			var fullName = fileInfo.FullName;
 			var length = ConvertBytesToSuitableString(fileInfo.Length);
 			var creationTime = fileInfo.CreationTime;
 			var lastAccessTime = fileInfo.LastAccessTime;
 			string size = $"{imageSize.Width}x{imageSize.Height}";
 
 			string output =
-			$"Название файла: {fullName}\n" +
+			$"Название файла: {ImagePath}\n" +
 			$"Размер файла: {length}\n" +
 			$"Дата создания: {creationTime}\n" +
 			$"Дата открытия: {lastAccessTime}\n" +
 			$"Размер изображения: {size}";
+
+			Logger.LogTrace("Выведены сведения о картинке");
 			return output;
 		}
 

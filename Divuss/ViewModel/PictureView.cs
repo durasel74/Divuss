@@ -83,6 +83,16 @@ namespace Divuss.ViewModel
 			Logger.LogTrace($"({SectionName}) Просмотр картинки закрыт");
 		}
 
+		public void UpdateView()
+		{
+			if (PicturesBuffer.Count == 0)
+				ClosePicture();
+			else if (CurrentPictureIndex == 0)
+				OpenPicture(PicturesBuffer[CurrentPictureIndex]);
+			else
+				MoveBuffer(BufferMove.Previous);
+		}
+
 		public void MoveBuffer(BufferMove move)
 		{
 			switch (move)

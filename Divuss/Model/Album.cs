@@ -55,6 +55,7 @@ namespace Divuss.Model
 
 
 
+
 		public void AddPictures(Picture[] pictures)
 		{
 			foreach (Picture picture in pictures)
@@ -74,16 +75,32 @@ namespace Divuss.Model
 		//	album.AddPictures(pictures);
 		//}
 
-		//public void DeletePicture(Picture[] pictures)
-		//{
-		//	foreach (Picture picture in pictures)
-		//	{
-		//		Elements.Remove(picture);
-		//	}
-		//}
 
 
 
+
+
+		public void DeletePicture(Picture picture)
+		{
+			Elements.Remove(picture);
+			Logger.LogTrace($"(Альбом {albumName}) Удалена картинка: " +
+				$"{picture.ImagePath}");
+		}
+
+		public void DeletePictures(Picture[] pictures)
+		{
+			Logger.LogTrace($"(Альбом {albumName}) Удаление картинок...");
+			int picturesCount = pictures.Length;
+
+			foreach (var picture in pictures)
+			{
+				Elements.Remove(picture);
+				Logger.LogTrace($"(Альбом {albumName}) Удалена картинка: " +
+					$"{picture.ImagePath}");
+			}
+			Logger.LogTrace($"(Альбом {albumName}) Удалено картинок: " +
+				$"{picturesCount}");
+		}
 
 		/// <summary>
 		/// Находит элемент с одинаковым путем к изображению.

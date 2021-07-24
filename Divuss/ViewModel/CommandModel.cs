@@ -94,14 +94,22 @@ namespace Divuss.ViewModel
 				return pictureDeleteCommand ??
 				  (pictureDeleteCommand = new ButtonCommand(obj =>
 				  {
+					  var picture = obj as Picture;
+					  var pictures = obj as ObservableCollection<object>;
+
 					  if (CurrentSection is Photos)
 					  {
-						  var picture = obj as Picture;
-						  var pictures = obj as ObservableCollection<object>;
 						  if (picture != null)
 							  PhotosDeletePicture(picture);
 						  else if (pictures != null)
 							  PhotosDeletePictures(pictures);
+					  }
+					  else if (CurrentSection is Albums)
+					  {
+						  if (picture != null)
+							  AlbumsDeletePicture(picture);
+						  else if (pictures != null)
+							  AlbumsDeletePictures(pictures);
 					  }
 				  }));
 			}
@@ -232,14 +240,7 @@ namespace Divuss.ViewModel
 		{
 			PictureView.PicturesBuffer.Remove(picture);
 			Photos.RemovePictureFromLast(picture);
-			var currentPictureIndex = PictureView.CurrentPictureIndex;
-
-			if (PictureView.PicturesBuffer.Count == 0)
-				PictureView.ClosePicture();
-			else if (currentPictureIndex == 0)
-				PictureView.OpenPicture(PictureView.PicturesBuffer[currentPictureIndex]);
-			else
-				PictureView.MoveBuffer(BufferMove.Previous);
+			PictureView.UpdateView();
 		}
 
 		private void PhotosDeletePictures(ObservableCollection<object> pictures)
@@ -247,6 +248,20 @@ namespace Divuss.ViewModel
 			Picture[] selectedPictures = ObservalbeObjectToPicturesArray(pictures);
 			if (selectedPictures == null) return;
 			Photos.RemovePicturesFromLast(selectedPictures);
+		}
+
+		private void AlbumsDeletePicture(Picture picture)
+		{
+			PictureView.PicturesBuffer.Remove(picture);
+			Albums.CurrentAlbum.DeletePicture(picture);
+			PictureView.UpdateView();
+		}
+
+		private void AlbumsDeletePictures(ObservableCollection<object> pictures)
+		{
+			Picture[] selectedPictures = ObservalbeObjectToPicturesArray(pictures);
+			if (selectedPictures == null) return;
+			Albums.CurrentAlbum.DeletePictures(selectedPictures);
 		}
 
 		private void AlbumsCreateAlbum()

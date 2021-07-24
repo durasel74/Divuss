@@ -182,7 +182,7 @@ namespace Divuss.ViewModel
 			}
 			else 
 			{
-				viewModel.FullscreenMode = false;
+				Resources.Controls.PictureView.FullscreenClose();
 				PictureView.ClosePicture();
 			}
 		}

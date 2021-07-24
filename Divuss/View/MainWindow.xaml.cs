@@ -19,7 +19,8 @@ namespace Divuss.View
 {
 	public partial class MainWindow : Window
 	{
-		private ViewModel.ViewModel dataContext;
+		private static ViewModel.ViewModel dataContext;
+		private static MainWindow thisWindow;
 
 		public MainWindow()
 		{
@@ -27,6 +28,7 @@ namespace Divuss.View
 			{
 				Logger.Initialize();
 				InitializeComponent();
+				thisWindow = this;
 				DataContext = new ViewModel.ViewModel();
 			}
 			catch (Exception e)
@@ -36,6 +38,12 @@ namespace Divuss.View
 				Application.Current.Shutdown();
 			}
 			dataContext = (ViewModel.ViewModel)this.DataContext;
+		}
+		internal static MainWindow GetWindow()
+		{
+			if (thisWindow != null)
+				return thisWindow;
+			return null;
 		}
 
 		private void Window_Closed(object sender, EventArgs e)

@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
-    <Grid Style="{DynamicResource PictureViewPanel}">
+    <Grid x:Name="ScreenArea" Style="{DynamicResource PictureViewPanel}">
         <Image Source="{Binding CurrentPicture.ImagePath}" Margin="10"
                RenderOptions.BitmapScalingMode="HighQuality"/>
 
@@ -21,12 +21,22 @@
 
             <Button Style="{DynamicResource ActionButton}"
                     HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    Margin="3" Content="Full"
-                    Click="FullscreenButton_Click"
+                    Margin="3" Content="Full" 
+                    Click="FullscreenButton_Click"/>
+
+
+
+
+            <!--<Button Style="{DynamicResource ActionButton}"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Margin="3" Content="Info"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
-                            Path=DataContext.FullscreenModeCommand}"/>
+                            Path=DataContext.FullscreenModeCommand}"/>-->
 
+            
+            
+            
             <Button HorizontalAlignment="Left" VerticalAlignment="Center"
                     Background="DarkRed"
                     Width="10" Height="50" Content="&lt;" FontSize="16"

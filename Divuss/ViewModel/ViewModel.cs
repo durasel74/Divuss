@@ -19,7 +19,6 @@ namespace Divuss.ViewModel
 		private CommandMode commandMode;
 		private Section currentSection;
 		private bool selectionMode;
-		private bool fullscreenMode;
 
 		public ViewModel()
 		{
@@ -85,24 +84,6 @@ namespace Divuss.ViewModel
 			}
 		}
 
-		public bool FullscreenMode
-		{
-			get { return fullscreenMode; }
-			set
-			{
-				var nextMode = value;
-				if (nextMode != fullscreenMode)
-				{
-					fullscreenMode = nextMode;
-					OnPropertyChanged("FullscreenMode");
-					if (fullscreenMode)
-						Logger.LogTrace("Переход в полноэкранный режим");
-					else
-						Logger.LogTrace("Выход из полноэкранного режима");
-				}
-			}
-		}
-
 		public static void ClearAllSelection()
 		{
 			SelectionClearEventHandler();
@@ -148,20 +129,6 @@ namespace Divuss.ViewModel
 								  CommandMode = CommandMode.Multiplicity;
 								  break;
 						  }
-					  }));
-			}
-		}
-
-		private ButtonCommand fullscreenModeCommand;
-		public ButtonCommand FullscreenModeCommand
-		{
-			get
-			{
-				return fullscreenModeCommand ??
-					  (fullscreenModeCommand = new ButtonCommand(obj =>
-					  {
-						  if (FullscreenMode) FullscreenMode = false;
-						  else FullscreenMode = true;
 					  }));
 			}
 		}

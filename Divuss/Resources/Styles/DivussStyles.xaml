@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Misc\MainWindowStyle.xaml"/>
         <ResourceDictionary Source="PictureListStyles\PictureListStyle.xaml"/>
         <ResourceDictionary Source="PictureListStyles\PictureListItemStyle.xaml"/>
         <ResourceDictionary Source="SectionsListStyles\SectionsListStyle.xaml"/>

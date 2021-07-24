@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Divuss.View"
         xmlns:Controls="clr-namespace:Divuss.Resources.Controls" 
-        mc:Ignorable="d" Style="{StaticResource MainWindow}"
+        mc:Ignorable="d"
         Title="Divuss" Height="450" Width="800"
         WindowStartupLocation="CenterScreen"
         KeyDown="IsKeyDown" KeyUp="IsKeyUp" Closed="Window_Closed">

@@ -95,7 +95,14 @@ namespace Divuss.ViewModel
 				  (pictureDeleteCommand = new ButtonCommand(obj =>
 				  {
 					  if (CurrentSection is Photos)
-						  PhotosDeletePictures(obj);
+					  {
+						  var picture = obj as Picture;
+						  var pictures = obj as ObservableCollection<object>;
+						  if (picture != null)
+							  PhotosDeletePicture(picture);
+						  else if (pictures != null)
+							  PhotosDeletePictures(pictures);
+					  }
 				  }));
 			}
 		}
@@ -141,8 +148,7 @@ namespace Divuss.ViewModel
 						  var buffer = PictureView.PicturesBuffer;
 						  if (buffer.Count == 0)
 							  return false;
-						  else if (buffer.IndexOf(PictureView.CurrentPicture)
-							== 0)
+						  else if (buffer.IndexOf(PictureView.CurrentPicture) == 0)
 							  return false;
 						  return true;
 					  }));
@@ -195,11 +201,7 @@ namespace Divuss.ViewModel
 				PictureView.AddPicturesToBuffer(pictures);
 				PictureView.OpenPicture(PictureView.PicturesBuffer[0]);
 			}
-			else 
-			{
-				Resources.Controls.PictureView.FullscreenClose();
-				PictureView.ClosePicture();
-			}
+			else PictureView.ClosePicture();
 		}
 
 		private void AlbumsAlbumSwitch(object obj)
@@ -226,9 +228,23 @@ namespace Divuss.ViewModel
 			Albums.CurrentAlbum.AddPictureFromFile(path);
 		}
 
-		private void PhotosDeletePictures(object obj)
+		private void PhotosDeletePicture(Picture picture)
 		{
-			Picture[] selectedPictures = ObservalbeObjectToPicturesArray(obj);
+			PictureView.PicturesBuffer.Remove(picture);
+			Photos.RemovePictureFromLast(picture);
+			var currentPictureIndex = PictureView.CurrentPictureIndex;
+
+			if (PictureView.PicturesBuffer.Count == 0)
+				PictureView.ClosePicture();
+			else if (currentPictureIndex == 0)
+				PictureView.OpenPicture(PictureView.PicturesBuffer[currentPictureIndex]);
+			else
+				PictureView.MoveBuffer(BufferMove.Previous);
+		}
+
+		private void PhotosDeletePictures(ObservableCollection<object> pictures)
+		{
+			Picture[] selectedPictures = ObservalbeObjectToPicturesArray(pictures);
 			if (selectedPictures == null) return;
 			Photos.RemovePicturesFromLast(selectedPictures);
 		}
@@ -246,9 +262,9 @@ namespace Divuss.ViewModel
 			Albums.DeleteAlbums(selectedAlbums);
 		}
 
-		private Picture[] ObservalbeObjectToPicturesArray(object obj)
+		private Picture[] ObservalbeObjectToPicturesArray(
+			ObservableCollection<object> objectPictures)
 		{
-			var objectPictures = obj as ObservableCollection<object>;
 			if (objectPictures != null && objectPictures.Count != 0)
 			{
 				Picture[] pictures = new Picture[objectPictures.Count];

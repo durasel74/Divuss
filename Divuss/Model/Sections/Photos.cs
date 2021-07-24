@@ -61,17 +61,26 @@ namespace Divuss.Model
 			}
 		}
 
+		public void RemovePictureFromLast(Picture picture)
+		{
+			LastPictures.Remove(picture);
+			Logger.LogTrace($"({SectionName}) Удалена из списка картинка: " +
+				$"{picture.ImagePath}");
+		}
+
 		public void RemovePicturesFromLast(Picture[] pictures)
 		{
-			Logger.LogTrace($"({SectionName}) Удаление последних картинок...");
+			Logger.LogTrace($"({SectionName}) Удаление из последних картинок...");
 			int picturesCount = pictures.Length;
 
 			foreach (var picture in pictures)
 			{
 				LastPictures.Remove(picture);
-				Logger.LogTrace($"({SectionName}) Удалена из списка картинка: {picture.ImagePath}");
+				Logger.LogTrace($"({SectionName}) Удалена из списка картинка: " +
+					$"{picture.ImagePath}");
 			}
-			Logger.LogTrace($"({SectionName}) Удалено из списка картинок: {picturesCount}");
+			Logger.LogTrace($"({SectionName}) Удалено из списка картинок: " +
+				$"{picturesCount}");
 		}
 
 		/// <summary>

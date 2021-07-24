@@ -34,6 +34,7 @@ namespace Divuss.ViewModel
 
 		public string SectionName { get; }
 		public ObservableCollection<Picture> PicturesBuffer { get; set; }
+		public int CurrentPictureIndex {get; private set;}
 
 		/// <summary>
 		/// Определяет, открыто ли в данный момент изображение в режиме просмотра.
@@ -55,6 +56,7 @@ namespace Divuss.ViewModel
 			{
 				currentPicture = value;
 				OnPropertyChanged("CurrentPicture");
+				CurrentPictureIndex = PicturesBuffer.IndexOf(currentPicture);
 			}
 		}
 
@@ -77,6 +79,7 @@ namespace Divuss.ViewModel
 		{
 			PictureViewIsVisibility = false;
 			CurrentPicture = null;
+			Resources.Controls.PictureView.FullscreenClose();
 			Logger.LogTrace($"({SectionName}) Просмотр картинки закрыт");
 		}
 
@@ -95,16 +98,14 @@ namespace Divuss.ViewModel
 
 		private void MovePrevious()
 		{
-			var currentPictureIndex = PicturesBuffer.IndexOf(CurrentPicture);
-			if (currentPictureIndex == 0) return;
-			OpenPicture(PicturesBuffer[currentPictureIndex - 1]);
+			if (CurrentPictureIndex == 0) return;
+			OpenPicture(PicturesBuffer[CurrentPictureIndex - 1]);
 		}
 
 		private void MoveNext()
 		{
-			var currentPictureIndex = PicturesBuffer.IndexOf(CurrentPicture);
-			if (currentPictureIndex == PicturesBuffer.Count - 1) return;
-			OpenPicture(PicturesBuffer[currentPictureIndex + 1]);
+			if (CurrentPictureIndex == PicturesBuffer.Count - 1) return;
+			OpenPicture(PicturesBuffer[CurrentPictureIndex + 1]);
 		}
 	}
 }

@@ -18,6 +18,8 @@ namespace Divuss.Resources.Controls
 		public AlbumPhotos()
 		{
 			InitializeComponent();
+			ViewModel.ViewModel.SelectionClearEventHandler +=
+				AlbumPhotosList_SelectionClear;
 		}
 
 		private void AlbumPhotosList_MouseLeftButtonDown(object sender, 
@@ -50,6 +52,11 @@ namespace Divuss.Resources.Controls
 					Keyboard.IsKeyDown(Key.RightShift))
 				return true;
 			return false;
+		}
+
+		private void AlbumPhotosList_SelectionClear()
+		{
+			AlbumPhotosList.SelectedItems.Clear();
 		}
 	}
 }

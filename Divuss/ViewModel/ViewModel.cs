@@ -14,11 +14,18 @@ namespace Divuss.ViewModel
 		Multiplicity
 	}
 
+	internal enum PictureBufferMode
+	{
+		Photos,
+		Albums
+	}
+
 	internal class ViewModel : NotifyPropertyChanged
 	{
 		private CommandMode commandMode;
 		private Section currentSection;
 		private bool selectionMode;
+		private PictureBufferMode openedSection;
 
 		public ViewModel()
 		{
@@ -48,6 +55,7 @@ namespace Divuss.ViewModel
 				OnPropertyChanged("CurrentSection");
 				SelectionMode = false;
 				ClearAllSelection();
+				UpdateCurrentSectionProperty();
 				Logger.LogTrace($"Выбран раздел: {currentSection.SectionName}");
 			}
 		}
@@ -84,9 +92,27 @@ namespace Divuss.ViewModel
 			}
 		}
 
+		public PictureBufferMode OpenedSection
+		{
+			get { return openedSection; }
+			private set
+			{
+				openedSection = value;
+				OnPropertyChanged("OpenedSection");
+			}
+		}
+
 		public static void ClearAllSelection()
 		{
-			SelectionClearEventHandler();
+			SelectionClearEventHandler.Invoke();
+		}
+
+		private void UpdateCurrentSectionProperty()
+		{
+			if (currentSection is Photos)
+				OpenedSection = PictureBufferMode.Photos;
+			else if (currentSection is Albums)
+				OpenedSection = PictureBufferMode.Albums;
 		}
 
 		private KeyCommand selectionModeCommand;

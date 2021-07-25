@@ -9,6 +9,7 @@ namespace Divuss.Model
 		private Album currentAlbum;
 		private bool pictureListIsVisibility;
 		private int nameNoveltyCounter;
+		private int albumsCount;
 
 		#region Singleton конструктор
 		private static Albums instance;
@@ -35,7 +36,7 @@ namespace Divuss.Model
 				new Album("Album4"),
 				new Album("Album5")
 			};
-
+			UpdateAlbumsCount();
 		}
 		public static Albums GetInstance()
 		{
@@ -69,6 +70,16 @@ namespace Divuss.Model
 			}
 		}
 
+		public int AlbumsCount
+		{
+			get { return albumsCount; }
+			set
+			{
+				albumsCount = value;
+				OnPropertyChanged("AlbumsCount");
+			}
+		}
+
 		public void OpenAlbum(Album album)
 		{
 			CurrentAlbum = album;
@@ -90,6 +101,7 @@ namespace Divuss.Model
 			string newAlbumName = $"New Album {NameNoveltyCounter}";
 			var newAlbum = new Album(newAlbumName);
 			AlbumsList.Add(newAlbum);
+			UpdateAlbumsCount();
 			Logger.LogTrace($"({SectionName}) Создан альбом: {newAlbumName}");
 		}
 
@@ -103,7 +115,13 @@ namespace Divuss.Model
 				AlbumsList.Remove(album);
 				Logger.LogTrace($"({SectionName}) Удален альбом: {album.AlbumName}");
 			}
+			UpdateAlbumsCount();
 			Logger.LogTrace($"({SectionName}) Удалено альбомов: {albumsCount}");
+		}
+
+		private void UpdateAlbumsCount()
+		{
+			AlbumsCount = AlbumsList.Count;
 		}
 	}
 }

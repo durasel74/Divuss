@@ -7,6 +7,7 @@ namespace Divuss.Model
 	public class Photos : Section
 	{
 		//private int maxElementCount = 1000;
+		private int picturesCount;
 
 		#region Singleton конструктор
 		private static Photos instance;
@@ -28,6 +29,8 @@ namespace Divuss.Model
 				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Lighting.jpg"),
 				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Violet.jpg")
 			};
+
+			UpdatePicturesCount();
 		}
 		public static Photos GetInstance()
 		{
@@ -41,12 +44,23 @@ namespace Divuss.Model
 		public ObservableCollection<Picture> LastPictures { get; }
 		public Picture LastPicture => LastPictures != null ? LastPictures[0] : null;
 
+		public int PicturesCount
+		{
+			get { return picturesCount; }
+			set
+			{
+				picturesCount = value;
+				OnPropertyChanged("PicturesCount");
+			}
+		}
+
 		public void AddPictureToLast(string path)
 		{
 			int indexInLastPictures = FindPictureWithPath(path);
 			if (indexInLastPictures >= 0)
 				LastPictures.RemoveAt(indexInLastPictures);
 			LastPictures.Insert(0, new Picture(path));
+			UpdatePicturesCount();
 			Logger.LogTrace($"({SectionName}) Добавлена картинка: {path}");
 		}
 
@@ -64,6 +78,7 @@ namespace Divuss.Model
 		public void RemovePictureFromLast(Picture picture)
 		{
 			LastPictures.Remove(picture);
+			UpdatePicturesCount();
 			Logger.LogTrace($"({SectionName}) Удалена из списка картинка: " +
 				$"{picture.ImagePath}");
 		}
@@ -79,6 +94,7 @@ namespace Divuss.Model
 				Logger.LogTrace($"({SectionName}) Удалена из списка картинка: " +
 					$"{picture.ImagePath}");
 			}
+			UpdatePicturesCount();
 			Logger.LogTrace($"({SectionName}) Удалено из списка картинок: " +
 				$"{picturesCount}");
 		}
@@ -98,6 +114,11 @@ namespace Divuss.Model
 					return i;
 			}
 			return -1;
+		}
+
+		private void UpdatePicturesCount()
+		{
+			PicturesCount = LastPictures.Count;
 		}
 	}
 }

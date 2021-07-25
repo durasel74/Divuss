@@ -10,11 +10,13 @@ namespace Divuss.Model
 
 		private string albumName;
 		private Picture currentElement;
+		private int picturesCount;
 
 		public Album(string albumName)
 		{
 			AlbumName = albumName;
 			Elements = new ObservableCollection<Picture>();
+			UpdatePicturesCount();
 		}
 
 		public ObservableCollection<Picture> Elements { get; }
@@ -43,12 +45,23 @@ namespace Divuss.Model
 			}
 		}
 
+		public int PicturesCount
+		{
+			get { return picturesCount; }
+			set
+			{
+				picturesCount = value;
+				OnPropertyChanged("PicturesCount");
+			}
+		}
+
 		public void AddPictureFromFile(string path)
 		{
 			int indexInLastPictures = FindPictureWithPath(path);
 			if (indexInLastPictures >= 0)
 				Elements.RemoveAt(indexInLastPictures);
 			Elements.Insert(0, new Picture(path));
+			UpdatePicturesCount();
 			Logger.LogTrace($"(Альбом {albumName}) Импортирована картинка: {path}");
 		}
 
@@ -62,6 +75,7 @@ namespace Divuss.Model
 			{
 				Elements.Insert(0, picture);
 			}
+			UpdatePicturesCount();
 		}
 
 		//public void MovePictures(Picture[] pictures, Album album)
@@ -83,6 +97,7 @@ namespace Divuss.Model
 		public void DeletePicture(Picture picture)
 		{
 			Elements.Remove(picture);
+			UpdatePicturesCount();
 			Logger.LogTrace($"(Альбом {albumName}) Удалена картинка: " +
 				$"{picture.ImagePath}");
 		}
@@ -98,6 +113,7 @@ namespace Divuss.Model
 				Logger.LogTrace($"(Альбом {albumName}) Удалена картинка: " +
 					$"{picture.ImagePath}");
 			}
+			UpdatePicturesCount();
 			Logger.LogTrace($"(Альбом {albumName}) Удалено картинок: " +
 				$"{picturesCount}");
 		}
@@ -117,6 +133,11 @@ namespace Divuss.Model
 					return i;
 			}
 			return -1;
+		}
+
+		private void UpdatePicturesCount()
+		{
+			PicturesCount = Elements.Count;
 		}
 	}
 }

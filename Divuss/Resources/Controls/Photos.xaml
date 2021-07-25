@@ -43,6 +43,15 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="EmptyBackground" TargetType="{x:Type Viewbox}">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding PicturesCount}" Value="0">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -85,5 +94,10 @@
                             FindAncestor, AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.PictureDeleteCommand}"/>
         </StackPanel>
+
+        <Viewbox Style="{StaticResource EmptyBackground}" Grid.Row="1" 
+                 Margin="100">
+            <TextBlock Foreground="#333" Text="Нет последних картинок"/>
+        </Viewbox>
     </Grid>
 </UserControl>

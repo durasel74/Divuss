@@ -43,6 +43,16 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="EmptyBackground" TargetType="{x:Type Viewbox}">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CurrentAlbum.PicturesCount}" 
+                             Value="0">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <Grid Style="{DynamicResource AlbumPicturePanel}">
@@ -94,5 +104,10 @@
                             FindAncestor, AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.PictureDeleteCommand}"/>
         </StackPanel>
+
+        <Viewbox Style="{StaticResource EmptyBackground}" Grid.Row="1" 
+                 Margin="100">
+            <TextBlock Foreground="#333" Text="Нет картинок"/>
+        </Viewbox>
     </Grid>
 </UserControl>

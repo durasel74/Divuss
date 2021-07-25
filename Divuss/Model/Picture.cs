@@ -5,6 +5,10 @@ using Divuss.Service;
 
 namespace Divuss.Model
 {
+	/// <summary>
+	/// Класс картинки, предоставляет путь до изображения. Содержит 
+	/// проверку существования и информацию о файле.
+	/// </summary>
 	public class Picture
 	{
 		private string imagePath;
@@ -17,6 +21,9 @@ namespace Divuss.Model
 			imageSize = image.Size;
 		}
 
+		/// <summary>
+		/// Путь к файлу картинки.
+		/// </summary>
 		public string ImagePath
 		{
 			get
@@ -34,6 +41,10 @@ namespace Divuss.Model
 			}
 		}
 
+		/// <summary>
+		/// Выдает информацию о файле картинки и ее разрешение.
+		/// </summary>
+		/// <returns>Строка с информацией.</returns>
 		public string GetPictureInfo()
 		{
 			FileInfo fileInfo = new FileInfo(imagePath);

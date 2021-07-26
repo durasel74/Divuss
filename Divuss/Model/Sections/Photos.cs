@@ -95,8 +95,7 @@ namespace Divuss.Model
 					$"{picture.ImagePath}");
 			}
 			UpdatePicturesCount();
-			Logger.LogTrace($"({SectionName}) Удалено из списка картинок: " +
-				$"{picturesCount}");
+			Logger.LogTrace($"({SectionName}) Удалено {picturesCount} картинок из списка");
 		}
 
 		/// <summary>

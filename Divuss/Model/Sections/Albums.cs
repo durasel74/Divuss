@@ -10,6 +10,7 @@ namespace Divuss.Model
 		private bool pictureListIsVisibility;
 		private int nameNoveltyCounter;
 		private int albumsCount;
+		private bool isCopyMove;
 
 		#region Singleton конструктор
 		private static Albums instance;
@@ -19,6 +20,7 @@ namespace Divuss.Model
 			nameNoveltyCounter = 1;
 			AlbumsList = new ObservableCollection<Album>();
 			PictureListIsVisibility = false;
+			IsCopyMove = false;
 
 			Album testAlbum = new Album("TestAlbum");
 			testAlbum.AddPictures(new Picture[]
@@ -51,6 +53,7 @@ namespace Divuss.Model
 		public ObservableCollection<Album> AlbumsList { get; }
 		public Picture[] AddBuffer { get; set; }
 		public int AddBufferCount => AddBuffer.Length;
+		public ObservableCollection<Album> AlbumsBuffer { get; set; }
 
 		public Album CurrentAlbum
 		{
@@ -79,6 +82,16 @@ namespace Divuss.Model
 			{
 				albumsCount = value;
 				OnPropertyChanged("AlbumsCount");
+			}
+		}
+
+		public bool IsCopyMove
+		{
+			get { return isCopyMove; }
+			set
+			{
+				isCopyMove = value;
+				OnPropertyChanged("IsCopyMove");
 			}
 		}
 
@@ -118,7 +131,7 @@ namespace Divuss.Model
 				Logger.LogTrace($"({SectionName}) Удален альбом: {album.AlbumName}");
 			}
 			UpdateAlbumsCount();
-			Logger.LogTrace($"({SectionName}) Удалено альбомов: {albumsCount}");
+			Logger.LogTrace($"({SectionName}) Удалено {albumsCount} альбомов");
 		}
 
 		private void UpdateAlbumsCount()

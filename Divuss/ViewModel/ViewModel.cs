@@ -22,10 +22,10 @@ namespace Divuss.ViewModel
 
 	internal class ViewModel : NotifyPropertyChanged
 	{
-		private CommandMode commandMode;
 		private Section currentSection;
+		private PictureBufferMode pictureBufferMode;
+		private CommandMode commandMode;
 		private bool selectionMode;
-		private PictureBufferMode openedSection;
 
 		public ViewModel()
 		{
@@ -60,6 +60,30 @@ namespace Divuss.ViewModel
 			}
 		}
 
+		public PictureBufferMode PictureBufferMode
+		{
+			get { return pictureBufferMode; }
+			private set
+			{
+				pictureBufferMode = value;
+				OnPropertyChanged("OpenedSection");
+			}
+		}
+
+		public CommandMode CommandMode
+		{
+			get { return commandMode; }
+			set
+			{
+				var nextMode = value;
+				if (nextMode != commandMode)
+				{
+					commandMode = nextMode;
+					OnPropertyChanged("CommandMode");
+				}
+			}
+		}
+
 		public bool SelectionMode
 		{
 			get { return selectionMode; }
@@ -78,30 +102,6 @@ namespace Divuss.ViewModel
 			}
 		}
 
-		public CommandMode CommandMode
-		{
-			get { return commandMode; }
-			set
-			{
-				var nextMode = value;
-				if (nextMode != commandMode)
-				{
-					commandMode = nextMode;
-					OnPropertyChanged("CommandMode");
-				}
-			}
-		}
-
-		public PictureBufferMode OpenedSection
-		{
-			get { return openedSection; }
-			private set
-			{
-				openedSection = value;
-				OnPropertyChanged("OpenedSection");
-			}
-		}
-
 		public static void ClearAllSelection()
 		{
 			SelectionClearEventHandler.Invoke();
@@ -110,9 +110,9 @@ namespace Divuss.ViewModel
 		private void UpdateCurrentSectionProperty()
 		{
 			if (currentSection is Photos)
-				OpenedSection = PictureBufferMode.Photos;
+				PictureBufferMode = PictureBufferMode.Photos;
 			else if (currentSection is Albums)
-				OpenedSection = PictureBufferMode.Albums;
+				PictureBufferMode = PictureBufferMode.Albums;
 		}
 
 		private KeyCommand selectionModeCommand;

@@ -14,7 +14,7 @@
             <Style.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
                                     FindAncestor, AncestorType={x:Type Window}}, 
-                                    Path=DataContext.OpenedSection}"
+                                    Path=DataContext.PictureBufferMode}"
                              Value="Photos">
                     <Setter Property="Visibility" Value="Visible"/>
                 </DataTrigger>

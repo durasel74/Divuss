@@ -205,8 +205,7 @@ namespace Divuss.ViewModel
 				return pictureAddToAlbumCommand ??
 					  (pictureAddToAlbumCommand = new ButtonCommand(obj =>
 					  {
-						  if (CurrentSection is Photos)
-							  PhotosAddToAlbum(obj);
+						  PicturesAddToAlbum(obj);
 					  }));
 			}
 		}
@@ -221,6 +220,8 @@ namespace Divuss.ViewModel
 					  {
 						  if (CurrentSection is Photos)
 							  PhotosConfirmAddToAlbum(obj);
+						  else if (CurrentSection is Albums)
+							  AlbumsConfirmAddToAlbum(obj);
 					  }, obj => { return obj is Album; }));
 			}
 		}
@@ -306,7 +307,7 @@ namespace Divuss.ViewModel
 			Albums.DeleteAlbums(selectedAlbums);
 		}
 
-		private void PhotosAddToAlbum(object obj)
+		private void PicturesAddToAlbum(object obj)
 		{
 			var window = new View.AddToAlbumDialog(viewModel);
 			Picture[] pictures;
@@ -314,11 +315,15 @@ namespace Divuss.ViewModel
 			var picture = obj as Picture;
 			var objectPictures = obj as ObservableCollection<object>;
 			if (picture != null)
-				pictures = new [] { picture };
+				pictures = new[] { picture };
 			else
 				pictures = ObservalbeObjectToPicturesArray(objectPictures);
 
+			Albums.AlbumsBuffer = CopyAlbumsList();
+			if (CurrentSection is Albums) 
+				Albums.AlbumsBuffer.Remove(Albums.CurrentAlbum);
 			Albums.AddBuffer = pictures;
+			Albums.IsCopyMove = false;
 			window.ShowDialog();
 		}
 
@@ -326,6 +331,25 @@ namespace Divuss.ViewModel
 		{
 			var album = obj as Album;
 			if (album != null) album.AddPictures(Albums.AddBuffer);
+		}
+
+		private void AlbumsConfirmAddToAlbum(object obj)
+		{
+			var album = obj as Album;
+			if (album == null) return;
+
+			if (Albums.IsCopyMove)
+				Albums.CurrentAlbum.CopyPicture(Albums.AddBuffer, album);
+			else
+				Albums.CurrentAlbum.MovePictures(Albums.AddBuffer, album);
+		}
+
+		private ObservableCollection<Album> CopyAlbumsList()
+		{
+			ObservableCollection<Album> newList = new ObservableCollection<Album>();
+			foreach (var album in Albums.AlbumsList)
+				newList.Add(album);
+			return newList;
 		}
 
 		private Picture[] ObservalbeObjectToPicturesArray(

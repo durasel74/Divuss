@@ -6,10 +6,23 @@
         xmlns:local="clr-namespace:Divuss.View"
         mc:Ignorable="d" WindowStyle="ToolWindow"
         Title="AddToAlbumDialog" Height="450" Width="400">
+
+    <Window.Resources>
+        <Style x:Key="CheckBoxCopy" TargetType="{x:Type CheckBox}">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding PictureBufferMode}"
+                             Value="Albums">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     
     <Grid Background="#555">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
@@ -18,9 +31,14 @@
                  Style="{DynamicResource AddDialogList}"
                  ItemContainerStyle="{DynamicResource AddDialogListItem}"
                  DataContext="{Binding AlbumsTab}"
-                 ItemsSource="{Binding AlbumsList}"/>
+                 ItemsSource="{Binding AlbumsBuffer}"/>
 
-        <StackPanel Grid.Row="1" Margin="4" Orientation="Horizontal"
+        <CheckBox Grid.Row="1" Style="{StaticResource CheckBoxCopy}" 
+                  Margin="5" IsChecked="{Binding AlbumsTab.IsCopyMove}"
+                  Content="Копировать изображения"
+                  Foreground="#DDD"/>
+
+        <StackPanel Grid.Row="2" Margin="4" Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button Margin="2" Padding="10" Content="OK"
                     Click="Button_Click"
@@ -29,21 +47,21 @@
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.ConfirmAddToAlbumCommand}"/>
-            
+
             <Button Margin="2" Padding="10" Content="Назад"
                     Click="Button_Click"/>
         </StackPanel>
 
-        <Grid Grid.Row="2" DataContext="{Binding AlbumsTab}"
+        <Grid Grid.Row="3" DataContext="{Binding AlbumsTab}"
               Background="#444">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Foreground="#DDD" Margin="10,0,5,0"
+            <TextBlock Grid.Column="0" Foreground="#DDD" Margin="10,0,0,0"
                        VerticalAlignment="Center"
-                       Text="Количество фотографий:"/>
+                       Text="Количество фотографий: "/>
 
             <TextBlock Grid.Column="1" Foreground="#DDD" Margin="0"
                        VerticalAlignment="Center"

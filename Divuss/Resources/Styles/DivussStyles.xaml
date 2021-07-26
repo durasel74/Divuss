@@ -11,6 +11,8 @@
         <ResourceDictionary Source="AlbumListStyles\AlbumListItemStyle.xaml"/>
         <ResourceDictionary Source="AlbumListStyles\AlbumPicturesPanelStyle.xaml"/>
         <ResourceDictionary Source="ButtonsStyles\ActionButtonStyle.xaml"/>
+        <ResourceDictionary Source="AddDialogListStyles\AddDialogListStyle.xaml"/>
+        <ResourceDictionary Source="AddDialogListStyles\AddDialogListItemStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
     

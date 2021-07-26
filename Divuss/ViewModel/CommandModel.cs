@@ -197,7 +197,36 @@ namespace Divuss.ViewModel
 			}
 		}
 
-		private void PictureSwitch(Picture picture, ObservableCollection<Picture> pictures)
+		private ButtonCommand pictureAddToAlbumCommand;
+		public ButtonCommand PictureAddToAlbumCommand
+		{
+			get
+			{
+				return pictureAddToAlbumCommand ??
+					  (pictureAddToAlbumCommand = new ButtonCommand(obj =>
+					  {
+						  if (CurrentSection is Photos)
+							  PhotosAddToAlbum(obj);
+					  }));
+			}
+		}
+
+		private ButtonCommand confirmAddToAlbumCommand;
+		public ButtonCommand ConfirmAddToAlbumCommand
+		{
+			get
+			{
+				return confirmAddToAlbumCommand ??
+					  (confirmAddToAlbumCommand = new ButtonCommand(obj =>
+					  {
+						  if (CurrentSection is Photos)
+							  PhotosConfirmAddToAlbum(obj);
+					  }, obj => { return obj is Album; }));
+			}
+		}
+
+		private void PictureSwitch(Picture picture, 
+			ObservableCollection<Picture> pictures)
 		{
 			if (picture != null && pictures != null)
 			{
@@ -275,6 +304,28 @@ namespace Divuss.ViewModel
 			Album[] selectedAlbums = ObservableObjectToAlbumsArray(obj);
 			if (selectedList == null) return;
 			Albums.DeleteAlbums(selectedAlbums);
+		}
+
+		private void PhotosAddToAlbum(object obj)
+		{
+			var window = new View.AddToAlbumDialog(viewModel);
+			Picture[] pictures;
+
+			var picture = obj as Picture;
+			var objectPictures = obj as ObservableCollection<object>;
+			if (picture != null)
+				pictures = new [] { picture };
+			else
+				pictures = ObservalbeObjectToPicturesArray(objectPictures);
+
+			Albums.AddBuffer = pictures;
+			window.ShowDialog();
+		}
+
+		private void PhotosConfirmAddToAlbum(object obj)
+		{
+			var album = obj as Album;
+			if (album != null) album.AddPictures(Albums.AddBuffer);
 		}
 
 		private Picture[] ObservalbeObjectToPicturesArray(

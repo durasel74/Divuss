@@ -57,26 +57,37 @@ namespace Divuss.Model
 
 		public void AddPictureFromFile(string path)
 		{
-			int indexInLastPictures = FindPictureWithPath(path);
-			if (indexInLastPictures >= 0)
-				Elements.RemoveAt(indexInLastPictures);
+			int indexInElements = FindPictureWithPath(path);
+			if (indexInElements >= 0)
+				Elements.RemoveAt(indexInElements);
 			Elements.Insert(0, new Picture(path));
 			UpdatePicturesCount();
 			Logger.LogTrace($"(Альбом {albumName}) Импортирована картинка: {path}");
 		}
 
-
-
-
-
 		public void AddPictures(Picture[] pictures)
 		{
+			Logger.LogTrace($"(Альбом {albumName}) Добавление картинок в альбом...");
+			int picturesCount = pictures.Length;
+
+			int indexInElements;
 			foreach (Picture picture in pictures)
 			{
+				indexInElements = FindPictureWithPath(picture.ImagePath);
+				if (indexInElements >= 0)
+					Elements.RemoveAt(indexInElements);
 				Elements.Insert(0, picture);
+				Logger.LogTrace($"(Альбом {albumName}) Добавлена картинка: " +
+					$"{picture.ImagePath}");
 			}
 			UpdatePicturesCount();
+			Logger.LogTrace($"(Альбом {albumName}) Добавлено картинок: {picturesCount}");
 		}
+
+
+
+
+
 
 		//public void MovePictures(Picture[] pictures, Album album)
 		//{

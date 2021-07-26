@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Divuss.View"
         xmlns:Controls="clr-namespace:Divuss.Resources.Controls" 
         mc:Ignorable="d"
-        Title="Divuss" Height="450" Width="800"
+        Title="Divuss" Height="450" Width="800" Background="#000"
         WindowStartupLocation="CenterScreen"
         KeyDown="IsKeyDown" KeyUp="IsKeyUp" Closed="Window_Closed">
 

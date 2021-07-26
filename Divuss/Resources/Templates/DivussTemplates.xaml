@@ -11,6 +11,9 @@
         <ResourceDictionary Source="AlbumListTemplates\AlbumListItemTemplate.xaml"/>
         <ResourceDictionary Source="AlbumListTemplates\AlbumListItemContentTemplate.xaml"/>
         <ResourceDictionary Source="ButtonsTemplates\ActionButtonTemplate.xaml"/>
+        <ResourceDictionary Source="AddDialogTemplates\AddDialogListTemplate.xaml"/>
+        <ResourceDictionary Source="AddDialogTemplates\AddDialogListItemTemplate.xaml"/>
+        <ResourceDictionary Source="AddDialogTemplates\AddDialogListItemContentTemplate.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
     

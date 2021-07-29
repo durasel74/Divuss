@@ -11,6 +11,7 @@ namespace Divuss.Model
 		private string albumName;
 		private Picture currentElement;
 		private int picturesCount;
+		private bool isRenaming;
 
 		public Album(string albumName)
 		{
@@ -28,10 +29,10 @@ namespace Divuss.Model
 			{
 				string newName = value;
 				if (newName.Length <= MAX_ALBUM_NAME_LENGTH)
-				{
 					albumName = newName;
-					OnPropertyChanged("AlbumName");
-				}
+				else
+					albumName = newName.Substring(0, MAX_ALBUM_NAME_LENGTH);
+				OnPropertyChanged("AlbumName");
 			}
 		}
 
@@ -52,6 +53,16 @@ namespace Divuss.Model
 			{
 				picturesCount = value;
 				OnPropertyChanged("PicturesCount");
+			}
+		}
+
+		public bool IsRenaming
+		{
+			get { return isRenaming; }
+			set
+			{
+				isRenaming = value;
+				OnPropertyChanged("IsRenaming");
 			}
 		}
 

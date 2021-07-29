@@ -226,6 +226,19 @@ namespace Divuss.ViewModel
 			}
 		}
 
+		private ButtonCommand albumRenameCommand;
+		public ButtonCommand AlbumRenameCommand
+		{
+			get
+			{
+				return albumRenameCommand ??
+					  (albumRenameCommand = new ButtonCommand(obj =>
+					  {
+						  AlbumRename(obj);
+					  }));
+			}
+		}
+
 		private void PictureSwitch(Picture picture, 
 			ObservableCollection<Picture> pictures)
 		{
@@ -245,10 +258,7 @@ namespace Divuss.ViewModel
 		private void AlbumsAlbumSwitch(object obj)
 		{
 			var album = obj as Album;
-			if (album != null)
-			{
-				Albums.OpenAlbum(album);
-			}
+			if (album != null) Albums.OpenAlbum(album);
 			else Albums.CloseAlbum();
 		}
 
@@ -256,7 +266,7 @@ namespace Divuss.ViewModel
 		{
 			Photos.AddPictureToLast(path);
 			PictureView.AddPicturesToBuffer(new ObservableCollection<Picture>() 
-				{ Photos.LastPicture } );
+				{ Photos.LastPicture });
 			PictureView.OpenPicture(Photos.LastPicture);
 			Photos.UpdatePictureInLast(Photos.LastPicture);
 		}
@@ -344,11 +354,29 @@ namespace Divuss.ViewModel
 				Albums.CurrentAlbum.MovePictures(Albums.AddBuffer, album);
 		}
 
+		private void AlbumRename(object obj)
+		{
+			var album = obj as Album;
+
+			if (album != null)
+			{
+				album.IsRenaming = true;
+				Albums.RenameBuffer = album.AlbumName;
+				Albums.AlbumsBuffer = new ObservableCollection<Album>() { album };
+			}
+			else
+			{
+				album = Albums.AlbumsBuffer[0];
+				album.IsRenaming = false;
+				album.AlbumName = Albums.RenameBuffer;
+				Albums.AlbumsBuffer = null;
+			}
+		}
+
 		private ObservableCollection<Album> CopyAlbumsList()
 		{
 			ObservableCollection<Album> newList = new ObservableCollection<Album>();
-			foreach (var album in Albums.AlbumsList)
-				newList.Add(album);
+			foreach (var album in Albums.AlbumsList) newList.Add(album);
 			return newList;
 		}
 

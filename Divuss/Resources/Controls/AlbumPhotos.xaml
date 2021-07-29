@@ -74,12 +74,19 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0" Style="{DynamicResource SectionPanel}">
-            <Button HorizontalAlignment="Left" VerticalAlignment="Center"
+            <StackPanel Orientation="Horizontal">
+                <Button VerticalAlignment="Center"
                     Margin="3" Width="25" Height="25" Content="&lt;"
                     FontSize="16"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.AlbumSwitchCommand}"/>
+
+                <local:AlbumNameTextElement DataContext="{Binding CurrentAlbum}"
+                                            VerticalAlignment="Center"
+                                            Margin="5,0,0,0" FontSize="20"
+                                            Foreground="#DDD"/>
+            </StackPanel>
         </Border>
 
         <ListBox x:Name="AlbumPhotosList" Grid.Row="1"
@@ -108,7 +115,7 @@
                             FindAncestor, AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.PictureSwitchCommand}"/>
 
-            <Button Width="50" Height="50" Content="Add"
+            <Button Width="50" Height="50" Content="Move"
                     Style="{StaticResource AddToAlbumButton}"
                     CommandParameter="{Binding ElementName=AlbumPhotosList,
                                     Path=SelectedItems}"

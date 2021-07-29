@@ -46,12 +46,16 @@ namespace Divuss.View
 			return null;
 		}
 
+		private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			Keyboard.ClearFocus();
+		}
 		private void Window_Closed(object sender, EventArgs e)
 		{
 			Logger.Close();
 		}
 
-		private void SectionsList_SelectionChanged(object sender, 
+		private void SectionsList_SelectionChanged(object sender,
 			SelectionChangedEventArgs e)
 		{
 			var tabItem = (sender as TabControl)?.SelectedItem as TabItem;

@@ -11,6 +11,7 @@ namespace Divuss.Model
 		private int nameNoveltyCounter;
 		private int albumsCount;
 		private bool isCopyMove;
+		private string renameBuffer;
 
 		#region Singleton конструктор
 		private static Albums instance;
@@ -92,6 +93,16 @@ namespace Divuss.Model
 			{
 				isCopyMove = value;
 				OnPropertyChanged("IsCopyMove");
+			}
+		}
+
+		public string RenameBuffer
+		{
+			get { return renameBuffer; }
+			set
+			{
+				renameBuffer = value;
+				OnPropertyChanged("RenameBuffer");
 			}
 		}
 

@@ -6,10 +6,6 @@
         <Setter Property="Visibility" Value="Collapsed"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding PictureListIsVisibility}"
-                         Value="False">
-                <Setter Property="Visibility" Value="Collapsed"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding PictureListIsVisibility}"
                          Value="True">
                 <Setter Property="Visibility" Value="Visible"/>
             </DataTrigger>

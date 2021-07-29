@@ -15,6 +15,16 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
 
         <Setter Property="Template" Value="{StaticResource AlbumListTemplate}"/>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}},
+                            Path=DataContext.AlbumsTab.PictureListIsVisibility}"
+                         Value="True">
+                <Setter Property="Visibility" Value="Collapsed"/>
+                <Setter Property="IsEnabled" Value="False"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
     

@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Divuss.Resources.Controls.AlbumNameTextElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Divuss.Resources.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="100">
+
+    <UserControl.Resources>
+        <Style x:Key="Button" TargetType="{x:Type Button}">
+            <Setter Property="Template" Value="{StaticResource ItemBorder}"/>
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsRenaming}" Value="True">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="TextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsRenaming}" Value="True">
+                    <Setter Property="VirtualizingPanel.Visibility" 
+                            Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <Border BorderThickness="0" Background="Transparent">
+        <Grid>
+            <Button x:Name="TextButton" Style="{StaticResource Button}"
+                    Content="{Binding AlbumName}" BorderThickness="0" 
+                    Background="Transparent" CommandParameter="{Binding}"
+                    Command="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}},
+                            Path=DataContext.CommandModel.AlbumRenameCommand}"/>
+
+            <TextBox x:Name="TextBox" Style="{StaticResource TextBox}"
+                     BorderThickness="0" 
+                     Background="#444"
+                     LostFocus="TextBox_LostFocus"
+                     Text="{Binding RelativeSource={RelativeSource 
+                                FindAncestor, AncestorType={x:Type Window}},
+                                UpdateSourceTrigger=PropertyChanged,
+                                Path=DataContext.AlbumsTab.RenameBuffer}"/>
+        </Grid>
+    </Border>
+</UserControl>

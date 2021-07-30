@@ -54,26 +54,24 @@ namespace Divuss.Model
 			}
 		}
 
-		public void AddPictureToLast(string path)
+		public void AddPicturesToLast(string[] paths)
 		{
-			int indexInLastPictures = FindPictureWithPath(path);
-			if (indexInLastPictures >= 0)
-				LastPictures.RemoveAt(indexInLastPictures);
-			LastPictures.Insert(0, new Picture(path));
+			foreach (var path in paths)
+				AddPictureToLastPictures(new Picture(path));
 			UpdatePicturesCount();
-			Logger.LogTrace($"({SectionName}) Добавлена картинка: {path}");
+			Logger.LogTrace($"({SectionName}) Добавлено картинок: {paths.Length}");
 		}
 
-		public void UpdatePictureInLast(Picture picture)
-		{
-			if (LastPictures.Contains(picture))
-			{
-				LastPictures.Remove(picture);
-				LastPictures.Insert(0, picture);
-				Logger.LogTrace($"({SectionName}) Обновлена картинка: " +
-					$"{picture.ImagePath}");
-			}
-		}
+		//public void UpdatePictureInLast(Picture picture)
+		//{
+		//	if (LastPictures.Contains(picture))
+		//	{
+		//		LastPictures.Remove(picture);
+		//		LastPictures.Insert(0, picture);
+		//		Logger.LogTrace($"({SectionName}) Обновлена картинка: " +
+		//			$"{picture.ImagePath}");
+		//	}
+		//}
 
 		public void RemovePictureFromLast(Picture picture)
 		{
@@ -113,6 +111,13 @@ namespace Divuss.Model
 					return i;
 			}
 			return -1;
+		}
+
+		private void AddPictureToLastPictures(Picture picture)
+		{
+			int indexInElements = FindPictureWithPath(picture.ImagePath);
+			if (indexInElements >= 0) LastPictures.RemoveAt(indexInElements);
+			LastPictures.Insert(0, picture);
 		}
 
 		private void UpdatePicturesCount()

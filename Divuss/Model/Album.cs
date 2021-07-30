@@ -69,11 +69,12 @@ namespace Divuss.Model
 			}
 		}
 
-		public void AddPictureFromFile(string path)
+		public void AddPicturesFromFile(string[] paths)
 		{
-			AddPictureToAlbum(new Picture(path), this);
+			foreach (var path in paths)
+				AddPictureToAlbum(new Picture(path), this);
 			UpdatePicturesCount();
-			Logger.LogTrace($"(Альбом {albumName}) Импортирована картинка: {path}");
+			Logger.LogTrace($"(Альбом {albumName}) Импортировано картинок: {paths.Length}");
 		}
 
 		public void AddPictures(Picture[] pictures)

@@ -67,19 +67,21 @@ namespace Divuss.ViewModel
 				return pictureOpenCommand ??
 				  (pictureOpenCommand = new ButtonCommand(obj =>
 				  {
-					  Logger.LogTrace("Нажата кнопка открытия изображения");
+					  Logger.LogTrace("Нажата кнопка открытия изображений");
 					  OpenFileDialog openFileDialog = new OpenFileDialog();
+					  openFileDialog.Multiselect = true;
 					  openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
 
-					  Logger.LogTrace("Открыто окно выбора файла...");
+					  Logger.LogTrace("Открыто окно выбора файлов...");
 					  if (openFileDialog.ShowDialog() == true)
 					  {
-						  var imagePath = openFileDialog.FileName;
-						  Logger.LogTrace($"Файл выбран: {imagePath}");
+						  var imagesPaths = openFileDialog.FileNames;
+						  Array.Reverse(imagesPaths);
+						  Logger.LogTrace($"Выбрано файлов: {imagesPaths.Length}");
 						  if (CurrentSection is Photos)
-							  PhotosPictureOpen(imagePath);
+							  PhotosPictureOpen(imagesPaths);
 						  else if (CurrentSection is Albums)
-							  AlbumsPictureOpen(imagePath);
+							  AlbumsPictureOpen(imagesPaths);
 					  }
 					  else Logger.LogTrace("Файл не был выбран");
 				  }));
@@ -285,18 +287,19 @@ namespace Divuss.ViewModel
 			else Albums.CloseAlbum();
 		}
 
-		private void PhotosPictureOpen(string path)
+		private void PhotosPictureOpen(string[] paths)
 		{
-			Photos.AddPictureToLast(path);
-			PictureView.AddPicturesToBuffer(new ObservableCollection<Picture>() 
-				{ Photos.LastPicture });
+			Photos.AddPicturesToLast(paths);
+			var buffer = new ObservableCollection<Picture>();
+			for (int i = 0; i < paths.Length; i++)
+				buffer.Add(Photos.LastPictures[i]);
+			PictureView.AddPicturesToBuffer(buffer);
 			PictureView.OpenPicture(Photos.LastPicture);
-			Photos.UpdatePictureInLast(Photos.LastPicture);
 		}
 
-		private void AlbumsPictureOpen(string path)
+		private void AlbumsPictureOpen(string[] paths)
 		{
-			Albums.CurrentAlbum.AddPictureFromFile(path);
+			Albums.CurrentAlbum.AddPicturesFromFile(paths);
 		}
 
 		private void PhotosDeletePicture(Picture picture)

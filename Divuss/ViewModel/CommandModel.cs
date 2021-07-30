@@ -307,6 +307,8 @@ namespace Divuss.ViewModel
 		private void AlbumsCreateAlbum()
 		{
 			Albums.CreateAlbum();
+			var newAlbum = Albums.AlbumsBuffer[0];
+			AlbumRenameCommand.Execute(newAlbum);
 		}
 
 		private void AlbumsDeleteAlbums(object obj)
@@ -369,6 +371,7 @@ namespace Divuss.ViewModel
 				album = Albums.AlbumsBuffer[0];
 				album.IsRenaming = false;
 				album.AlbumName = Albums.RenameBuffer;
+				Albums.RenameBuffer = "";
 				Albums.AlbumsBuffer = null;
 			}
 		}

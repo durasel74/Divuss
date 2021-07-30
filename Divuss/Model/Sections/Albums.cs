@@ -128,6 +128,7 @@ namespace Divuss.Model
 			var newAlbum = new Album(newAlbumName);
 			AlbumsList.Add(newAlbum);
 			UpdateAlbumsCount();
+			AlbumsBuffer = new ObservableCollection<Album>() { newAlbum };
 			Logger.LogTrace($"({SectionName}) Создан альбом: {newAlbumName}");
 		}
 

@@ -28,6 +28,8 @@ namespace Divuss.Model
 			set
 			{
 				string newName = value;
+				if (newName.Length == 0 || newName == albumName) return;
+				Logger.LogTrace($"Альбом {albumName} переименован в: {newName}");
 				if (newName.Length <= MAX_ALBUM_NAME_LENGTH)
 					albumName = newName;
 				else

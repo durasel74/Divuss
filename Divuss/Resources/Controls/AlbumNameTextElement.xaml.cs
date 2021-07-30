@@ -15,14 +15,30 @@ namespace Divuss.Resources.Controls
 {
 	public partial class AlbumNameTextElement : UserControl
 	{
+		private bool isFirstChanged;
+
 		public AlbumNameTextElement()
 		{
 			InitializeComponent();
+			isFirstChanged = true;
 		}
 
 		private void TextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			ViewModel.ViewModel.DataContext.CommandModel.AlbumRenameCommand.Execute(null);
+		}
+
+		private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+		{
+			isFirstChanged = true;
+		}
+
+		private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (isFirstChanged == false) return;
+			isFirstChanged = false;
+			TextBox.SelectionStart = TextBox.Text.Length;
+			TextBox.SelectAll();
 		}
 	}
 }

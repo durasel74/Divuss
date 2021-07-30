@@ -48,7 +48,7 @@ namespace Divuss.View
 
 		private void Window_MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			Keyboard.ClearFocus();
+			FocusManager.SetFocusedElement(this, this);
 		}
 		private void Window_Closed(object sender, EventArgs e)
 		{

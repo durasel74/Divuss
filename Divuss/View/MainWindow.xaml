@@ -9,7 +9,7 @@
         Title="Divuss" Height="450" Width="800" Background="#000"
         WindowStartupLocation="CenterScreen"
         KeyDown="IsKeyDown" KeyUp="IsKeyUp" Closed="Window_Closed"
-        PreviewMouseDown="Window_MouseDown">
+        MouseDown="Window_MouseDown">
 
     <Grid Background="#555">
         <TabControl x:Name="Sections" Style="{StaticResource SectionsList}" 

@@ -66,7 +66,7 @@ namespace Divuss.ViewModel
 			private set
 			{
 				pictureBufferMode = value;
-				OnPropertyChanged("OpenedSection");
+				OnPropertyChanged("PictureBufferMode");
 			}
 		}
 
@@ -109,9 +109,9 @@ namespace Divuss.ViewModel
 
 		private void UpdateCurrentSectionProperty()
 		{
-			if (currentSection is Photos)
+			if (CurrentSection is Photos)
 				PictureBufferMode = PictureBufferMode.Photos;
-			else if (currentSection is Albums)
+			else if (CurrentSection is Albums)
 				PictureBufferMode = PictureBufferMode.Albums;
 		}
 

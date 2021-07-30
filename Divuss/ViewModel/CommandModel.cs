@@ -304,9 +304,8 @@ namespace Divuss.ViewModel
 
 		private void PhotosDeletePicture(Picture picture)
 		{
-			PictureView.PicturesBuffer.Remove(picture);
 			Photos.RemovePictureFromLast(picture);
-			PictureView.UpdateView();
+			PictureView.RemoveCurrentPictureFromBuffer();
 		}
 
 		private void PhotosDeletePictures(ObservableCollection<object> pictures)
@@ -318,9 +317,8 @@ namespace Divuss.ViewModel
 
 		private void AlbumsDeletePicture(Picture picture)
 		{
-			PictureView.PicturesBuffer.Remove(picture);
 			Albums.CurrentAlbum.DeletePicture(picture);
-			PictureView.UpdateView();
+			PictureView.RemoveCurrentPictureFromBuffer();
 		}
 
 		private void AlbumsDeletePictures(ObservableCollection<object> pictures)
@@ -362,7 +360,7 @@ namespace Divuss.ViewModel
 				pictures = ObservalbeObjectToPicturesArray(objectPictures);
 
 			Albums.AlbumsBuffer = CopyAlbumsList();
-			if (CurrentSection is Albums) 
+			if (CurrentSection is Albums)
 				Albums.AlbumsBuffer.Remove(Albums.CurrentAlbum);
 			Albums.AddBuffer = pictures;
 			Albums.IsCopyMove = false;
@@ -383,7 +381,10 @@ namespace Divuss.ViewModel
 			if (Albums.IsCopyMove)
 				Albums.CurrentAlbum.CopyPicture(Albums.AddBuffer, album);
 			else
+			{
 				Albums.CurrentAlbum.MovePictures(Albums.AddBuffer, album);
+				PictureView.RemoveCurrentPictureFromBuffer();
+			}
 		}
 
 		private void AlbumRename(object obj)

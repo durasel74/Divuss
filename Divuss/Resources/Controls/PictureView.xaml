@@ -8,15 +8,25 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <Style x:Key="ActionButtonDeleteForPictureView" TargetType="Button"
+        <Style x:Key="ActionButtonAddAlbum" TargetType="Button"
                BasedOn="{StaticResource ActionButton}">
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="CommandParameter" Value="{Binding CurrentPicture}"/>
+            <Setter Property="Command" Value="{Binding RelativeSource=
+                                            {RelativeSource FindAncestor, 
+                                            AncestorType={x:Type Window}}, 
+                                            Path=DataContext.CommandModel.PictureAddToAlbumCommand}"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
                                     FindAncestor, AncestorType={x:Type Window}}, 
                                     Path=DataContext.PictureBufferMode}"
                              Value="Photos">
-                    <Setter Property="Visibility" Value="Visible"/>
+                    <Setter Property="Content" Value="Add"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
+                                    FindAncestor, AncestorType={x:Type Window}}, 
+                                    Path=DataContext.PictureBufferMode}"
+                             Value="Albums">
+                    <Setter Property="Content" Value="Move"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -42,7 +52,10 @@
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right"
                         Orientation="Horizontal">
 
-                <Button Style="{DynamicResource ActionButtonDeleteForPictureView}" 
+                <Button Style="{DynamicResource ActionButtonAddAlbum}"
+                        Margin="3"/>
+
+                <Button Style="{DynamicResource ActionButton}" 
                         Content="Delete" Margin="3"
                         CommandParameter="{Binding CurrentPicture}"
                         Command="{Binding RelativeSource={RelativeSource 
@@ -56,22 +69,7 @@
                             AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.PictureGetInfoCommand}"/>
             </StackPanel>
-            
-           
 
-            
-            
-            
-            <!--<Button Style="{DynamicResource ActionButton}"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    Margin="3" Content="Info"
-                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-                            AncestorType={x:Type Window}}, 
-                            Path=DataContext.FullscreenModeCommand}"/>-->
-
-            
-            
-            
             <Button HorizontalAlignment="Left" VerticalAlignment="Center"
                     Background="DarkRed"
                     Width="10" Height="50" Content="&lt;" FontSize="16"

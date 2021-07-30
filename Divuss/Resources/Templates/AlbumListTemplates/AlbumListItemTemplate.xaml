@@ -15,9 +15,25 @@
                             AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.AlbumSwitchCommand}">
 
-                <ContentPresenter Margin="{TemplateBinding Padding}" 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ContentPresenter Grid.Column="0" Margin="{TemplateBinding Padding}" 
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+
+                    <Button Grid.Column="1" Width="30" Height="30" Margin="2"
+                            VerticalAlignment="Center" FontSize="20" Content="x" 
+                            CommandParameter="{Binding}"
+                            Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                            AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandModel.AlbumDeleteCommand}"/>
+                </Grid>
+                
             </Button>
 
             <VisualStateManager.VisualStateGroups>

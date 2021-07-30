@@ -137,8 +137,16 @@ namespace Divuss.ViewModel
 				return albumDeleteCommand ??
 					  (albumDeleteCommand = new ButtonCommand(obj =>
 					  {
+						  var album = obj as Album;
+						  var albums = obj as ObservableCollection<object>;
+
 						  if (CurrentSection is Albums)
-							  AlbumsDeleteAlbums(obj);
+						  {
+							  if (album != null)
+								  AlbumsDeleteAlbum(album);
+							  else if (albums != null)
+								  AlbumsDeleteAlbums(albums);
+						  }
 					  }));
 			}
 		}
@@ -311,11 +319,15 @@ namespace Divuss.ViewModel
 			AlbumRenameCommand.Execute(newAlbum);
 		}
 
-		private void AlbumsDeleteAlbums(object obj)
+		private void AlbumsDeleteAlbum(Album album)
 		{
-			var selectedList = (ObservableCollection<object>)obj;
-			Album[] selectedAlbums = ObservableObjectToAlbumsArray(obj);
-			if (selectedList == null) return;
+			Albums.DeleteAlbum(album);
+		}
+
+		private void AlbumsDeleteAlbums(ObservableCollection<object> albums)
+		{
+			Album[] selectedAlbums = ObservableObjectToAlbumsArray(albums);
+			if (selectedAlbums == null) return;
 			Albums.DeleteAlbums(selectedAlbums);
 		}
 

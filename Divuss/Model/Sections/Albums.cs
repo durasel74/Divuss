@@ -132,6 +132,13 @@ namespace Divuss.Model
 			Logger.LogTrace($"({SectionName}) Создан альбом: {newAlbumName}");
 		}
 
+		public void DeleteAlbum(Album album)
+		{
+			AlbumsList.Remove(album);
+			UpdateAlbumsCount();
+			Logger.LogTrace($"({SectionName}) Удален альбом: {album.AlbumName}");
+		}
+
 		public void DeleteAlbums(Album[] albums)
 		{
 			Logger.LogTrace($"({SectionName}) Удаление альбомов...");

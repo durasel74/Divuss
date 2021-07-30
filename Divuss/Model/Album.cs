@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using Divuss.Service;
 
 namespace Divuss.Model
@@ -151,6 +152,25 @@ namespace Divuss.Model
 			UpdatePicturesCount();
 			Logger.LogTrace($"(Альбом {albumName}) Удалено {picturesCount} " +
 				$"картинок");
+		}
+
+		public string GetAlbumInfo()
+		{
+			//DirectoryInfo directoryInfo = new DirectoryInfo(directoryPath);
+			//var length = ConvertBytesToSuitableString(fileInfo.Length);
+			//var creationTime = fileInfo.CreationTime;
+			//var lastAccessTime = fileInfo.LastAccessTime;
+			//string size = $"{imageSize.Width}x{imageSize.Height}";
+
+			//string output =
+			//$"Название файла: {ImagePath}\n" +
+			//$"Размер файла: {length}\n" +
+			//$"Дата создания: {creationTime}\n" +
+			//$"Дата открытия: {lastAccessTime}\n";
+
+			Logger.LogTrace("Выведены сведения о альбоме");
+			string output = $"Альбом {albumName}";
+			return output;
 		}
 
 		/// <summary>

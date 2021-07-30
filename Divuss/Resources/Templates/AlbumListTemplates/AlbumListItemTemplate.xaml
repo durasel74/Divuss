@@ -27,13 +27,19 @@
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
                     <Button Grid.Column="1" Width="30" Height="30" Margin="2"
+                            VerticalAlignment="Center" FontSize="20" Content="i"
+                            CommandParameter="{Binding}"
+                            Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                            AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandModel.AlbumGetInfoCommand}"/>
+
+                    <Button Grid.Column="2" Width="30" Height="30" Margin="2"
                             VerticalAlignment="Center" FontSize="20" Content="x" 
                             CommandParameter="{Binding}"
                             Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.AlbumDeleteCommand}"/>
                 </Grid>
-                
             </Button>
 
             <VisualStateManager.VisualStateGroups>

@@ -205,6 +205,21 @@ namespace Divuss.ViewModel
 			}
 		}
 
+		private ButtonCommand albumGetInfoCommand;
+		public ButtonCommand AlbumGetInfoCommand
+		{
+			get
+			{
+				return albumGetInfoCommand ??
+						  (albumGetInfoCommand = new ButtonCommand(obj =>
+						  {
+							  var album = obj as Album;
+							  if (album == null) return;
+							  MessageBox.Show(album.GetAlbumInfo());
+						  }));
+			}
+		}
+
 		private ButtonCommand pictureAddToAlbumCommand;
 		public ButtonCommand PictureAddToAlbumCommand
 		{

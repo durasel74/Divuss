@@ -37,14 +37,15 @@
         <Grid>
             <Button x:Name="TextButton" Style="{StaticResource Button}"
                     Content="{Binding AlbumName}" BorderThickness="0" 
-                    Background="Transparent" CommandParameter="{Binding}"
+                    Background="Transparent" Foreground="#DDD"
+                    CommandParameter="{Binding}"
                     Command="{Binding RelativeSource={RelativeSource 
                             FindAncestor, AncestorType={x:Type Window}},
                             Path=DataContext.CommandModel.AlbumRenameCommand}"/>
 
             <TextBox x:Name="TextBox" Style="{StaticResource TextBoxStyle}"
-                     BorderThickness="0" 
-                     Background="#444"
+                     BorderThickness="0" Background="#444"
+                     Foreground="#DDD"
                      TextChanged="TextBox_TextChanged"
                      GotFocus="TextBox_GotFocus"
                      LostFocus="TextBox_LostFocus"

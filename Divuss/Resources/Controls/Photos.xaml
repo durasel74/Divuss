@@ -8,54 +8,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <Style x:Key="OpenButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Collapsed"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandMode}"
-                             Value="None">
-                    <Setter Property="Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="SelectOpenButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Visible"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandMode}"
-                             Value="None">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="AddToAlbumButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Visible"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandMode}"
-                             Value="None">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="DeleteButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Visible"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandMode}"
-                             Value="None">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
         <Style x:Key="EmptyBackground" TargetType="{x:Type Viewbox}">
             <Setter Property="Visibility" Value="Collapsed"/>
             <Style.Triggers>
@@ -81,39 +33,15 @@
                  SelectionChanged="PictureList_SelectionChanged"
                  ItemsSource="{Binding LastPictures}"/>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="4"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom">
-
-            <Button Width="50" Height="50" Content="Open" 
-                    Style="{StaticResource OpenButton}"
-                    Command="{Binding RelativeSource={RelativeSource
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureOpenCommand}"/>
-
-            <Button Width="50" Height="50" Content="Open"
-                    Style="{StaticResource SelectOpenButton}"
-                    CommandParameter="{Binding ElementName=PictureList,
-                                    Path=SelectedItems}"
-                    Command="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureSwitchCommand}"/>
-
-            <Button Width="50" Height="50" Content="Add"
-                    Style="{StaticResource AddToAlbumButton}"
-                    CommandParameter="{Binding ElementName=PictureList,
-                                    Path=SelectedItems}"
-                    Command="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureAddToAlbumCommand}"/>
-
-            <Button Width="50" Height="50" Content="Delete"
-                    Style="{StaticResource DeleteButton}"
-                    CommandParameter="{Binding ElementName=PictureList,
-                                    Path=SelectedItems}"
-                    Command="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureDeleteCommand}"/>
-        </StackPanel>
+        <Border Grid.Row="1" Style="{StaticResource ActionPanel}">
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <Button Style="{StaticResource ImportButton}" 
+                        Content="Open"/>
+                <Button Style="{StaticResource SelectOpenButton}"/>
+                <Button Style="{StaticResource AddToAlbumButton}"/>
+                <Button Style="{StaticResource DeleteButton}"/>
+            </StackPanel>
+        </Border>
 
         <Viewbox Style="{StaticResource EmptyBackground}" Grid.Row="1" 
                  Margin="100">

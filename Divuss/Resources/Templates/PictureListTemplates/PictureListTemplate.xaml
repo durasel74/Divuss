@@ -2,12 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="PictureListTemplate" TargetType="ListBox">
-        <Border Name="Border" Margin="{TemplateBinding Margin}"
-                BorderThickness="{TemplateBinding BorderThickness}"
+        <Border Name="Border" BorderThickness="{TemplateBinding BorderThickness}"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}">
             <ScrollViewer Focusable="false" Margin="0" BorderThickness="0">
-                <WrapPanel IsItemsHost="True" Margin="{TemplateBinding Padding}"/>
+                <WrapPanel IsItemsHost="True" Margin="{TemplateBinding Padding}"
+                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </ScrollViewer>
         </Border>
 

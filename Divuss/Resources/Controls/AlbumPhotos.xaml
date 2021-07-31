@@ -8,54 +8,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <Style x:Key="ImportButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Collapsed"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandMode}"
-                             Value="None">
-                    <Setter Property="Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="SelectOpenButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Visible"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandMode}"
-                             Value="None">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="AddToAlbumButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Visible"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandMode}"
-                             Value="None">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="DeleteButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Visible"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandMode}"
-                             Value="None">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
         <Style x:Key="EmptyBackground" TargetType="{x:Type Viewbox}">
             <Setter Property="Visibility" Value="Collapsed"/>
             <Style.Triggers>
@@ -75,9 +27,8 @@
 
         <Border Grid.Row="0" Style="{DynamicResource SectionPanel}">
             <StackPanel Orientation="Horizontal">
-                <Button VerticalAlignment="Center"
-                    Margin="3" Width="25" Height="25" Content="&lt;"
-                    FontSize="16"
+                <Button VerticalAlignment="Center" Margin="3" 
+                        Width="25" Height="25" Content="&lt;" FontSize="16"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                             AncestorType={x:Type Window}}, 
                             Path=DataContext.CommandModel.AlbumSwitchCommand}"/>
@@ -89,48 +40,22 @@
             </StackPanel>
         </Border>
 
-        <ListBox x:Name="AlbumPhotosList" Grid.Row="1"
+        <ListBox x:Name="PictureList" Grid.Row="1"
                  Style="{DynamicResource PictureList}" 
                  ItemContainerStyle="{DynamicResource PictureListItem}"
                  MouseLeftButtonDown="AlbumPhotosList_MouseLeftButtonDown"
                  SelectionChanged="AlbumPhotosList_SelectionChanged"
                  ItemsSource="{Binding CurrentAlbum.Elements}"/>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="4"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            
-            <Button HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Style="{StaticResource ImportButton}"
-                    Margin="3" Width="50" Height="50" Content="Import"
-                    FontSize="16"
-                    Command="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureOpenCommand}"/>
-
-            <Button Width="50" Height="50" Content="Open"
-                    Style="{StaticResource SelectOpenButton}"
-                    CommandParameter="{Binding ElementName=AlbumPhotosList,
-                                    Path=SelectedItems}"
-                    Command="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureSwitchCommand}"/>
-
-            <Button Width="50" Height="50" Content="Move"
-                    Style="{StaticResource AddToAlbumButton}"
-                    CommandParameter="{Binding ElementName=AlbumPhotosList,
-                                    Path=SelectedItems}"
-                    Command="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureAddToAlbumCommand}"/>
-
-            <Button Width="50" Height="50" Content="Delete"
-                    Style="{StaticResource DeleteButton}"
-                    CommandParameter="{Binding ElementName=AlbumPhotosList,
-                                    Path=SelectedItems}"
-                    Command="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureDeleteCommand}"/>
-        </StackPanel>
+        <Border Grid.Row="1" Style="{StaticResource ActionPanel}">
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <Button Style="{StaticResource ImportButton}"/>
+                <Button Style="{StaticResource SelectOpenButton}"/>
+                <Button Style="{StaticResource AddToAlbumButton}"
+                        Content="Move"/>
+                <Button Style="{StaticResource DeleteButton}"/>
+            </StackPanel>
+        </Border>
 
         <Viewbox Style="{StaticResource EmptyBackground}" Grid.Row="1" 
                  Margin="100">

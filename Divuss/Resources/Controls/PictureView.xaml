@@ -8,27 +8,27 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <Style x:Key="ActionButtonAddAlbum" TargetType="Button"
-               BasedOn="{StaticResource ActionButton}">
-            <Setter Property="CommandParameter" Value="{Binding CurrentPicture}"/>
-            <Setter Property="Command" Value="{Binding RelativeSource=
-                                            {RelativeSource FindAncestor, 
-                                            AncestorType={x:Type Window}}, 
-                                            Path=DataContext.CommandModel.PictureAddToAlbumCommand}"/>
+        <Style x:Key="AddAlbumButton" TargetType="{x:Type Button}"
+               BasedOn="{StaticResource ViewButton}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                                    FindAncestor, AncestorType={x:Type Window}}, 
-                                    Path=DataContext.PictureBufferMode}"
-                             Value="Photos">
+                <DataTrigger Binding="{Binding RelativeSource=
+                    {RelativeSource FindAncestor, AncestorType={x:Type Window}}, 
+                    Path=DataContext.PictureBufferMode}" Value="Photos">
                     <Setter Property="Content" Value="Add"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                                    FindAncestor, AncestorType={x:Type Window}}, 
-                                    Path=DataContext.PictureBufferMode}"
-                             Value="Albums">
+                <DataTrigger Binding="{Binding RelativeSource=
+                    {RelativeSource FindAncestor, AncestorType={x:Type Window}}, 
+                    Path=DataContext.PictureBufferMode}" Value="Albums">
                     <Setter Property="Content" Value="Move"/>
                 </DataTrigger>
             </Style.Triggers>
+        </Style>
+
+        <Style x:Key="MoveThroughButton" TargetType="{x:Type Button}"
+               BasedOn="{StaticResource ViewButton}">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="200"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
     </UserControl.Resources>
     
@@ -37,52 +37,46 @@
                RenderOptions.BitmapScalingMode="HighQuality"/>
 
         <Grid>
-            <Button Style="{DynamicResource ActionButton}"
+            <Button Style="{DynamicResource ViewButton}" Content="&lt;"
                     HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Margin="3" Content="&lt;"
-                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-                            AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureSwitchCommand}"/>
+                    Command="{Binding RelativeSource=
+                {RelativeSource FindAncestor, AncestorType={x:Type Window}}, 
+                Path=DataContext.CommandModel.PictureSwitchCommand}"/>
 
-            <Button Style="{DynamicResource ActionButton}"
+            <Button Style="{DynamicResource ViewButton}" Content="Full" 
                     HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                    Margin="3" Content="Full" 
                     Click="FullscreenButton_Click"/>
 
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right"
                         Orientation="Horizontal">
-
-                <Button Style="{DynamicResource ActionButtonAddAlbum}"
-                        Margin="3"/>
-
-                <Button Style="{DynamicResource ActionButton}" 
-                        Content="Delete" Margin="3"
+                <Button Style="{DynamicResource AddAlbumButton}"
                         CommandParameter="{Binding CurrentPicture}"
                         Command="{Binding RelativeSource={RelativeSource 
-                                FindAncestor, AncestorType={x:Type Window}}, 
-                                Path=DataContext.CommandModel.PictureDeleteCommand}"/>
-
-                <Button Style="{DynamicResource ActionButton}"
+                    FindAncestor, AncestorType={x:Type Window}}, 
+                    Path=DataContext.CommandModel.PictureAddToAlbumCommand}"/>
+                <Button Style="{DynamicResource ViewButton}" Content="Delete"
+                        CommandParameter="{Binding CurrentPicture}"
+                        Command="{Binding RelativeSource={RelativeSource 
+                    FindAncestor, AncestorType={x:Type Window}}, 
+                    Path=DataContext.CommandModel.PictureDeleteCommand}"/>
+                <Button Style="{DynamicResource ViewButton}" Content="i"
                     HorizontalAlignment="Right" VerticalAlignment="Top"
-                    Margin="3" Content="i"
-                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-                            AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureGetInfoCommand}"/>
+                    Command="{Binding RelativeSource={RelativeSource 
+                    FindAncestor, AncestorType={x:Type Window}},
+                    Path=DataContext.CommandModel.PictureGetInfoCommand}"/>
             </StackPanel>
 
-            <Button HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Background="DarkRed"
-                    Width="10" Height="50" Content="&lt;" FontSize="16"
-                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-                            AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureViewPreviousMoveCommand}"/>
+            <Button Style="{StaticResource MoveThroughButton}" Content="&lt;"
+                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Command="{Binding RelativeSource=
+                {RelativeSource FindAncestor, AncestorType={x:Type Window}}, 
+                Path=DataContext.CommandModel.PictureViewPreviousMoveCommand}"/>
 
-            <Button HorizontalAlignment="Right" VerticalAlignment="Center"
-                    Width="10" Height="50" Content=">" FontSize="16"
-                    Background="DarkRed"
-                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-                            AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandModel.PictureViewNextMoveCommand}"/>
+            <Button Style="{StaticResource MoveThroughButton}" Content=">"
+                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                    Command="{Binding RelativeSource=
+                {RelativeSource FindAncestor, AncestorType={x:Type Window}}, 
+                Path=DataContext.CommandModel.PictureViewNextMoveCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

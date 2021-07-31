@@ -56,7 +56,7 @@ namespace Divuss.Resources.Controls
 
 		private void AlbumPhotosList_SelectionClear()
 		{
-			AlbumPhotosList.SelectedItems.Clear();
+			PictureList.SelectedItems.Clear();
 		}
 	}
 }

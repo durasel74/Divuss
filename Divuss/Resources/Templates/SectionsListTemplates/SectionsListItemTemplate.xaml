@@ -3,6 +3,17 @@
 
     <ControlTemplate x:Key="SectionsListItemTemplate" TargetType="{x:Type TabItem}">
         <Grid x:Name="Root">
+            <Border x:Name="Border" BorderThickness="1,1,1,1"
+                    Background="#666" BorderBrush="#444">
+
+                <ContentPresenter x:Name="ContentSite"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  ContentSource="Header"
+                                  Margin="12,2,12,2"
+                                  RecognizesAccessKey="True"/>
+            </Border>
+
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="SelectionStates">
                     <VisualState x:Name="Unselected"/>
@@ -20,17 +31,6 @@
                     <VisualState x:Name="Disabled"/>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-
-            <Border x:Name="Border" BorderThickness="1,1,1,1"
-                    Background="#666" BorderBrush="#444">
-
-                <ContentPresenter x:Name="ContentSite"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Center"
-                                  ContentSource="Header"
-                                  Margin="12,2,12,2"
-                                  RecognizesAccessKey="True"/>
-            </Border>
         </Grid>
 
         <ControlTemplate.Triggers>

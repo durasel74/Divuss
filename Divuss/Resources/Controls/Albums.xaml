@@ -9,29 +9,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <Style x:Key="CreateButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Collapsed"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandMode}" Value="None">
-                    <Setter Property="Visibility" Value="Visible"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="DeleteButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Visible"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}}, 
-                            Path=DataContext.CommandMode}"
-                             Value="None">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-
         <Style x:Key="EmptyBackground" TargetType="{x:Type Viewbox}">
             <Setter Property="Visibility" Value="Collapsed"/>
             <Style.Triggers>
@@ -51,30 +28,21 @@
 
         <Border Grid.Row="0" Style="{DynamicResource SectionPanel}"/>
 
-        <ListBox x:Name="AlbumList" Grid.Row="1"
+        <Grid Grid.Row="1" Style="{StaticResource ContentPanel}">
+            <ListBox x:Name="AlbumList" Grid.Row="1"
                  Style="{DynamicResource AlbumList}"
                  ItemContainerStyle="{DynamicResource AlbumListItem}"
                  MouseLeftButtonDown="AlbumList_MouseLeftButtonDown"
                  SelectionChanged="AlbumList_SelectionChanged"
                  ItemsSource="{Binding AlbumsList}"/>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="4"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom">
-
-            <Button Width="50" Height="50" Content="Create"
-                    Style="{StaticResource CreateButton}"
-                    Command="{Binding RelativeSource={RelativeSource 
-                            FindAncestor, AncestorType={x:Type Window}},
-                            Path=DataContext.CommandModel.AlbumCreateCommand}"/>
-
-            <Button Width="50" Height="50" Content="Delete"
-                    Style="{StaticResource DeleteButton}"
-                        CommandParameter="{Binding ElementName=AlbumList,
-                                        Path=SelectedItems}"
-                        Command="{Binding RelativeSource={RelativeSource 
-                                FindAncestor, AncestorType={x:Type Window}}, 
-                                Path=DataContext.CommandModel.AlbumDeleteCommand}"/>
-        </StackPanel>
+            <Border Grid.Row="1" Style="{StaticResource ActionPanel}">
+                <StackPanel Orientation="Horizontal" Margin="2">
+                    <Button Style="{StaticResource CreateAlbumButton}"/>
+                    <Button Style="{StaticResource DeleteAlbumButton}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
 
         <Controls:AlbumPhotos Grid.RowSpan="2"/>
 

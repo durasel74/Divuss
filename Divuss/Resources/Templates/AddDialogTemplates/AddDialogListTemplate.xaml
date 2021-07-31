@@ -2,8 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="AddDialogListTemplate" TargetType="ListBox">
-        <Border Name="Border" Margin="{TemplateBinding Margin}"
-                BorderThickness="{TemplateBinding BorderThickness}"
+        <Border Name="Border" BorderThickness="{TemplateBinding BorderThickness}"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}">
             <ScrollViewer Focusable="false" Margin="0" BorderThickness="0">

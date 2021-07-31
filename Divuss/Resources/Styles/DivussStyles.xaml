@@ -10,9 +10,14 @@
         <ResourceDictionary Source="AlbumListStyles\AlbumListStyle.xaml"/>
         <ResourceDictionary Source="AlbumListStyles\AlbumListItemStyle.xaml"/>
         <ResourceDictionary Source="AlbumListStyles\AlbumPicturesPanelStyle.xaml"/>
-        <ResourceDictionary Source="ButtonsStyles\ActionButtonStyle.xaml"/>
+        <ResourceDictionary Source="AlbumListStyles\ContentPanelStyle.xaml"/>
         <ResourceDictionary Source="AddDialogListStyles\AddDialogListStyle.xaml"/>
         <ResourceDictionary Source="AddDialogListStyles\AddDialogListItemStyle.xaml"/>
+        <ResourceDictionary Source="ButtonsStyles\ActionButtonsStyles\ActionPanelStyle.xaml"/>
+        <ResourceDictionary Source="ButtonsStyles\ActionButtonsStyles\ActionButtonStyle.xaml"/>
+        <ResourceDictionary Source="ButtonsStyles\ActionButtonsStyles\ActionButtonsCollection.xaml"/>
+        <ResourceDictionary Source="ButtonsStyles\AlbumItemButtonsStyles\AlbumItemButtonStyle.xaml"/>
+        <ResourceDictionary Source="ButtonsStyles\ViewButtonsStyles\ViewButtonStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
     

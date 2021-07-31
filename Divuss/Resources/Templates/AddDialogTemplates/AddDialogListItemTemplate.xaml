@@ -2,15 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="AddDialogListItemTemplate" TargetType="ListBoxItem">
-        <Border x:Name="Border" SnapsToDevicePixels="True" Margin="{TemplateBinding Margin}"
-                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                BorderThickness="{TemplateBinding BorderThickness}" 
+        <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" 
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}">
-            <ContentPresenter Margin="{TemplateBinding Padding}" 
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            <ContentPresenter Margin="{TemplateBinding Padding}"/>
 
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="SelectionStates">

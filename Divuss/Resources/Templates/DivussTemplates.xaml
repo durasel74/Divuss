@@ -10,10 +10,12 @@
         <ResourceDictionary Source="AlbumListTemplates\AlbumListTemplate.xaml"/>
         <ResourceDictionary Source="AlbumListTemplates\AlbumListItemTemplate.xaml"/>
         <ResourceDictionary Source="AlbumListTemplates\AlbumListItemContentTemplate.xaml"/>
-        <ResourceDictionary Source="ButtonsTemplates\ActionButtonTemplate.xaml"/>
         <ResourceDictionary Source="AddDialogTemplates\AddDialogListTemplate.xaml"/>
         <ResourceDictionary Source="AddDialogTemplates\AddDialogListItemTemplate.xaml"/>
         <ResourceDictionary Source="AddDialogTemplates\AddDialogListItemContentTemplate.xaml"/>
+        <ResourceDictionary Source="ButtonsTemplates\ActionButtonTemplate.xaml"/>
+        <ResourceDictionary Source="ButtonsTemplates\AlbumItemButtonTemplate.xaml"/>
+        <ResourceDictionary Source="ButtonsTemplates\ViewButtonTemplate.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
     

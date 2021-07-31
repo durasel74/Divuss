@@ -3,7 +3,7 @@
                     xmlns:Controls="clr-namespace:Divuss.Resources.Controls">
     
     <DataTemplate x:Key="AlbumListItemContentTemplate">
-        <Controls:AlbumNameTextElement FontSize="14"/>
+        <Controls:AlbumNameTextElement FontSize="14" Foreground="#DDD"/>
     </DataTemplate>
 </ResourceDictionary>
     

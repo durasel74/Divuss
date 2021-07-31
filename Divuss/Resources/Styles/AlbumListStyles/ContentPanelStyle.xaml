@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="ContentPanel" TargetType="{x:Type Grid}">
+        <Setter Property="Visibility" Value="Visible"/>
+        <Setter Property="IsEnabled" Value="True"/>
+        <Setter Property="Background" Value="Transparent"/>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
+                                FindAncestor, AncestorType={x:Type Window}},
+                                Path=DataContext.AlbumsTab.PictureListIsVisibility}"
+                         Value="True">
+                <Setter Property="Visibility" Value="Collapsed"/>
+                <Setter Property="IsEnabled" Value="False"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
+    

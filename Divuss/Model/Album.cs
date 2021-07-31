@@ -155,6 +155,10 @@ namespace Divuss.Model
 				$"картинок");
 		}
 
+		/// <summary>
+		/// Выдает информацию о альбоме.
+		/// </summary>
+		/// <returns>Строка с информацией.</returns>
 		public string GetAlbumInfo()
 		{
 			//DirectoryInfo directoryInfo = new DirectoryInfo(directoryPath);

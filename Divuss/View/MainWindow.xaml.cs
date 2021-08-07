@@ -28,15 +28,11 @@ namespace Divuss.View
 			{
 				Logger.Initialize();
 				InitializeComponent();
+				BootLoader.DataCheck();
 				thisWindow = this;
 				DataContext = new ViewModel.ViewModel();
 			}
-			catch (Exception e)
-			{
-				Logger.LogError(e.Message);
-				Logger.ForcedClose();
-				Application.Current.Shutdown();
-			}
+			catch (Exception e) { BootLoader.ApplicationCrash(e); }
 			dataContext = (ViewModel.ViewModel)this.DataContext;
 		}
 		internal static MainWindow GetWindow()

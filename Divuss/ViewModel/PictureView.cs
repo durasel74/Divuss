@@ -108,19 +108,20 @@ namespace Divuss.ViewModel
 
 		public void RemoveCurrentPictureFromBuffer()
 		{
+			if (PictureViewIsVisibility == false) return;
 			PicturesBuffer.Remove(CurrentPicture);
 			UpdateView();
 		}
 
 		private void MovePrevious()
 		{
-			if (CurrentPictureIndex == 0) return;
+			if (CurrentPictureIndex <= 0) return;
 			OpenPicture(PicturesBuffer[CurrentPictureIndex - 1]);
 		}
 
 		private void MoveNext()
 		{
-			if (CurrentPictureIndex == PicturesBuffer.Count - 1) return;
+			if (CurrentPictureIndex >= PicturesBuffer.Count - 1) return;
 			OpenPicture(PicturesBuffer[CurrentPictureIndex + 1]);
 		}
 	}

@@ -25,17 +25,17 @@ namespace Divuss.Service
 
 		public static void CompleteLaunch()
 		{
-			logger.Trace("Приложение успешно запущено!");
+			logger.Trace("----- Приложение успешно запущено! -----");
+		}
+
+		public static void ForcedClose()
+		{
+			logger.Trace("Аварийное завершение работы!");
 		}
 
 		public static void Close()
 		{
 			logger.Trace("Приложение завершило работу...\n");
-		}
-
-		public static void ForcedClose()
-		{
-			logger.Trace("Приложение принудительно остановлено...\n");
 		}
 	}
 }

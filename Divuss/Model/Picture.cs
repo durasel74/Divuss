@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using Divuss.Exceptions;
 using Divuss.Service;
 
 namespace Divuss.Model
@@ -14,6 +15,7 @@ namespace Divuss.Model
 		private string imagePath;
 		private Size imageSize;
 
+		public Picture() { }
 		public Picture(string imagePath)
 		{
 			ImagePath = imagePath;
@@ -32,7 +34,7 @@ namespace Divuss.Model
 					throw new MediaElementNotFoundException(imagePath);
 				return imagePath;
 			}
-			private set
+			set
 			{
 				var newPath = value;
 				if (!PathExists(value))

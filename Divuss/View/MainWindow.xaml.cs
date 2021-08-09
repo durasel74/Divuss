@@ -28,7 +28,7 @@ namespace Divuss.View
 			{
 				Logger.Initialize();
 				InitializeComponent();
-				BootLoader.DataCheck();
+				BootLoader.Startup();
 				thisWindow = this;
 				DataContext = new ViewModel.ViewModel();
 			}

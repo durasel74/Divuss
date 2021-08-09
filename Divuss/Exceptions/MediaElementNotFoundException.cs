@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Divuss
+namespace Divuss.Exceptions
 {
 	public class MediaElementNotFoundException : ApplicationException
 	{

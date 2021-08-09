@@ -14,22 +14,7 @@ namespace Divuss.Model
 		private Photos()
 		{
 			SectionName = "Photos";
-			LastPictures = new ObservableCollection<Picture>();
-
-			//string[] AllFiles = Directory.GetFiles(@"D:\закачки\картинки\New Wave", "*.*", SearchOption.AllDirectories);
-			//foreach (string filename in AllFiles)
-			//{
-			//	LastPictures.Add(new Picture(filename));
-			//}
-
-			LastPictures = new ObservableCollection<Picture>()
-			{
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Biruz.jpg"),
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Blue.jpg"),
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Lighting.jpg"),
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Violet.jpg")
-			};
-
+			LastPictures = BootLoader.LastSessionData.LastPictures;
 			UpdatePicturesCount();
 		}
 		public static Photos GetInstance()
@@ -41,7 +26,7 @@ namespace Divuss.Model
 		#endregion
 
 		public override string SectionName { get; }
-		public ObservableCollection<Picture> LastPictures { get; }
+		public ObservableCollection<Picture> LastPictures { get; private set; }
 		public Picture LastPicture => LastPictures != null ? LastPictures[0] : null;
 
 		public int PicturesCount

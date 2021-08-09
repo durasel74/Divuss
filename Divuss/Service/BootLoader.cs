@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Text.Json;
+using Divuss.Exceptions;
+
 using System.Windows;
 
 namespace Divuss.Service
@@ -9,11 +12,13 @@ namespace Divuss.Service
 		private const string APPLICATION_TITLE = "Divuss";
 		private const string ALBUMS_FOLDER_NAME = "Albums";
 		private const string CONFIG_FOLDER_NAME = "Config";
+		private const string LAST_SESSION_FILE_NAME = "LastSession.json";
 
 		private static string appDataPath;
 		private static string applicationDataPath;
 		private static string albumsFolderPath;
 		private static string configFolderPath;
+		private static string lastSessionFilePath;
 
 		static BootLoader()
 		{
@@ -21,11 +26,15 @@ namespace Divuss.Service
 			applicationDataPath = appDataPath + APPLICATION_TITLE;
 			albumsFolderPath = applicationDataPath + "\\" + ALBUMS_FOLDER_NAME;
 			configFolderPath = applicationDataPath + "\\" + CONFIG_FOLDER_NAME;
+			lastSessionFilePath = configFolderPath + "\\" + LAST_SESSION_FILE_NAME;
 		}
-		
-		public static void DataCheck()
+
+		public static LastSessionData LastSessionData { get; set; }
+
+		public static void Startup()
 		{
-			CreateAppFolder();
+			CheckData();
+			LoadData();
 			Logger.CompleteLaunch();
 		}
 
@@ -35,12 +44,31 @@ namespace Divuss.Service
 
 			Logger.LogError(exception.Message);
 			Logger.ForcedClose();
-			MessageBox.Show("Error: " + exception.Message, "Error", 
+			MessageBox.Show("Error: " + exception.Message, "Error",
 				MessageBoxButton.OK, MessageBoxImage.Error);
 			Application.Current.Shutdown();
 		}
 
-		private static void CreateAppFolder()
+		public static void CheckData()
+		{
+			CheckAppFolder();
+			CheckAlbumsFolder();
+			CheckConfigFolder();
+			CheckLastSessionFile();
+		}
+
+		public static void LoadData()
+		{
+			LastSessionData = LastSessionData.Deserialize(lastSessionFilePath);
+		}
+
+		private static void AppFolderCheck()
+		{
+			if (Directory.Exists(applicationDataPath) == false)
+				throw new ApplicationFolderCreateException();
+		}
+
+		private static void CheckAppFolder()
 		{
 			if (Directory.Exists(applicationDataPath) == false)
 			{
@@ -49,11 +77,9 @@ namespace Divuss.Service
 				Logger.LogTrace("Директория данных приложения создана, " +
 					"так как не была найдена");
 			}
-			CreateAlbumsFolder();
-			CreateConfigFolder();
 		}
 
-		private static void CreateAlbumsFolder()
+		private static void CheckAlbumsFolder()
 		{
 			if (Directory.Exists(albumsFolderPath) == false)
 			{
@@ -62,7 +88,7 @@ namespace Divuss.Service
 			}
 		}
 
-		private static void CreateConfigFolder()
+		private static void CheckConfigFolder()
 		{
 			if (Directory.Exists(configFolderPath) == false)
 			{
@@ -71,10 +97,17 @@ namespace Divuss.Service
 			}
 		}
 
-		private static void AppFolderCheck()
+		private static void CheckLastSessionFile()
 		{
-			if (Directory.Exists(applicationDataPath) == false)
-				throw new Exception("Ok");
+			if (File.Exists(lastSessionFilePath) == false)
+			{
+				LastSessionData = new LastSessionData();
+				var fs = File.Create(lastSessionFilePath);
+				var options = new JsonSerializerOptions() { WriteIndented = true };
+				JsonSerializer.SerializeAsync<LastSessionData>(fs, LastSessionData, options);
+				fs.Close();
+				Logger.LogTrace($"Создан файл: {LAST_SESSION_FILE_NAME}");
+			}
 		}
 	}
 }

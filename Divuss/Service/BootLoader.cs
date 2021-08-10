@@ -29,6 +29,9 @@ namespace Divuss.Service
 			lastSessionFilePath = configFolderPath + "\\" + LAST_SESSION_FILE_NAME;
 		}
 
+		public delegate void SaveDataHandler();
+		public static event SaveDataHandler SaveDataEventHandler;
+
 		public static LastSessionData LastSessionData { get; set; }
 
 		public static void Startup()
@@ -57,7 +60,14 @@ namespace Divuss.Service
 			CheckLastSessionFile();
 		}
 
-		public static void LoadData()
+		public static void SaveData()
+		{
+			CheckData();
+			SaveDataEventHandler.Invoke();
+			LastSessionData.Serialize(lastSessionFilePath);
+		}
+
+		private static void LoadData()
 		{
 			LastSessionData = LastSessionData.Deserialize(lastSessionFilePath);
 		}

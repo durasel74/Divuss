@@ -15,7 +15,6 @@ namespace Divuss.Model
 		private string imagePath;
 		private Size imageSize;
 
-		public Picture() { }
 		public Picture(string imagePath)
 		{
 			ImagePath = imagePath;
@@ -34,7 +33,7 @@ namespace Divuss.Model
 					throw new MediaElementNotFoundException(imagePath);
 				return imagePath;
 			}
-			set
+			private set
 			{
 				var newPath = value;
 				if (!PathExists(value))
@@ -62,12 +61,16 @@ namespace Divuss.Model
 			$"Дата открытия: {lastAccessTime}\n" +
 			$"Размер изображения: {size}";
 
-			Logger.LogTrace("Выведены сведения о картинке");
 			return output;
 		}
 
 		public static bool PathExists(string path) => File.Exists(path);
 		public bool PathExists() => File.Exists(imagePath);
+
+		internal PictureData GetPictureData()
+		{
+			return new PictureData(ImagePath);
+		}
 
 		private string ConvertBytesToSuitableString(long bytes)
 		{

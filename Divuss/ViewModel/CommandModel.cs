@@ -203,6 +203,7 @@ namespace Divuss.ViewModel
 					  (pictureGetInfoCommand = new ButtonCommand(obj =>
 					  {
 						  MessageBox.Show(PictureView.CurrentPicture.GetPictureInfo());
+						  Logger.LogTrace("Выведены сведения о картинке");
 					  }));
 			}
 		}
@@ -295,6 +296,7 @@ namespace Divuss.ViewModel
 				buffer.Add(Photos.LastPictures[i]);
 			PictureView.AddPicturesToBuffer(buffer);
 			PictureView.OpenPicture(Photos.LastPicture);
+			BootLoader.SaveData();
 		}
 
 		private void AlbumsPictureOpen(string[] paths)
@@ -306,6 +308,7 @@ namespace Divuss.ViewModel
 		{
 			Photos.RemovePictureFromLast(picture);
 			PictureView.RemoveCurrentPictureFromBuffer();
+			BootLoader.SaveData();
 		}
 
 		private void PhotosDeletePictures(ObservableCollection<object> pictures)
@@ -313,6 +316,7 @@ namespace Divuss.ViewModel
 			Picture[] selectedPictures = ObservalbeObjectToPicturesArray(pictures);
 			if (selectedPictures == null) return;
 			Photos.RemovePicturesFromLast(selectedPictures);
+			BootLoader.SaveData();
 		}
 
 		private void AlbumsDeletePicture(Picture picture)

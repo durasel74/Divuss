@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
-using System.Collections.ObjectModel;
-using Divuss.Model;
 
 namespace Divuss.Service
 {
@@ -10,25 +8,26 @@ namespace Divuss.Service
 	{
 		public LastSessionData()
 		{
-			LastPictures = new ObservableCollection<Picture>();
-			LastPictures = new ObservableCollection<Picture>()
-			{
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Biruz.jpg"),
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Blue.jpg"),
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Lighting.jpg"),
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Violet.jpg")
-			};
-			Albums = new ObservableCollection<Album>();
+			LastPictures = new PictureData[0];
+			//LastPictures = new PictureData[]
+			//{
+			//	new PictureData(@"D:\закачки\картинки\Gradients\Gradient_Biruz.jpg"),
+			//	new PictureData(@"D:\закачки\картинки\Gradients\Gradient_Blue.jpg"),
+			//	new PictureData(@"D:\закачки\картинки\Gradients\Gradient_Lighting.jpg"),
+			//	new PictureData(@"D:\закачки\картинки\Gradients\Gradient_Violet.jpg"),
+			//};
+
+			//Albums = new ObservableCollection<Album>();
 		}
 
-		public ObservableCollection<Picture> LastPictures { get; set; }
-		public ObservableCollection<Album> Albums { get; set; }
+		public PictureData[] LastPictures { get; set; }
+		//public ObservableCollection<Album> Albums { get; set; }
 
 		public async void Serialize(string filePath)
 		{
 			if (File.Exists(filePath) == false) return;
 
-			using (FileStream fs = new FileStream(filePath, FileMode.Open))
+			using (FileStream fs = new FileStream(filePath, FileMode.Create))
 			{
 				var options = new JsonSerializerOptions() { WriteIndented = true };
 				await JsonSerializer.SerializeAsync<LastSessionData>(fs, this, options);

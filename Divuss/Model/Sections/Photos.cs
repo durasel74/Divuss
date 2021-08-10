@@ -14,8 +14,10 @@ namespace Divuss.Model
 		private Photos()
 		{
 			SectionName = "Photos";
-			LastPictures = BootLoader.LastSessionData.LastPictures;
+			LastPictures = new ObservableCollection<Picture>();
+			LoadLastPictures();
 			UpdatePicturesCount();
+			BootLoader.SaveDataEventHandler += SaveLastPictures;
 		}
 		public static Photos GetInstance()
 		{
@@ -108,6 +110,27 @@ namespace Divuss.Model
 		private void UpdatePicturesCount()
 		{
 			PicturesCount = LastPictures.Count;
+		}
+
+		private void LoadLastPictures()
+		{
+			var lastPicturesData = BootLoader.LastSessionData.LastPictures;
+			foreach (var pictureData in lastPicturesData)
+			{
+				if (Picture.PathExists(pictureData.ImagePath))
+					LastPictures.Add(pictureData.CreatePicture());
+			}
+		}
+
+		private void SaveLastPictures()
+		{
+			PictureData[] lastPicturesData = new PictureData[LastPictures.Count];
+			for (int i = 0; i < lastPicturesData.Length; i++)
+			{
+				if (Picture.PathExists(LastPictures[i].ImagePath))
+					lastPicturesData[i] = LastPictures[i].GetPictureData();
+			}
+			BootLoader.LastSessionData.LastPictures = lastPicturesData;
 		}
 	}
 }

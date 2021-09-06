@@ -4,24 +4,17 @@ using System.Text.Json;
 
 namespace Divuss.Service
 {
+	[Serializable]
 	internal class LastSessionData
 	{
 		public LastSessionData()
 		{
 			LastPictures = new PictureData[0];
-			//LastPictures = new PictureData[]
-			//{
-			//	new PictureData(@"D:\закачки\картинки\Gradients\Gradient_Biruz.jpg"),
-			//	new PictureData(@"D:\закачки\картинки\Gradients\Gradient_Blue.jpg"),
-			//	new PictureData(@"D:\закачки\картинки\Gradients\Gradient_Lighting.jpg"),
-			//	new PictureData(@"D:\закачки\картинки\Gradients\Gradient_Violet.jpg"),
-			//};
-
-			//Albums = new ObservableCollection<Album>();
+			Albums = new AlbumData[0];
 		}
 
 		public PictureData[] LastPictures { get; set; }
-		//public ObservableCollection<Album> Albums { get; set; }
+		public AlbumData[] Albums { get; set; }
 
 		public async void Serialize(string filePath)
 		{

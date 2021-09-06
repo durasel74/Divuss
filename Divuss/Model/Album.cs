@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using Divuss.Service;
@@ -9,19 +10,28 @@ namespace Divuss.Model
 	{
 		private const int MAX_ALBUM_NAME_LENGTH = 50;
 
+		private string albumsDirPath;
 		private string albumName;
+		private DirectoryInfo albumDir;
 		private Picture currentElement;
 		private int picturesCount;
 		private bool isRenaming;
 
-		public Album(string albumName)
+		public Album(string albumName, string albumPath)
 		{
+			albumsDirPath = BootLoader.GetAlbumsFolderPath();
 			AlbumName = albumName;
+			AlbumPath = albumPath;
+
+			if (!Directory.Exists(albumPath)) throw new Exception("Альбома нет"); // <------
+			albumDir = new DirectoryInfo(albumPath);
+
 			Elements = new ObservableCollection<Picture>();
 			UpdatePicturesCount();
 		}
 
-		public ObservableCollection<Picture> Elements { get; }
+		public string AlbumPath { get; private set; }
+		public ObservableCollection<Picture> Elements { get; set; }
 
 		public string AlbumName
 		{
@@ -35,6 +45,9 @@ namespace Divuss.Model
 					albumName = newName;
 				else
 					albumName = newName.Substring(0, MAX_ALBUM_NAME_LENGTH);
+
+				albumDir?.MoveTo(albumsDirPath + "\\" + albumName);
+				AlbumPath = albumDir?.FullName;
 				OnPropertyChanged("AlbumName");
 			}
 		}
@@ -71,8 +84,12 @@ namespace Divuss.Model
 
 		public void AddPicturesFromFile(string[] paths)
 		{
+			Picture picture;
 			foreach (var path in paths)
-				AddPictureToAlbum(new Picture(path), this);
+			{
+				picture = new Picture(path);
+				AddPictureToAlbum(picture, this);
+			}
 			UpdatePicturesCount();
 			Logger.LogTrace($"(Альбом {albumName}) Импортировано картинок: {paths.Length}");
 		}
@@ -92,48 +109,54 @@ namespace Divuss.Model
 			Logger.LogTrace($"(Альбом {albumName}) Добавлено {picturesCount} картинок");
 		}
 
-		public void MovePictures(Picture[] pictures, Album album)
-		{
-			Logger.LogTrace($"(Альбом {albumName}) Перемещение картинок в " +
-				$"альбом: {album.AlbumName}...");
-			int picturesCount = pictures.Length;
-
-			foreach (Picture picture in pictures)
-			{
-				AddPictureToAlbum(picture, album);
-				Logger.LogTrace($"(Альбом {albumName}) Перемещена картинка: " +
-					$"{picture.ImagePath}");
-			}
-			foreach (var picture in pictures)
-				Elements.Remove(picture);
-
-			UpdatePicturesCount();
-			album.UpdatePicturesCount();
-			Logger.LogTrace($"(Альбом {albumName}) Перемещено {picturesCount} " +
-				$"картинок в альбом {album.AlbumName}");
-		}
-
-		public void CopyPicture(Picture[] pictures, Album album)
+		public void CopyPicture(Picture[] pictures, Album otherAlbum)
 		{
 			Logger.LogTrace($"(Альбом {albumName}) Копирование картинок в " +
-				$"альбом: {album.AlbumName}...");
+				$"альбом: {otherAlbum.AlbumName}...");
 			int picturesCount = pictures.Length;
 
 			foreach (Picture picture in pictures)
 			{
-				AddPictureToAlbum(picture, album);
+				AddPictureToAlbum(picture, otherAlbum);
 				Logger.LogTrace($"(Альбом {albumName}) Копирована картинка: " +
 					$"{picture.ImagePath}");
 			}
 			UpdatePicturesCount();
-			album.UpdatePicturesCount();
+			otherAlbum.UpdatePicturesCount();
 			Logger.LogTrace($"(Альбом {albumName}) Копировано {picturesCount} " +
-				$"картинок в альбом {album.AlbumName}");
+				$"картинок в альбом {otherAlbum.AlbumName}");
+		}
+
+		public void MovePictures(Picture[] pictures, Album otherAlbum)
+		{
+			Logger.LogTrace($"(Альбом {albumName}) Перемещение картинок в " +
+				$"альбом: {otherAlbum.AlbumName}...");
+			int picturesCount = pictures.Length;
+
+			foreach (Picture picture in pictures)
+			{
+				AddPictureToAlbum(picture, otherAlbum);
+				Logger.LogTrace($"(Альбом {albumName}) Перемещена картинка: " +
+					$"{picture.ImagePath}");
+			}
+			foreach (var picture in pictures)
+			{
+				Elements.Remove(picture);
+				//File.Delete(picture.ImagePath);
+			}
+
+			UpdatePicturesCount();
+			otherAlbum.UpdatePicturesCount();
+			Logger.LogTrace($"(Альбом {albumName}) Перемещено {picturesCount} " +
+				$"картинок в альбом {otherAlbum.AlbumName}");
 		}
 
 		public void DeletePicture(Picture picture)
 		{
+			if (!Elements.Contains(picture)) throw new Exception("Этой картинки нет в альбоме"); // <-----------------
+
 			Elements.Remove(picture);
+			//File.Delete(picture.ImagePath);
 			UpdatePicturesCount();
 			Logger.LogTrace($"(Альбом {albumName}) Удалена картинка: " +
 				$"{picture.ImagePath}");
@@ -143,14 +166,7 @@ namespace Divuss.Model
 		{
 			Logger.LogTrace($"(Альбом {albumName}) Удаление картинок...");
 			int picturesCount = pictures.Length;
-
-			foreach (var picture in pictures)
-			{
-				Elements.Remove(picture);
-				Logger.LogTrace($"(Альбом {albumName}) Удалена картинка: " +
-					$"{picture.ImagePath}");
-			}
-			UpdatePicturesCount();
+			foreach (var picture in pictures) DeletePicture(picture);
 			Logger.LogTrace($"(Альбом {albumName}) Удалено {picturesCount} " +
 				$"картинок");
 		}
@@ -161,20 +177,18 @@ namespace Divuss.Model
 		/// <returns>Строка с информацией.</returns>
 		public string GetAlbumInfo()
 		{
-			//DirectoryInfo directoryInfo = new DirectoryInfo(directoryPath);
-			//var length = ConvertBytesToSuitableString(fileInfo.Length);
-			//var creationTime = fileInfo.CreationTime;
-			//var lastAccessTime = fileInfo.LastAccessTime;
-			//string size = $"{imageSize.Width}x{imageSize.Height}";
+			DirectoryInfo directoryInfo = new DirectoryInfo(AlbumPath);
+			var creationTime = directoryInfo.CreationTime;
+			var lastAccessTime = directoryInfo.LastAccessTime;
+			var picturesCount = Elements.Count;
 
-			//string output =
-			//$"Название файла: {ImagePath}\n" +
-			//$"Размер файла: {length}\n" +
-			//$"Дата создания: {creationTime}\n" +
-			//$"Дата открытия: {lastAccessTime}\n";
+			string output =
+			$"Название альбома: {AlbumPath}\n" +
+			$"Дата создания: {creationTime}\n" +
+			$"Дата открытия: {lastAccessTime}\n" +
+			$"Количество изображений: {picturesCount}";
 
 			Logger.LogTrace("Выведены сведения о альбоме");
-			string output = $"Альбом {albumName}";
 			return output;
 		}
 
@@ -195,16 +209,44 @@ namespace Divuss.Model
 			return -1;
 		}
 
+		internal AlbumData GetAlbumData()
+		{
+			return new AlbumData(AlbumName, AlbumPath, ElementsToData());
+		}
+
 		private static void AddPictureToAlbum(Picture picture, Album album)
 		{
 			int indexInElements = album.FindPictureWithPath(picture.ImagePath);
-			if (indexInElements >= 0) album.Elements.RemoveAt(indexInElements);
+			if (indexInElements >= 0)
+			{
+				var sameElement = album.Elements[indexInElements];
+				album.Elements.Remove(sameElement);
+			}
+			album.SavePictureToUserDir(picture, album);
 			album.Elements.Insert(0, picture);
 		}
 
 		private void UpdatePicturesCount()
 		{
 			PicturesCount = Elements.Count;
+		}
+
+		private PictureData[] ElementsToData()
+		{
+			PictureData[] pictureData = new PictureData[Elements.Count];
+			for (int i = 0; i < Elements.Count; i++)
+				pictureData[i] = Elements[i].GetPictureData();
+			return pictureData;
+		}
+
+		private Picture SavePictureToUserDir(Picture picture, Album album)
+		{
+			var fileInfo = new FileInfo(picture.ImagePath);
+			//string newPath = album.AlbumPath + "\\" + fileInfo.Name;
+			//File.Copy(picture.ImagePath, newPath);
+			//var newPicture = new Picture(newPath);
+			//return newPicture;
+			return picture;
 		}
 	}
 }

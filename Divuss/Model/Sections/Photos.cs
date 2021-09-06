@@ -112,16 +112,6 @@ namespace Divuss.Model
 			PicturesCount = LastPictures.Count;
 		}
 
-		private void LoadLastPictures()
-		{
-			var lastPicturesData = BootLoader.LastSessionData.LastPictures;
-			foreach (var pictureData in lastPicturesData)
-			{
-				if (Picture.PathExists(pictureData.ImagePath))
-					LastPictures.Add(pictureData.CreatePicture());
-			}
-		}
-
 		private void SaveLastPictures()
 		{
 			PictureData[] lastPicturesData = new PictureData[LastPictures.Count];
@@ -131,6 +121,16 @@ namespace Divuss.Model
 					lastPicturesData[i] = LastPictures[i].GetPictureData();
 			}
 			BootLoader.LastSessionData.LastPictures = lastPicturesData;
+		}
+
+		private void LoadLastPictures()
+		{
+			var lastPicturesData = BootLoader.LastSessionData.LastPictures;
+			foreach (var pictureData in lastPicturesData)
+			{
+				if (Picture.PathExists(pictureData.ImagePath))
+					LastPictures.Add(pictureData.CreatePicture());
+			}
 		}
 	}
 }

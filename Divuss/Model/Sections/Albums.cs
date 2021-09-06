@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.ObjectModel;
 using Divuss.Service;
 
@@ -6,6 +7,7 @@ namespace Divuss.Model
 {
 	public class Albums : Section
 	{
+		private string albumsDirPath;
 		private Album currentAlbum;
 		private bool pictureListIsVisibility;
 		private int nameNoveltyCounter;
@@ -17,29 +19,14 @@ namespace Divuss.Model
 		private static Albums instance;
 		private Albums()
 		{
+			albumsDirPath = BootLoader.GetAlbumsFolderPath();
 			SectionName = "Albums";
 			nameNoveltyCounter = 1;
-			AlbumsList = new ObservableCollection<Album>();
 			PictureListIsVisibility = false;
 			IsCopyMove = false;
-
-			Album testAlbum = new Album("TestAlbum");
-			testAlbum.AddPictures(new Picture[]
-			{
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Biruz.jpg"),
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Blue.jpg"),
-				new Picture(@"D:\закачки\картинки\Gradients\Gradient_Violet.jpg")
-			});
-			AlbumsList = new ObservableCollection<Album>()
-			{
-				testAlbum,
-				new Album("Album1"),
-				new Album("Album2"),
-				new Album("Album3"),
-				new Album("Album4"),
-				new Album("Album5")
-			};
+			AlbumsList = new ObservableCollection<Album>();
 			UpdateAlbumsCount();
+			BootLoader.SaveAlbumsEventHandler += SaveAlbums;
 		}
 		public static Albums GetInstance()
 		{
@@ -125,7 +112,11 @@ namespace Divuss.Model
 		public void CreateAlbum()
 		{
 			string newAlbumName = $"New Album {NameNoveltyCounter}";
-			var newAlbum = new Album(newAlbumName);
+
+			string albumPath = albumsDirPath + "\\" + newAlbumName;
+			Directory.CreateDirectory(albumPath);
+			
+			var newAlbum = new Album(newAlbumName, albumPath);
 			AlbumsList.Add(newAlbum);
 			UpdateAlbumsCount();
 			AlbumsBuffer = new ObservableCollection<Album>() { newAlbum };
@@ -135,6 +126,9 @@ namespace Divuss.Model
 		public void DeleteAlbum(Album album)
 		{
 			AlbumsList.Remove(album);
+
+			Directory.Delete(album.AlbumPath);
+
 			UpdateAlbumsCount();
 			Logger.LogTrace($"({SectionName}) Удален альбом: {album.AlbumName}");
 		}
@@ -145,10 +139,7 @@ namespace Divuss.Model
 			int albumsCount = albums.Length;
 
 			foreach (var album in albums)
-			{
-				AlbumsList.Remove(album);
-				Logger.LogTrace($"({SectionName}) Удален альбом: {album.AlbumName}");
-			}
+				DeleteAlbum(album);
 			UpdateAlbumsCount();
 			Logger.LogTrace($"({SectionName}) Удалено {albumsCount} альбомов");
 		}
@@ -156,6 +147,19 @@ namespace Divuss.Model
 		private void UpdateAlbumsCount()
 		{
 			AlbumsCount = AlbumsList.Count;
+		}
+
+		private void SaveAlbums()
+		{
+			AlbumData[] albumsData = new AlbumData[AlbumsCount];
+			AlbumData albumData;
+			for (int i = 0; i< albumsData.Length; i++)
+			{
+				albumData = AlbumsList[i].GetAlbumData();
+				if (Directory.Exists(albumData.AlbumPath))
+					albumsData[i] = albumData;
+			}
+			BootLoader.LastSessionData.Albums = albumsData;
 		}
 	}
 }

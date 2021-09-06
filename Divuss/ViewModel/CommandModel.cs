@@ -302,6 +302,7 @@ namespace Divuss.ViewModel
 		private void AlbumsPictureOpen(string[] paths)
 		{
 			Albums.CurrentAlbum.AddPicturesFromFile(paths);
+			BootLoader.SaveAlbums();
 		}
 
 		private void PhotosDeletePicture(Picture picture)
@@ -323,6 +324,7 @@ namespace Divuss.ViewModel
 		{
 			Albums.CurrentAlbum.DeletePicture(picture);
 			PictureView.RemoveCurrentPictureFromBuffer();
+			BootLoader.SaveAlbums();
 		}
 
 		private void AlbumsDeletePictures(ObservableCollection<object> pictures)
@@ -330,18 +332,21 @@ namespace Divuss.ViewModel
 			Picture[] selectedPictures = ObservalbeObjectToPicturesArray(pictures);
 			if (selectedPictures == null) return;
 			Albums.CurrentAlbum.DeletePictures(selectedPictures);
+			BootLoader.SaveAlbums();
 		}
 
 		private void AlbumsCreateAlbum()
 		{
 			Albums.CreateAlbum();
 			var newAlbum = Albums.AlbumsBuffer[0];
+			BootLoader.SaveAlbums();
 			AlbumRenameCommand.Execute(newAlbum);
 		}
 
 		private void AlbumsDeleteAlbum(Album album)
 		{
 			Albums.DeleteAlbum(album);
+			BootLoader.SaveAlbums();
 		}
 
 		private void AlbumsDeleteAlbums(ObservableCollection<object> albums)
@@ -349,6 +354,7 @@ namespace Divuss.ViewModel
 			Album[] selectedAlbums = ObservableObjectToAlbumsArray(albums);
 			if (selectedAlbums == null) return;
 			Albums.DeleteAlbums(selectedAlbums);
+			BootLoader.SaveAlbums();
 		}
 
 		private void PicturesAddToAlbum(object obj)
@@ -375,6 +381,7 @@ namespace Divuss.ViewModel
 		{
 			var album = obj as Album;
 			if (album != null) album.AddPictures(Albums.AddBuffer);
+			BootLoader.SaveAlbums();
 		}
 
 		private void AlbumsConfirmAddToAlbum(object obj)
@@ -383,12 +390,15 @@ namespace Divuss.ViewModel
 			if (album == null) return;
 
 			if (Albums.IsCopyMove)
+			{
 				Albums.CurrentAlbum.CopyPicture(Albums.AddBuffer, album);
+			}
 			else
 			{
 				Albums.CurrentAlbum.MovePictures(Albums.AddBuffer, album);
 				PictureView.RemoveCurrentPictureFromBuffer();
 			}
+			BootLoader.SaveAlbums();
 		}
 
 		private void AlbumRename(object obj)
@@ -409,6 +419,7 @@ namespace Divuss.ViewModel
 				Albums.RenameBuffer = "";
 				Albums.AlbumsBuffer = null;
 			}
+			BootLoader.SaveAlbums();
 		}
 
 		private ObservableCollection<Album> CopyAlbumsList()

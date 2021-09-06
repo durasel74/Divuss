@@ -29,8 +29,9 @@ namespace Divuss.Service
 			lastSessionFilePath = configFolderPath + "\\" + LAST_SESSION_FILE_NAME;
 		}
 
-		public delegate void SaveDataHandler();
-		public static event SaveDataHandler SaveDataEventHandler;
+		public delegate void SaveHandler();
+		public static event SaveHandler SaveDataEventHandler;
+		public static event SaveHandler SaveAlbumsEventHandler;
 
 		public static LastSessionData LastSessionData { get; set; }
 
@@ -65,6 +66,19 @@ namespace Divuss.Service
 			CheckData();
 			SaveDataEventHandler.Invoke();
 			LastSessionData.Serialize(lastSessionFilePath);
+		}
+
+		public static void SaveAlbums()
+		{
+			CheckData();
+			//CheckAlbums();
+			SaveAlbumsEventHandler.Invoke();
+			//LastSessionData.Serialize(lastSessionFilePath);
+		}
+
+		public static string GetAlbumsFolderPath()
+		{
+			return albumsFolderPath;
 		}
 
 		private static void LoadData()
@@ -118,6 +132,11 @@ namespace Divuss.Service
 				fs.Close();
 				Logger.LogTrace($"Создан файл: {LAST_SESSION_FILE_NAME}");
 			}
+		}
+
+		private static void CheckAlbums()
+		{
+			
 		}
 	}
 }

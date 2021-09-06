@@ -18,8 +18,6 @@ namespace Divuss.Model
 		public Picture(string imagePath)
 		{
 			ImagePath = imagePath;
-			Image image = Image.FromFile(imagePath);
-			imageSize = image.Size;
 		}
 
 		/// <summary>
@@ -49,6 +47,9 @@ namespace Divuss.Model
 		public string GetPictureInfo()
 		{
 			FileInfo fileInfo = new FileInfo(imagePath);
+			Image image = Image.FromFile(imagePath);
+			imageSize = image.Size;
+
 			var length = ConvertBytesToSuitableString(fileInfo.Length);
 			var creationTime = fileInfo.CreationTime;
 			var lastAccessTime = fileInfo.LastAccessTime;

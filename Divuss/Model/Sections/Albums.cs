@@ -37,7 +37,7 @@ namespace Divuss.Model
 		#endregion
 
 		public override string SectionName { get; }
-		public int NameNoveltyCounter { get => nameNoveltyCounter++;  }
+		public int NameNoveltyCounter { get => nameNoveltyCounter++; }
 		public ObservableCollection<Album> AlbumsList { get; }
 		public Picture[] AddBuffer { get; set; }
 		public int AddBufferCount => AddBuffer.Length;

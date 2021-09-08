@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Divuss.View"
         xmlns:Controls="clr-namespace:Divuss.Resources.Controls" 
         mc:Ignorable="d"
-        Title="Divuss" Height="450" Width="800" Background="#000"
-        WindowStartupLocation="CenterScreen"
-        KeyDown="IsKeyDown" KeyUp="IsKeyUp" Closed="Window_Closed"
+        Title="Divuss" Height="450" Width="800" MinHeight="200" MinWidth="200"
+        Background="#000" KeyDown="IsKeyDown" KeyUp="IsKeyUp" 
+        Closed="Window_Closed" WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown">
 
     <Grid Background="#555">
@@ -21,6 +21,9 @@
             </TabItem>
             <TabItem Header="Альбомы">
                 <Controls:Albums DataContext="{Binding AlbumsTab}"/>
+            </TabItem>
+            <TabItem Header="Слайдер">
+                <Controls:Slider DataContext="{Binding SliderTab}"/>
             </TabItem>
         </TabControl>
 

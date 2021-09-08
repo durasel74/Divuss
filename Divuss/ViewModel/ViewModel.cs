@@ -34,6 +34,7 @@ namespace Divuss.ViewModel
 			PictureView = PictureView.GetInstance();
 			PhotosTab = Photos.GetInstance();
 			AlbumsTab = Albums.GetInstance();
+			SliderTab = Slider.GetInstance();
 			CurrentSection = PhotosTab;
 		}
 
@@ -45,6 +46,7 @@ namespace Divuss.ViewModel
 		public PictureView PictureView { get; }
 		public Section PhotosTab { get; }
 		public Section AlbumsTab { get; }
+		public Section SliderTab { get; }
 
 		public Section CurrentSection
 		{

@@ -40,6 +40,7 @@
                 <Button Style="{StaticResource SelectOpenButton}"/>
                 <Button Style="{StaticResource AddToAlbumButton}"/>
                 <Button Style="{StaticResource DeleteButton}"/>
+                <Button Style="{StaticResource AddToSliderButton}"/>
             </StackPanel>
         </Border>
 

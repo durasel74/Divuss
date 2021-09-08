@@ -11,6 +11,9 @@ namespace Divuss.ViewModel
 	internal class CommandModel
 	{
 		private ViewModel viewModel;
+		private string imageFilter = "" +
+			"Image files (*.png;*.jpg;*.jpeg;*.tiff;*.tif;*.bmp;*.gif)" +
+			"|*.png;*.jpg;*.jpeg;*.tiff;*.tif;*.bmp;*.gif";
 
 		public CommandModel(ViewModel viewModel)
 		{
@@ -21,6 +24,7 @@ namespace Divuss.ViewModel
 		private PictureView PictureView => viewModel.PictureView;
 		public Photos Photos => (Photos)viewModel.PhotosTab;
 		private Albums Albums => (Albums)viewModel.AlbumsTab;
+		private Slider Slider => (Slider)viewModel.SliderTab;
 
 		private PictureCommand pictureSwitchCommand;
 		public PictureCommand PictureSwitchCommand
@@ -70,7 +74,7 @@ namespace Divuss.ViewModel
 					  Logger.LogTrace("Нажата кнопка открытия изображений");
 					  OpenFileDialog openFileDialog = new OpenFileDialog();
 					  openFileDialog.Multiselect = true;
-					  openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg";
+					  openFileDialog.Filter = imageFilter;
 
 					  Logger.LogTrace("Открыто окно выбора файлов...");
 					  if (openFileDialog.ShowDialog() == true)
@@ -265,6 +269,51 @@ namespace Divuss.ViewModel
 			}
 		}
 
+		private ButtonCommand sliderAddPictureCommand;
+		public ButtonCommand SliderAddPictureCommand
+		{
+			get
+			{
+				return sliderAddPictureCommand ??
+					  (sliderAddPictureCommand = new ButtonCommand(obj =>
+					  {
+						  var pictures = obj as ObservableCollection<object>;
+
+						  if (CurrentSection is Photos)
+						  {
+							  if (pictures != null && pictures.Count == 2)
+								SliderAddPictures(pictures);
+						  }
+					  }));
+			}
+		}
+
+		private ButtonCommand sliderRestartCommand;
+		public ButtonCommand SliderRestartCommand
+		{
+			get
+			{
+				return sliderRestartCommand ??
+					  (sliderRestartCommand = new ButtonCommand(obj =>
+					  {
+						  Slider.RestartView();
+					  }));
+			}
+		}
+
+		private ButtonCommand sliderSwapCommand;
+		public ButtonCommand SliderSwapCommand
+		{
+			get
+			{
+				return sliderSwapCommand ??
+					  (sliderSwapCommand = new ButtonCommand(obj =>
+					  {
+						  Slider.SwapPictures();
+					  }));
+			}
+		}
+
 		private void PictureSwitch(Picture picture, 
 			ObservableCollection<Picture> pictures)
 		{
@@ -420,6 +469,12 @@ namespace Divuss.ViewModel
 				Albums.AlbumsBuffer = null;
 			}
 			BootLoader.SaveAlbums();
+		}
+
+		private void SliderAddPictures(ObservableCollection<object> pictures)
+		{
+			var picturesArray = ObservalbeObjectToPicturesArray(pictures);
+			Slider.AddPicturesToSlider(picturesArray);
 		}
 
 		private ObservableCollection<Album> CopyAlbumsList()

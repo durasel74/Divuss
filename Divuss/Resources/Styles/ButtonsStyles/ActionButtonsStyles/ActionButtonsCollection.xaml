@@ -74,6 +74,24 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="AddToSliderButton" TargetType="{x:Type Button}"
+               BasedOn="{StaticResource ActionButton}">
+        <Setter Property="IsEnabled" Value="False"/>
+        <Setter Property="Content" Value="Slider"/>
+        <Setter Property="CommandParameter" Value="{Binding 
+                ElementName=PictureList, Path=SelectedItems}"/>
+        <Setter Property="Command" Value="{Binding RelativeSource=
+                {RelativeSource FindAncestor, AncestorType={x:Type Window}}, 
+                Path=DataContext.CommandModel.SliderAddPictureCommand}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource 
+                            FindAncestor, AncestorType={x:Type Window}}, 
+                            Path=DataContext.CommandMode}" Value="Two">
+                <Setter Property="IsEnabled" Value="True"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
     <!--#endregion-->
 
     <!--#region Albums -->

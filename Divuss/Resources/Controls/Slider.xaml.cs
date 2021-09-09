@@ -15,13 +15,19 @@ namespace Divuss.Resources.Controls
 {
 	public partial class Slider : UserControl
 	{
+		private readonly Brush preTransparentColor;
+
 		private double maxWidth;
 		private double actualWidth;
 		private double normalize;
+		private Brush lineColor;
+		private bool isLineVisibility;
 
 		public Slider()
 		{
 			InitializeComponent();
+			preTransparentColor = new SolidColorBrush(Color.FromArgb(0, 0xFF, 0xFF, 0xFF));
+			isLineVisibility = true;
 			normalize = 0.5;
 			GradientStop1.Offset = normalize;
 			GradientStop2.Offset = normalize;
@@ -45,6 +51,21 @@ namespace Divuss.Resources.Controls
 			normalize = actualWidth / maxWidth;
 			GradientStop1.Offset = normalize;
 			GradientStop2.Offset = normalize;
+		}
+
+		private void SwitchLineClick(object sender, RoutedEventArgs e)
+		{
+			if (isLineVisibility)
+			{
+				lineColor = SliderLine.Background;
+				SliderLine.Background = preTransparentColor;
+				isLineVisibility = false;
+			}
+			else
+			{
+				SliderLine.Background = lineColor;
+				isLineVisibility = true;
+			}
 		}
 	}
 }

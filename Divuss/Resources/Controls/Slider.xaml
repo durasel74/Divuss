@@ -16,13 +16,17 @@
         <Border Grid.Row="0" Style="{DynamicResource SectionPanel}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button VerticalAlignment="Center" Width="25" Height="25"
+                        Margin="3" Content="|" FontSize="16" Padding="0,0,0,4"
+                        Click="SwitchLineClick"/>
+                
+                <Button VerticalAlignment="Center" Width="25" Height="25"
                         Margin="3" Content="⇄" FontSize="16"
                         Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                                 AncestorType={x:Type Window}}, 
                                 Path=DataContext.CommandModel.SliderSwapCommand}"/>
 
                 <Button VerticalAlignment="Center" Width="25" Height="25"
-                        Margin="3" Content="↻" FontSize="16"
+                        Margin="3" Content="↻" FontSize="16" Padding="0,0,0,4"
                         Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                                 AncestorType={x:Type Window}}, 
                                 Path=DataContext.CommandModel.SliderRestartCommand}"/>
@@ -55,12 +59,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <GridSplitter Grid.Column="1" Width="2" Background="#CCC"
+            <GridSplitter x:Name="SliderLine" Grid.Column="1" Width="2"
                           HorizontalAlignment="Center"
-                          VerticalAlignment="Stretch" 
+                          VerticalAlignment="Stretch"
                           DragDelta="Spliter_DragDelta"
-                          SizeChanged="Spliter_SizeChanged">
-            </GridSplitter>
+                          SizeChanged="Spliter_SizeChanged"
+                          Background="#CCC"/>
         </Grid>
     </Grid>
 </UserControl>
